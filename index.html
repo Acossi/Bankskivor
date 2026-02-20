@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Bänkskivor – Lägenhetsstatus</title>
+<style>
+body { font-family: Arial, sans-serif; padding:20px; }
+table { border-collapse: collapse; width:100%; margin-bottom:20px;}
+th, td { border:1px solid #999; padding:6px; text-align:center; }
+th { background:#eee; }
+
+.red { background:#f8b4b4; }
+.yellow { background:#fff3b0; }
+.green { background:#b7f7b7; }
+
+button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
+.summary td { font-weight:bold; }
+</style>
+</head>
+<body>
+
+<h2>Status bänkskivor – badrum & kök (per lägenhet)</h2>
+
+<label>Ditt namn:
+<input type="text" id="userName" placeholder="Skriv ditt namn"></label>
+
+<br><br>
+
+<select id="houseFilter" onchange="applyFilters()">
+<option value="all">Visa alla hus</option>
+<option value="516">516</option>
+<option value="515">515</option>
+<option value="514">514</option>
+<option value="513">513</option>
+</select>
+
+<input type="text" id="aptSearch" placeholder="Sök lägenhetsnr" onkeyup="applyFilters()">
+
+<button onclick="exportToExcel()">📤 Exportera till Excel</button>
+
+<table id="table"></table>
+
+<h3>Sammanställning per hus</h3>
+<table id="summary"></table>
+
+<script>
+const apartments = [
+ // 516
+ {house:"516",floor:5,apt:"1001"},
+ {house:"516",floor:6,apt:"1101"},{house:"516",floor:6,apt:"1102"},{house:"516",floor:6,apt:"1103"},{house:"516",floor:6,apt:"1104"},
+ {house:"516",floor:7,apt:"1201"},{house:"516",floor:7,apt:"1202"},{house:"516",floor:7,apt:"1203"},{house:"516",floor:7,apt:"1204"},
+ {house:"516",floor:8,apt:"1301"},{house:"516",floor:8,apt:"1302"},{house:"516",floor:8,apt:"1303"},{house:"516",floor:8,apt:"1304"},
+ {house:"516",floor:9,apt:"1401"},{house:"516",floor:9,apt:"1402"},{house:"516",floor:9,apt:"1403"},{house:"516",floor:9,apt:"1404"},
+ {house:"516",floor:10,apt:"1501"},{house:"516",floor:10,apt:"1502"},{house:"516",floor:10,apt:"1503"},{house:"516",floor:10,apt:"1504"},
+ {house:"516",floor:11,apt:"1601"},{house:"516",floor:11,apt:"1602"},{house:"516",floor:11,apt:"1603"},
+ {house:"516",floor:12,apt:"1701"},{house:"516",floor:12,apt:"1702"},{house:"516",floor:12,apt:"1703"},
+
+ // 515
+ {house:"515",floor:5,apt:"1001"},{house:"515",floor:5,apt:"1002"},
+ {house:"515",floor:6,apt:"1101"},{house:"515",floor:6,apt:"1102"},{house:"515",floor:6,apt:"1103"},{house:"515",floor:6,apt:"1104"},{house:"515",floor:6,apt:"1105"},{house:"515",floor:6,apt:"1106"},
+ {house:"515",floor:7,apt:"1201"},{house:"515",floor:7,apt:"1202"},{house:"515",floor:7,apt:"1203"},{house:"515",floor:7,apt:"1204"},{house:"515",floor:7,apt:"1205"},{house:"515",floor:7,apt:"1206"},
+ {house:"515",floor:8,apt:"1301"},{house:"515",floor:8,apt:"1302"},{house:"515",floor:8,apt:"1303"},{house:"515",floor:8,apt:"1304"},{house:"515",floor:8,apt:"1305"},{house:"515",floor:8,apt:"1306"},
+ {house:"515",floor:9,apt:"1401"},{house:"515",floor:9,apt:"1402"},{house:"515",floor:9,apt:"1403"},{house:"515",floor:9,apt:"1404"},{house:"515",floor:9,apt:"1405"},{house:"515",floor:9,apt:"1406"},
+ {house:"515",floor:10,apt:"1501"},{house:"515",floor:10,apt:"1502"},{house:"515",floor:10,apt:"1503"},{house:"515",floor:10,apt:"1504"},{house:"515",floor:10,apt:"1505"},{house:"515",floor:10,apt:"1506"},
+
+ // 514
+ {house:"514",floor:5,apt:"1001"},{house:"514",floor:5,apt:"1002"},{house:"514",floor:5,apt:"1003"},{house:"514",floor:5,apt:"1004"},{house:"514",floor:5,apt:"1005"},
+ {house:"514",floor:6,apt:"1101"},{house:"514",floor:6,apt:"1102"},{house:"514",floor:6,apt:"1103"},
+ {house:"514",floor:7,apt:"1201"},{house:"514",floor:7,apt:"1202"},{house:"514",floor:7,apt:"1203"},{house:"514",floor:7,apt:"1204"},
+ {house:"514",floor:8,apt:"1301"},{house:"514",floor:8,apt:"1302"},{house:"514",floor:8,apt:"1303"},{house:"514",floor:8,apt:"1304"},
+ {house:"514",floor:9,apt:"1401"},{house:"514",floor:9,apt:"1402"},{house:"514",floor:9,apt:"1403"},{house:"514",floor:9,apt:"1404"},
+ {house:"514",floor:10,apt:"1501"},{house:"514",floor:10,apt:"1502"},{house:"514",floor:10,apt:"1503"},{house:"514",floor:10,apt:"1504"},
+ {house:"514",floor:11,apt:"1601"},
+
+ // 513
+ {house:"513",floor:5,apt:"1001"},{house:"513",floor:5,apt:"1002"},
+ {house:"513",floor:6,apt:"1101"},{house:"513",floor:6,apt:"1102"},
+ {house:"513",floor:7,apt:"1201"},{house:"513",floor:7,apt:"1202"},{house:"513",floor:7,apt:"1203"},{house:"513",floor:7,apt:"1204"},
+ {house:"513",floor:8,apt:"1301"},{house:"513",floor:8,apt:"1302"},{house:"513",floor:8,apt:"1303"},{house:"513",floor:8,apt:"1304"},
+ {house:"513",floor:9,apt:"1401"},{house:"513",floor:9,apt:"1402"},{house:"513",floor:9,apt:"1403"},{house:"513",floor:9,apt:"1404"},
+ {house:"513",floor:10,apt:"1501"},{house:"513",floor:10,apt:"1502"},
+];
+
+const table = document.getElementById("table");
+table.innerHTML = `
+<tr>
+<th>Hus</th><th>Plan</th><th>Lgh</th>
+<th>Badrum Måttad</th><th>Badrum Monterad</th>
+<th>Kök Måttad</th><th>Kök Monterad</th>
+<th>Status</th><th>Senast ändrad</th><th>Av</th>
+</tr>`;
+
+apartments.forEach((row,i)=>{
+ let saved = JSON.parse(localStorage.getItem("row"+i))||{};
+ let tr = document.createElement("tr");
+ tr.dataset.house = row.house;
+ tr.dataset.apt = row.apt;
+ tr.innerHTML = `
+<td>${row.house}</td>
+<td>Plan ${row.floor}</td>
+<td>${row.apt}</td>
+<td><input type="checkbox"></td>
+<td><input type="checkbox"></td>
+<td><input type="checkbox"></td>
+<td><input type="checkbox"></td>
+<td class="status"></td>
+<td class="time"></td>
+<td class="user"></td>`;
+ table.appendChild(tr);
+
+ let inputs = tr.querySelectorAll("input");
+ inputs[0].checked = saved.bm||false;
+ inputs[1].checked = saved.bmon||false;
+ inputs[2].checked = saved.km||false;
+ inputs[3].checked = saved.kmon||false;
+ tr.querySelector(".time").textContent = saved.time||"";
+ tr.querySelector(".user").textContent = saved.user||"";
+
+ inputs.forEach(inp=>inp.addEventListener("change",()=>saveRow(i,tr)));
+ updateRow(tr);
+});
+
+function saveRow(i,tr){
+ let name = document.getElementById("userName").value || "Okänd";
+ let time = new Date().toLocaleString();
+
+ let inputs = tr.querySelectorAll("input");
+ let data = {
+  bm:inputs[0].checked,
+  bmon:inputs[1].checked,
+  km:inputs[2].checked,
+  kmon:inputs[3].checked,
+  time: time,
+  user: name
+ };
+ localStorage.setItem("row"+i,JSON.stringify(data));
+ tr.querySelector(".time").textContent = time;
+ tr.querySelector(".user").textContent = name;
+ updateRow(tr);
+ updateSummary();
+}
+
+function updateRow(tr){
+ let inputs = tr.querySelectorAll("input");
+ let statusCell = tr.querySelector(".status");
+ let done = inputs[1].checked && inputs[3].checked;
+ let started = inputs[0].checked || inputs[1].checked || inputs[2].checked || inputs[3].checked;
+
+ tr.classList.remove("red","yellow","green");
+
+ if(done){
+   tr.classList.add("green");
+   statusCell.textContent="Klar";
+ } else if(started){
+   tr.classList.add("yellow");
+   statusCell.textContent="Pågår";
+ } else {
+   tr.classList.add("red");
+   statusCell.textContent="Ej startad";
+ }
+}
+
+function applyFilters(){
+ let house = document.getElementById("houseFilter").value;
+ let aptSearch = document.getElementById("aptSearch").value.toLowerCase();
+
+ Array.from(table.rows).forEach((row,i)=>{
+  if(i===0) return;
+  let matchHouse = (house==="all" || row.dataset.house===house);
+  let matchApt = row.dataset.apt.toLowerCase().includes(aptSearch);
+  row.style.display = (matchHouse && matchApt) ? "" : "none";
+ });
+}
+
+function updateSummary(){
+ let count = {};
+ apartments.forEach((f,i)=>{
+  let row = table.rows[i+1];
+  let status = row.classList.contains("green")?"green":
+               row.classList.contains("yellow")?"yellow":"red";
+  if(!count[f.house]) count[f.house]={red:0,yellow:0,green:0};
+  count[f.house][status]++;
+ });
+
+ let sTable = document.getElementById("summary");
+ sTable.innerHTML = `
+<tr>
+<th>Hus</th><th>🔴 Ej påbörjad</th><th>🟡 Delvis klar</th><th>🟢 Klar</th>
+</tr>`;
+ for(let h in count){
+  sTable.innerHTML += `
+  <tr class="summary">
+   <td>${h}</td>
+   <td>${count[h].red}</td>
+   <td>${count[h].yellow}</td>
+   <td>${count[h].green}</td>
+  </tr>`;
+ }
+}
+
+function exportToExcel(){
+ let html = "<table border='1'>";
+ html += table.innerHTML;
+ html += "</table>";
+ let blob = new Blob([html],{type:"application/vnd.ms-excel"});
+ let link = document.createElement("a");
+ link.href = URL.createObjectURL(blob);
+ link.download = "bankskivor_lagenheter.xls";
+ link.click();
+}
+
+updateSummary();
+</script>
+
+</body>
+</html>
