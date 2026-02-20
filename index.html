@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Bänkskivor – Lägenhetsstatus</title>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 <style>
 body { font-family: Arial, sans-serif; padding:20px; }
 table { border-collapse: collapse; width:100%; margin-bottom:20px;}
@@ -44,41 +48,46 @@ button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 <table id="summary"></table>
 
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
+  authDomain: "bankskivor-status.firebaseapp.com",
+  projectId: "bankskivor-status",
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 const apartments = [
- // 516
- {house:"516",floor:5,apt:"1001"},
- {house:"516",floor:6,apt:"1101"},{house:"516",floor:6,apt:"1102"},{house:"516",floor:6,apt:"1103"},{house:"516",floor:6,apt:"1104"},
- {house:"516",floor:7,apt:"1201"},{house:"516",floor:7,apt:"1202"},{house:"516",floor:7,apt:"1203"},{house:"516",floor:7,apt:"1204"},
- {house:"516",floor:8,apt:"1301"},{house:"516",floor:8,apt:"1302"},{house:"516",floor:8,apt:"1303"},{house:"516",floor:8,apt:"1304"},
- {house:"516",floor:9,apt:"1401"},{house:"516",floor:9,apt:"1402"},{house:"516",floor:9,apt:"1403"},{house:"516",floor:9,apt:"1404"},
- {house:"516",floor:10,apt:"1501"},{house:"516",floor:10,apt:"1502"},{house:"516",floor:10,apt:"1503"},{house:"516",floor:10,apt:"1504"},
- {house:"516",floor:11,apt:"1601"},{house:"516",floor:11,apt:"1602"},{house:"516",floor:11,apt:"1603"},
- {house:"516",floor:12,apt:"1701"},{house:"516",floor:12,apt:"1702"},{house:"516",floor:12,apt:"1703"},
+{house:"516",floor:5,apt:"1001"},
+{house:"516",floor:6,apt:"1101"},{house:"516",floor:6,apt:"1102"},{house:"516",floor:6,apt:"1103"},{house:"516",floor:6,apt:"1104"},
+{house:"516",floor:7,apt:"1201"},{house:"516",floor:7,apt:"1202"},{house:"516",floor:7,apt:"1203"},{house:"516",floor:7,apt:"1204"},
+{house:"516",floor:8,apt:"1301"},{house:"516",floor:8,apt:"1302"},{house:"516",floor:8,apt:"1303"},{house:"516",floor:8,apt:"1304"},
+{house:"516",floor:9,apt:"1401"},{house:"516",floor:9,apt:"1402"},{house:"516",floor:9,apt:"1403"},{house:"516",floor:9,apt:"1404"},
+{house:"516",floor:10,apt:"1501"},{house:"516",floor:10,apt:"1502"},{house:"516",floor:10,apt:"1503"},{house:"516",floor:10,apt:"1504"},
+{house:"516",floor:11,apt:"1601"},{house:"516",floor:11,apt:"1602"},{house:"516",floor:11,apt:"1603"},
+{house:"516",floor:12,apt:"1701"},{house:"516",floor:12,apt:"1702"},{house:"516",floor:12,apt:"1703"},
 
- // 515
- {house:"515",floor:5,apt:"1001"},{house:"515",floor:5,apt:"1002"},
- {house:"515",floor:6,apt:"1101"},{house:"515",floor:6,apt:"1102"},{house:"515",floor:6,apt:"1103"},{house:"515",floor:6,apt:"1104"},{house:"515",floor:6,apt:"1105"},{house:"515",floor:6,apt:"1106"},
- {house:"515",floor:7,apt:"1201"},{house:"515",floor:7,apt:"1202"},{house:"515",floor:7,apt:"1203"},{house:"515",floor:7,apt:"1204"},{house:"515",floor:7,apt:"1205"},{house:"515",floor:7,apt:"1206"},
- {house:"515",floor:8,apt:"1301"},{house:"515",floor:8,apt:"1302"},{house:"515",floor:8,apt:"1303"},{house:"515",floor:8,apt:"1304"},{house:"515",floor:8,apt:"1305"},{house:"515",floor:8,apt:"1306"},
- {house:"515",floor:9,apt:"1401"},{house:"515",floor:9,apt:"1402"},{house:"515",floor:9,apt:"1403"},{house:"515",floor:9,apt:"1404"},{house:"515",floor:9,apt:"1405"},{house:"515",floor:9,apt:"1406"},
- {house:"515",floor:10,apt:"1501"},{house:"515",floor:10,apt:"1502"},{house:"515",floor:10,apt:"1503"},{house:"515",floor:10,apt:"1504"},{house:"515",floor:10,apt:"1505"},{house:"515",floor:10,apt:"1506"},
+{house:"515",floor:5,apt:"1001"},{house:"515",floor:5,apt:"1002"},
+{house:"515",floor:6,apt:"1101"},{house:"515",floor:6,apt:"1102"},{house:"515",floor:6,apt:"1103"},{house:"515",floor:6,apt:"1104"},{house:"515",floor:6,apt:"1105"},{house:"515",floor:6,apt:"1106"},
+{house:"515",floor:7,apt:"1201"},{house:"515",floor:7,apt:"1202"},{house:"515",floor:7,apt:"1203"},{house:"515",floor:7,apt:"1204"},{house:"515",floor:7,apt:"1205"},{house:"515",floor:7,apt:"1206"},
+{house:"515",floor:8,apt:"1301"},{house:"515",floor:8,apt:"1302"},{house:"515",floor:8,apt:"1303"},{house:"515",floor:8,apt:"1304"},{house:"515",floor:8,apt:"1305"},{house:"515",floor:8,apt:"1306"},
+{house:"515",floor:9,apt:"1401"},{house:"515",floor:9,apt:"1402"},{house:"515",floor:9,apt:"1403"},{house:"515",floor:9,apt:"1404"},{house:"515",floor:9,apt:"1405"},{house:"515",floor:9,apt:"1406"},
+{house:"515",floor:10,apt:"1501"},{house:"515",floor:10,apt:"1502"},{house:"515",floor:10,apt:"1503"},{house:"515",floor:10,apt:"1504"},{house:"515",floor:10,apt:"1505"},{house:"515",floor:10,apt:"1506"},
 
- // 514
- {house:"514",floor:5,apt:"1001"},{house:"514",floor:5,apt:"1002"},{house:"514",floor:5,apt:"1003"},{house:"514",floor:5,apt:"1004"},{house:"514",floor:5,apt:"1005"},
- {house:"514",floor:6,apt:"1101"},{house:"514",floor:6,apt:"1102"},{house:"514",floor:6,apt:"1103"},
- {house:"514",floor:7,apt:"1201"},{house:"514",floor:7,apt:"1202"},{house:"514",floor:7,apt:"1203"},{house:"514",floor:7,apt:"1204"},
- {house:"514",floor:8,apt:"1301"},{house:"514",floor:8,apt:"1302"},{house:"514",floor:8,apt:"1303"},{house:"514",floor:8,apt:"1304"},
- {house:"514",floor:9,apt:"1401"},{house:"514",floor:9,apt:"1402"},{house:"514",floor:9,apt:"1403"},{house:"514",floor:9,apt:"1404"},
- {house:"514",floor:10,apt:"1501"},{house:"514",floor:10,apt:"1502"},{house:"514",floor:10,apt:"1503"},{house:"514",floor:10,apt:"1504"},
- {house:"514",floor:11,apt:"1601"},
+{house:"514",floor:5,apt:"1001"},{house:"514",floor:5,apt:"1002"},{house:"514",floor:5,apt:"1003"},{house:"514",floor:5,apt:"1004"},{house:"514",floor:5,apt:"1005"},
+{house:"514",floor:6,apt:"1101"},{house:"514",floor:6,apt:"1102"},{house:"514",floor:6,apt:"1103"},
+{house:"514",floor:7,apt:"1201"},{house:"514",floor:7,apt:"1202"},{house:"514",floor:7,apt:"1203"},{house:"514",floor:7,apt:"1204"},
+{house:"514",floor:8,apt:"1301"},{house:"514",floor:8,apt:"1302"},{house:"514",floor:8,apt:"1303"},{house:"514",floor:8,apt:"1304"},
+{house:"514",floor:9,apt:"1401"},{house:"514",floor:9,apt:"1402"},{house:"514",floor:9,apt:"1403"},{house:"514",floor:9,apt:"1404"},
+{house:"514",floor:10,apt:"1501"},{house:"514",floor:10,apt:"1502"},{house:"514",floor:10,apt:"1503"},{house:"514",floor:10,apt:"1504"},
+{house:"514",floor:11,apt:"1601"},
 
- // 513
- {house:"513",floor:5,apt:"1001"},{house:"513",floor:5,apt:"1002"},
- {house:"513",floor:6,apt:"1101"},{house:"513",floor:6,apt:"1102"},
- {house:"513",floor:7,apt:"1201"},{house:"513",floor:7,apt:"1202"},{house:"513",floor:7,apt:"1203"},{house:"513",floor:7,apt:"1204"},
- {house:"513",floor:8,apt:"1301"},{house:"513",floor:8,apt:"1302"},{house:"513",floor:8,apt:"1303"},{house:"513",floor:8,apt:"1304"},
- {house:"513",floor:9,apt:"1401"},{house:"513",floor:9,apt:"1402"},{house:"513",floor:9,apt:"1403"},{house:"513",floor:9,apt:"1404"},
- {house:"513",floor:10,apt:"1501"},{house:"513",floor:10,apt:"1502"},
+{house:"513",floor:5,apt:"1001"},{house:"513",floor:5,apt:"1002"},
+{house:"513",floor:6,apt:"1101"},{house:"513",floor:6,apt:"1102"},
+{house:"513",floor:7,apt:"1201"},{house:"513",floor:7,apt:"1202"},{house:"513",floor:7,apt:"1203"},{house:"513",floor:7,apt:"1204"},
+{house:"513",floor:8,apt:"1301"},{house:"513",floor:8,apt:"1302"},{house:"513",floor:8,apt:"1303"},{house:"513",floor:8,apt:"1304"},
+{house:"513",floor:9,apt:"1401"},{house:"513",floor:9,apt:"1402"},{house:"513",floor:9,apt:"1403"},{house:"513",floor:9,apt:"1404"},
+{house:"513",floor:10,apt:"1501"},{house:"513",floor:10,apt:"1502"},
 ];
 
 const table = document.getElementById("table");
@@ -91,7 +100,6 @@ table.innerHTML = `
 </tr>`;
 
 apartments.forEach((row,i)=>{
- let saved = JSON.parse(localStorage.getItem("row"+i))||{};
  let tr = document.createElement("tr");
  tr.dataset.house = row.house;
  tr.dataset.apt = row.apt;
@@ -108,23 +116,16 @@ apartments.forEach((row,i)=>{
 <td class="user"></td>`;
  table.appendChild(tr);
 
- let inputs = tr.querySelectorAll("input");
- inputs[0].checked = saved.bm||false;
- inputs[1].checked = saved.bmon||false;
- inputs[2].checked = saved.km||false;
- inputs[3].checked = saved.kmon||false;
- tr.querySelector(".time").textContent = saved.time||"";
- tr.querySelector(".user").textContent = saved.user||"";
-
- inputs.forEach(inp=>inp.addEventListener("change",()=>saveRow(i,tr)));
- updateRow(tr);
+ tr.querySelectorAll("input").forEach(inp=>{
+  inp.addEventListener("change",()=>saveRow(i,tr));
+ });
 });
 
 function saveRow(i,tr){
  let name = document.getElementById("userName").value || "Okänd";
  let time = new Date().toLocaleString();
-
  let inputs = tr.querySelectorAll("input");
+
  let data = {
   bm:inputs[0].checked,
   bmon:inputs[1].checked,
@@ -133,12 +134,28 @@ function saveRow(i,tr){
   time: time,
   user: name
  };
- localStorage.setItem("row"+i,JSON.stringify(data));
- tr.querySelector(".time").textContent = time;
- tr.querySelector(".user").textContent = name;
- updateRow(tr);
- updateSummary();
+
+ db.collection("rows").doc("row"+i).set(data);
 }
+
+db.collection("rows").onSnapshot(snapshot=>{
+ snapshot.forEach(doc=>{
+  let i = parseInt(doc.id.replace("row",""));
+  let tr = table.rows[i+1];
+  if(!tr) return;
+  let saved = doc.data();
+  let inputs = tr.querySelectorAll("input");
+
+  inputs[0].checked = saved.bm;
+  inputs[1].checked = saved.bmon;
+  inputs[2].checked = saved.km;
+  inputs[3].checked = saved.kmon;
+  tr.querySelector(".time").textContent = saved.time;
+  tr.querySelector(".user").textContent = saved.user;
+  updateRow(tr);
+ });
+ updateSummary();
+});
 
 function updateRow(tr){
  let inputs = tr.querySelectorAll("input");
@@ -208,8 +225,6 @@ function exportToExcel(){
  link.download = "bankskivor_lagenheter.xls";
  link.click();
 }
-
-updateSummary();
 </script>
 
 </body>
