@@ -50,7 +50,7 @@ button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 
 <script>
 // ===== ADMINER =====
-const admins = ["Admin", "Bossen", "Projektledare"]; // ändra till rätt namn
+const admins = ["Admin", "Bossen", "Projektledare", "Adrian"]; // Adrian är nu admin
 
 // ===== FIREBASE =====
 const firebaseConfig = {
@@ -105,6 +105,7 @@ table.innerHTML = `
 <th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Admin</th><th>Senast ändrad</th><th>Av</th>
 </tr>`;
 
+// Skapa rader
 apartments.forEach((row,i)=>{
  let tr = document.createElement("tr");
  tr.dataset.house = row.house;
@@ -165,7 +166,7 @@ function saveRow(i,tr,lockedBy=null){
 }
 
 function adminUnlock(i,tr){
- let name = document.getElementById("userName").value || "Admin", "Adrian";
+ let name = document.getElementById("userName").value || "Admin";
  let inputs = tr.querySelectorAll("input");
  inputs[1].checked = false;
  inputs[3].checked = false;
