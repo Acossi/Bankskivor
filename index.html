@@ -19,7 +19,6 @@ th { background:#eee; }
 
 button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 .summary td { font-weight:bold; }
-
 .comment { width:100%; }
 </style>
 </head>
@@ -50,15 +49,19 @@ button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 <table id="summary"></table>
 
 <script>
+// ===== ADMINER =====
+const admins = ["Admin", "Bossen", "Projektledare"]; // ändra till rätt namn
+
+// ===== FIREBASE =====
 const firebaseConfig = {
   apiKey: "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
   authDomain: "bankskivor-status.firebaseapp.com",
   projectId: "bankskivor-status",
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// ===== DATA =====
 const apartments = [
 {house:"516",floor:5,apt:"1001"},
 {house:"516",floor:6,apt:"1101"},{house:"516",floor:6,apt:"1102"},{house:"516",floor:6,apt:"1103"},{house:"516",floor:6,apt:"1104"},
@@ -92,13 +95,14 @@ const apartments = [
 {house:"513",floor:10,apt:"1501"},{house:"513",floor:10,apt:"1502"},
 ];
 
+// ===== TABELL =====
 const table = document.getElementById("table");
 table.innerHTML = `
 <tr>
 <th>Hus</th><th>Plan</th><th>Lgh</th>
 <th>Badrum Måttad</th><th>Badrum Monterad</th>
 <th>Kök Måttad</th><th>Kök Monterad</th>
-<th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Senast ändrad</th><th>Av</th>
+<th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Admin</th><th>Senast ändrad</th><th>Av</th>
 </tr>`;
 
 apartments.forEach((row,i)=>{
@@ -116,6 +120,7 @@ apartments.forEach((row,i)=>{
 <td class="status"></td>
 <td><input type="text" class="comment" placeholder="Skriv kommentar"></td>
 <td class="commentUser"></td>
+<td><button class="unlockBtn" style="display:none">🔓 Lås upp</button></td>
 <td class="time"></td>
 <td class="user"></td>`;
  table.appendChild(tr);
@@ -123,9 +128,19 @@ apartments.forEach((row,i)=>{
  tr.querySelectorAll("input").forEach(inp=>{
   inp.addEventListener("change",()=>saveRow(i,tr));
  });
+
+ tr.querySelector(".unlockBtn").addEventListener("click",()=>{
+   let name = document.getElementById("userName").value || "";
+   if(!admins.includes(name)){
+     alert("Endast admin kan låsa upp.");
+     return;
+   }
+   adminUnlock(i,tr);
+ });
 });
 
-function saveRow(i,tr){
+// ===== FUNKTIONER =====
+function saveRow(i,tr,lockedBy=null){
  let name = document.getElementById("userName").value || "Okänd";
  let time = new Date().toLocaleString();
  let inputs = tr.querySelectorAll("input");
@@ -142,7 +157,19 @@ function saveRow(i,tr){
   user: name
  };
 
- db.collection("rows").doc("row"+i).set(data);
+ if(lockedBy){
+   data.lockedBy = lockedBy;
+ }
+
+ db.collection("rows").doc("row"+i).set(data,{merge:true});
+}
+
+function adminUnlock(i,tr){
+ let name = document.getElementById("userName").value || "Admin";
+ let inputs = tr.querySelectorAll("input");
+ inputs[1].checked = false;
+ inputs[3].checked = false;
+ saveRow(i,tr,name);
 }
 
 db.collection("rows").onSnapshot(snapshot=>{
@@ -161,6 +188,8 @@ db.collection("rows").onSnapshot(snapshot=>{
   tr.querySelector(".commentUser").textContent = saved.commentUser || "";
   tr.querySelector(".time").textContent = saved.time;
   tr.querySelector(".user").textContent = saved.user;
+  tr.dataset.lockedBy = saved.lockedBy || "";
+
   updateRow(tr);
  });
  updateSummary();
@@ -169,20 +198,36 @@ db.collection("rows").onSnapshot(snapshot=>{
 function updateRow(tr){
  let inputs = tr.querySelectorAll("input");
  let statusCell = tr.querySelector(".status");
+ let commentInput = tr.querySelector(".comment");
+ let unlockBtn = tr.querySelector(".unlockBtn");
+
+ let name = document.getElementById("userName").value || "";
+ let isAdmin = admins.includes(name);
+
  let done = inputs[1].checked && inputs[3].checked;
  let started = inputs[0].checked || inputs[1].checked || inputs[2].checked || inputs[3].checked;
+ let lockedBy = tr.dataset.lockedBy || "";
 
  tr.classList.remove("red","yellow","green");
 
  if(done){
    tr.classList.add("green");
-   statusCell.textContent="Klar";
+   statusCell.textContent = lockedBy ? "Klar (Låst av " + lockedBy + ")" : "Klar";
+   commentInput.disabled = true;
+   inputs.forEach(inp=>inp.disabled = true);
+   unlockBtn.style.display = isAdmin ? "inline-block" : "none";
  } else if(started){
    tr.classList.add("yellow");
    statusCell.textContent="Pågår";
+   commentInput.disabled = false;
+   inputs.forEach(inp=>inp.disabled = false);
+   unlockBtn.style.display = "none";
  } else {
    tr.classList.add("red");
    statusCell.textContent="Ej startad";
+   commentInput.disabled = false;
+   inputs.forEach(inp=>inp.disabled = false);
+   unlockBtn.style.display = "none";
  }
 }
 
