@@ -19,6 +19,8 @@ th { background:#eee; }
 
 button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 .summary td { font-weight:bold; }
+
+.comment { width:100%; }
 </style>
 </head>
 <body>
@@ -96,7 +98,7 @@ table.innerHTML = `
 <th>Hus</th><th>Plan</th><th>Lgh</th>
 <th>Badrum Måttad</th><th>Badrum Monterad</th>
 <th>Kök Måttad</th><th>Kök Monterad</th>
-<th>Status</th><th>Senast ändrad</th><th>Av</th>
+<th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Senast ändrad</th><th>Av</th>
 </tr>`;
 
 apartments.forEach((row,i)=>{
@@ -112,6 +114,8 @@ apartments.forEach((row,i)=>{
 <td><input type="checkbox"></td>
 <td><input type="checkbox"></td>
 <td class="status"></td>
+<td><input type="text" class="comment" placeholder="Skriv kommentar"></td>
+<td class="commentUser"></td>
 <td class="time"></td>
 <td class="user"></td>`;
  table.appendChild(tr);
@@ -125,12 +129,15 @@ function saveRow(i,tr){
  let name = document.getElementById("userName").value || "Okänd";
  let time = new Date().toLocaleString();
  let inputs = tr.querySelectorAll("input");
+ let comment = tr.querySelector(".comment").value;
 
  let data = {
   bm:inputs[0].checked,
   bmon:inputs[1].checked,
   km:inputs[2].checked,
   kmon:inputs[3].checked,
+  comment: comment,
+  commentUser: name,
   time: time,
   user: name
  };
@@ -150,6 +157,8 @@ db.collection("rows").onSnapshot(snapshot=>{
   inputs[1].checked = saved.bmon;
   inputs[2].checked = saved.km;
   inputs[3].checked = saved.kmon;
+  tr.querySelector(".comment").value = saved.comment || "";
+  tr.querySelector(".commentUser").textContent = saved.commentUser || "";
   tr.querySelector(".time").textContent = saved.time;
   tr.querySelector(".user").textContent = saved.user;
   updateRow(tr);
