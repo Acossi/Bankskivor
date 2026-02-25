@@ -79,7 +79,7 @@ const table = document.getElementById("table");
 table.innerHTML = `
 <tr>
 <th>Hus</th><th>Plan</th><th>Lgh</th>
-<th>Badrum klart</th><th>Kök klart</th>
+<th>Montage badrum klart</th><th>Montage kök klart</th>
 <th>Badrum Måttad</th><th>Badrum Monterad</th>
 <th>Kök Måttad</th><th>Kök Monterad</th>
 <th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Senast ändrad</th><th>Av</th>
@@ -125,8 +125,8 @@ function saveRow(i,tr){
  let inputs = tr.querySelectorAll("input");
 
  let data = {
-  bathDone: inputs[0].checked,
-  kitchenDone: inputs[1].checked,
+  bathMontage: inputs[0].checked,
+  kitchenMontage: inputs[1].checked,
   bm: inputs[2].checked,
   bmon: inputs[3].checked,
   km: inputs[4].checked,
@@ -148,8 +148,8 @@ db.collection("rows").onSnapshot(snapshot=>{
   let d = doc.data();
   let inputs = tr.querySelectorAll("input");
 
-  inputs[0].checked = d.bathDone;
-  inputs[1].checked = d.kitchenDone;
+  inputs[0].checked = d.bathMontage;
+  inputs[1].checked = d.kitchenMontage;
   inputs[2].checked = d.bm;
   inputs[3].checked = d.bmon;
   inputs[4].checked = d.km;
@@ -169,20 +169,20 @@ function updateRow(tr){
  let inputs = tr.querySelectorAll("input");
  let statusCell = tr.querySelector(".status");
 
- let done = inputs[0].checked && inputs[1].checked;
- let started = inputs[2].checked || inputs[3].checked || inputs[4].checked || inputs[5].checked;
+ // ALLA måste vara ikryssade för "Klar"
+ let allChecked = true;
+ inputs.forEach(inp=>{
+   if(!inp.checked) allChecked = false;
+ });
 
  tr.classList.remove("red","yellow","green");
 
- if(done){
+ if(allChecked){
    tr.classList.add("green");
    statusCell.textContent="Klar";
- } else if(started){
+ } else {
    tr.classList.add("yellow");
    statusCell.textContent="Pågår";
- } else {
-   tr.classList.add("red");
-   statusCell.textContent="Ej startad";
  }
 
  let allow = isAdmin();
@@ -213,22 +213,20 @@ function updateSummary(){
  let count = {};
  apartments.forEach((f,i)=>{
   let row = table.rows[i+1];
-  let status = row.classList.contains("green")?"green":
-               row.classList.contains("yellow")?"yellow":"red";
-  if(!count[f.house]) count[f.house]={red:0,yellow:0,green:0};
+  let status = row.classList.contains("green")?"green":"yellow";
+  if(!count[f.house]) count[f.house]={yellow:0,green:0};
   count[f.house][status]++;
  });
 
  let sTable = document.getElementById("summary");
  sTable.innerHTML = `
 <tr>
-<th>Hus</th><th>🔴 Ej påbörjad</th><th>🟡 Delvis klar</th><th>🟢 Klar</th>
+<th>Hus</th><th>🟡 Pågår</th><th>🟢 Klar</th>
 </tr>`;
  for(let h in count){
   sTable.innerHTML += `
   <tr class="summary">
    <td>${h}</td>
-   <td>${count[h].red}</td>
    <td>${count[h].yellow}</td>
    <td>${count[h].green}</td>
   </tr>`;
