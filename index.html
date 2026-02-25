@@ -17,9 +17,10 @@ th { background:#eee; }
 .yellow { background:#fff3b0; }
 .green { background:#b7f7b7; }
 
+.comment { width:100%; }
+
 button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 .summary td { font-weight:bold; }
-.comment { width:100%; }
 </style>
 </head>
 <body>
@@ -27,7 +28,7 @@ button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 <h2>Status bänkskivor – badrum & kök (per lägenhet)</h2>
 
 <label>Ditt namn:
-<input type="text" id="userName" placeholder="Skriv ditt namn"></label>
+<input type="text" id="userName" placeholder="Skriv ditt namn" onkeyup="refreshLocking()"></label>
 
 <br><br>
 
@@ -50,7 +51,7 @@ button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 
 <script>
 // ===== ADMINER =====
-const admins = ["Admin", "Bossen", "Projektledare", "Adrian"]; // Adrian är nu admin
+const admins = ["Admin", "Bossen", "Projektledare", "Adrian"];
 
 // ===== FIREBASE =====
 const firebaseConfig = {
@@ -71,28 +72,6 @@ const apartments = [
 {house:"516",floor:10,apt:"1501"},{house:"516",floor:10,apt:"1502"},{house:"516",floor:10,apt:"1503"},{house:"516",floor:10,apt:"1504"},
 {house:"516",floor:11,apt:"1601"},{house:"516",floor:11,apt:"1602"},{house:"516",floor:11,apt:"1603"},
 {house:"516",floor:12,apt:"1701"},{house:"516",floor:12,apt:"1702"},{house:"516",floor:12,apt:"1703"},
-
-{house:"515",floor:5,apt:"1001"},{house:"515",floor:5,apt:"1002"},
-{house:"515",floor:6,apt:"1101"},{house:"515",floor:6,apt:"1102"},{house:"515",floor:6,apt:"1103"},{house:"515",floor:6,apt:"1104"},{house:"515",floor:6,apt:"1105"},{house:"515",floor:6,apt:"1106"},
-{house:"515",floor:7,apt:"1201"},{house:"515",floor:7,apt:"1202"},{house:"515",floor:7,apt:"1203"},{house:"515",floor:7,apt:"1204"},{house:"515",floor:7,apt:"1205"},{house:"515",floor:7,apt:"1206"},
-{house:"515",floor:8,apt:"1301"},{house:"515",floor:8,apt:"1302"},{house:"515",floor:8,apt:"1303"},{house:"515",floor:8,apt:"1304"},{house:"515",floor:8,apt:"1305"},{house:"515",floor:8,apt:"1306"},
-{house:"515",floor:9,apt:"1401"},{house:"515",floor:9,apt:"1402"},{house:"515",floor:9,apt:"1403"},{house:"515",floor:9,apt:"1404"},{house:"515",floor:9,apt:"1405"},{house:"515",floor:9,apt:"1406"},
-{house:"515",floor:10,apt:"1501"},{house:"515",floor:10,apt:"1502"},{house:"515",floor:10,apt:"1503"},{house:"515",floor:10,apt:"1504"},{house:"515",floor:10,apt:"1505"},{house:"515",floor:10,apt:"1506"},
-
-{house:"514",floor:5,apt:"1001"},{house:"514",floor:5,apt:"1002"},{house:"514",floor:5,apt:"1003"},{house:"514",floor:5,apt:"1004"},{house:"514",floor:5,apt:"1005"},
-{house:"514",floor:6,apt:"1101"},{house:"514",floor:6,apt:"1102"},{house:"514",floor:6,apt:"1103"},
-{house:"514",floor:7,apt:"1201"},{house:"514",floor:7,apt:"1202"},{house:"514",floor:7,apt:"1203"},{house:"514",floor:7,apt:"1204"},
-{house:"514",floor:8,apt:"1301"},{house:"514",floor:8,apt:"1302"},{house:"514",floor:8,apt:"1303"},{house:"514",floor:8,apt:"1304"},
-{house:"514",floor:9,apt:"1401"},{house:"514",floor:9,apt:"1402"},{house:"514",floor:9,apt:"1403"},{house:"514",floor:9,apt:"1404"},
-{house:"514",floor:10,apt:"1501"},{house:"514",floor:10,apt:"1502"},{house:"514",floor:10,apt:"1503"},{house:"514",floor:10,apt:"1504"},
-{house:"514",floor:11,apt:"1601"},
-
-{house:"513",floor:5,apt:"1001"},{house:"513",floor:5,apt:"1002"},
-{house:"513",floor:6,apt:"1101"},{house:"513",floor:6,apt:"1102"},
-{house:"513",floor:7,apt:"1201"},{house:"513",floor:7,apt:"1202"},{house:"513",floor:7,apt:"1203"},{house:"513",floor:7,apt:"1204"},
-{house:"513",floor:8,apt:"1301"},{house:"513",floor:8,apt:"1302"},{house:"513",floor:8,apt:"1303"},{house:"513",floor:8,apt:"1304"},
-{house:"513",floor:9,apt:"1401"},{house:"513",floor:9,apt:"1402"},{house:"513",floor:9,apt:"1403"},{house:"513",floor:9,apt:"1404"},
-{house:"513",floor:10,apt:"1501"},{house:"513",floor:10,apt:"1502"},
 ];
 
 // ===== TABELL =====
@@ -100,12 +79,12 @@ const table = document.getElementById("table");
 table.innerHTML = `
 <tr>
 <th>Hus</th><th>Plan</th><th>Lgh</th>
+<th>Badrum klart</th><th>Kök klart</th>
 <th>Badrum Måttad</th><th>Badrum Monterad</th>
 <th>Kök Måttad</th><th>Kök Monterad</th>
-<th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Admin</th><th>Senast ändrad</th><th>Av</th>
+<th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Senast ändrad</th><th>Av</th>
 </tr>`;
 
-// Skapa rader
 apartments.forEach((row,i)=>{
  let tr = document.createElement("tr");
  tr.dataset.house = row.house;
@@ -118,10 +97,11 @@ apartments.forEach((row,i)=>{
 <td><input type="checkbox"></td>
 <td><input type="checkbox"></td>
 <td><input type="checkbox"></td>
+<td><input type="checkbox"></td>
+<td><input type="checkbox"></td>
 <td class="status"></td>
-<td><input type="text" class="comment" placeholder="Skriv kommentar"></td>
+<td><input type="text" class="comment"></td>
 <td class="commentUser"></td>
-<td><button class="unlockBtn" style="display:none">🔓 Lås upp</button></td>
 <td class="time"></td>
 <td class="user"></td>`;
  table.appendChild(tr);
@@ -129,48 +109,35 @@ apartments.forEach((row,i)=>{
  tr.querySelectorAll("input").forEach(inp=>{
   inp.addEventListener("change",()=>saveRow(i,tr));
  });
-
- tr.querySelector(".unlockBtn").addEventListener("click",()=>{
-   let name = document.getElementById("userName").value || "";
-   if(!admins.includes(name)){
-     alert("Endast admin kan låsa upp.");
-     return;
-   }
-   adminUnlock(i,tr);
- });
 });
 
 // ===== FUNKTIONER =====
-function saveRow(i,tr,lockedBy=null){
- let name = document.getElementById("userName").value || "Okänd";
+function isAdmin(){
+ let name = document.getElementById("userName").value || "";
+ return admins.includes(name);
+}
+
+function saveRow(i,tr){
+ if(!isAdmin()) return;
+
+ let name = document.getElementById("userName").value || "Admin";
  let time = new Date().toLocaleString();
  let inputs = tr.querySelectorAll("input");
- let comment = tr.querySelector(".comment").value;
 
  let data = {
-  bm:inputs[0].checked,
-  bmon:inputs[1].checked,
-  km:inputs[2].checked,
-  kmon:inputs[3].checked,
-  comment: comment,
+  bathDone: inputs[0].checked,
+  kitchenDone: inputs[1].checked,
+  bm: inputs[2].checked,
+  bmon: inputs[3].checked,
+  km: inputs[4].checked,
+  kmon: inputs[5].checked,
+  comment: tr.querySelector(".comment").value,
   commentUser: name,
   time: time,
   user: name
  };
 
- if(lockedBy){
-   data.lockedBy = lockedBy;
- }
-
  db.collection("rows").doc("row"+i).set(data,{merge:true});
-}
-
-function adminUnlock(i,tr){
- let name = document.getElementById("userName").value || "Admin";
- let inputs = tr.querySelectorAll("input");
- inputs[1].checked = false;
- inputs[3].checked = false;
- saveRow(i,tr,name);
 }
 
 db.collection("rows").onSnapshot(snapshot=>{
@@ -178,18 +145,20 @@ db.collection("rows").onSnapshot(snapshot=>{
   let i = parseInt(doc.id.replace("row",""));
   let tr = table.rows[i+1];
   if(!tr) return;
-  let saved = doc.data();
+  let d = doc.data();
   let inputs = tr.querySelectorAll("input");
 
-  inputs[0].checked = saved.bm;
-  inputs[1].checked = saved.bmon;
-  inputs[2].checked = saved.km;
-  inputs[3].checked = saved.kmon;
-  tr.querySelector(".comment").value = saved.comment || "";
-  tr.querySelector(".commentUser").textContent = saved.commentUser || "";
-  tr.querySelector(".time").textContent = saved.time;
-  tr.querySelector(".user").textContent = saved.user;
-  tr.dataset.lockedBy = saved.lockedBy || "";
+  inputs[0].checked = d.bathDone;
+  inputs[1].checked = d.kitchenDone;
+  inputs[2].checked = d.bm;
+  inputs[3].checked = d.bmon;
+  inputs[4].checked = d.km;
+  inputs[5].checked = d.kmon;
+
+  tr.querySelector(".comment").value = d.comment || "";
+  tr.querySelector(".commentUser").textContent = d.commentUser || "";
+  tr.querySelector(".time").textContent = d.time;
+  tr.querySelector(".user").textContent = d.user;
 
   updateRow(tr);
  });
@@ -199,37 +168,33 @@ db.collection("rows").onSnapshot(snapshot=>{
 function updateRow(tr){
  let inputs = tr.querySelectorAll("input");
  let statusCell = tr.querySelector(".status");
- let commentInput = tr.querySelector(".comment");
- let unlockBtn = tr.querySelector(".unlockBtn");
 
- let name = document.getElementById("userName").value || "";
- let isAdmin = admins.includes(name);
-
- let done = inputs[1].checked && inputs[3].checked;
- let started = inputs[0].checked || inputs[1].checked || inputs[2].checked || inputs[3].checked;
- let lockedBy = tr.dataset.lockedBy || "";
+ let done = inputs[0].checked && inputs[1].checked;
+ let started = inputs[2].checked || inputs[3].checked || inputs[4].checked || inputs[5].checked;
 
  tr.classList.remove("red","yellow","green");
 
  if(done){
    tr.classList.add("green");
-   statusCell.textContent = lockedBy ? "Klar (Låst av " + lockedBy + ")" : "Klar";
-   commentInput.disabled = true;
-   inputs.forEach(inp=>inp.disabled = true);
-   unlockBtn.style.display = isAdmin ? "inline-block" : "none";
+   statusCell.textContent="Klar";
  } else if(started){
    tr.classList.add("yellow");
    statusCell.textContent="Pågår";
-   commentInput.disabled = false;
-   inputs.forEach(inp=>inp.disabled = false);
-   unlockBtn.style.display = "none";
  } else {
    tr.classList.add("red");
    statusCell.textContent="Ej startad";
-   commentInput.disabled = false;
-   inputs.forEach(inp=>inp.disabled = false);
-   unlockBtn.style.display = "none";
  }
+
+ let allow = isAdmin();
+ inputs.forEach(inp=>inp.disabled = !allow);
+ tr.querySelector(".comment").disabled = !allow;
+}
+
+function refreshLocking(){
+ Array.from(table.rows).forEach((row,i)=>{
+  if(i===0) return;
+  updateRow(row);
+ });
 }
 
 function applyFilters(){
