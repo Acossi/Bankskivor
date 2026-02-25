@@ -17,7 +17,7 @@ th { background:#eee; }
 .yellow { background:#fff3b0; }
 .green { background:#b7f7b7; }
 
-.comment { width:100%; }
+.locked { background:#ddd; }
 
 button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 .summary td { font-weight:bold; }
@@ -25,70 +25,54 @@ button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
 </head>
 <body>
 
-<h2>Status bänkskivor – badrum & kök (per lägenhet)</h2>
+<h2>Status bänkskivor – badrum & kök</h2>
 
 <label>Ditt namn:
-<input type="text" id="userName" placeholder="Skriv ditt namn" onkeyup="refreshLocking()"></label>
+<input type="text" id="userName" placeholder="Skriv ditt namn"></label>
+
+<button onclick="toggleAdmin()">🔐 Admin toggle</button>
 
 <br><br>
 
-<select id="houseFilter" onchange="applyFilters()">
-<option value="all">Visa alla hus</option>
-<option value="516">516</option>
-<option value="515">515</option>
-<option value="514">514</option>
-<option value="513">513</option>
-</select>
-
-<input type="text" id="aptSearch" placeholder="Sök lägenhetsnr" onkeyup="applyFilters()">
-
-<button onclick="exportToExcel()">📤 Exportera till Excel</button>
-
 <table id="table"></table>
 
-<h3>Sammanställning per hus</h3>
-<table id="summary"></table>
-
 <script>
-// ===== ADMINER =====
-const admins = ["Admin", "Bossen", "Projektledare", "Adrian"];
-
-// ===== FIREBASE =====
 const firebaseConfig = {
   apiKey: "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
   authDomain: "bankskivor-status.firebaseapp.com",
   projectId: "bankskivor-status",
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// ===== DATA =====
+const ADMINS = ["admin","adrian"];
+let adminLocked = true;
+
 const apartments = [
 {house:"516",floor:5,apt:"1001"},
-{house:"516",floor:6,apt:"1101"},{house:"516",floor:6,apt:"1102"},{house:"516",floor:6,apt:"1103"},{house:"516",floor:6,apt:"1104"},
-{house:"516",floor:7,apt:"1201"},{house:"516",floor:7,apt:"1202"},{house:"516",floor:7,apt:"1203"},{house:"516",floor:7,apt:"1204"},
-{house:"516",floor:8,apt:"1301"},{house:"516",floor:8,apt:"1302"},{house:"516",floor:8,apt:"1303"},{house:"516",floor:8,apt:"1304"},
-{house:"516",floor:9,apt:"1401"},{house:"516",floor:9,apt:"1402"},{house:"516",floor:9,apt:"1403"},{house:"516",floor:9,apt:"1404"},
-{house:"516",floor:10,apt:"1501"},{house:"516",floor:10,apt:"1502"},{house:"516",floor:10,apt:"1503"},{house:"516",floor:10,apt:"1504"},
-{house:"516",floor:11,apt:"1601"},{house:"516",floor:11,apt:"1602"},{house:"516",floor:11,apt:"1603"},
-{house:"516",floor:12,apt:"1701"},{house:"516",floor:12,apt:"1702"},{house:"516",floor:12,apt:"1703"},
+{house:"516",floor:6,apt:"1101"}
 ];
 
-// ===== TABELL =====
 const table = document.getElementById("table");
 table.innerHTML = `
 <tr>
 <th>Hus</th><th>Plan</th><th>Lgh</th>
-<th>Montage badrum klart</th><th>Montage kök klart</th>
-<th>Badrum Måttad</th><th>Badrum Monterad</th>
-<th>Kök Måttad</th><th>Kök Monterad</th>
-<th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Senast ändrad</th><th>Av</th>
+<th>Montage badrum klart</th>
+<th>Montage kök klart</th>
+<th>Badrum måttad</th>
+<th>Badrum monterad</th>
+<th>Kök måttad</th>
+<th>Kök monterad</th>
+<th>Status</th>
+<th>Kommentar</th>
+<th>Kommentar av</th>
+<th>Senast ändrad</th>
+<th>Av</th>
 </tr>`;
 
 apartments.forEach((row,i)=>{
  let tr = document.createElement("tr");
- tr.dataset.house = row.house;
- tr.dataset.apt = row.apt;
  tr.innerHTML = `
 <td>${row.house}</td>
 <td>Plan ${row.floor}</td>
@@ -111,33 +95,41 @@ apartments.forEach((row,i)=>{
  });
 });
 
-// ===== FUNKTIONER =====
 function isAdmin(){
- let name = document.getElementById("userName").value || "";
- return admins.includes(name);
+ let name = document.getElementById("userName").value.toLowerCase();
+ return ADMINS.includes(name);
+}
+
+function toggleAdmin(){
+ if(!isAdmin()){
+   alert("Endast admin/adrian kan låsa upp.");
+   return;
+ }
+ adminLocked = !adminLocked;
+ updateAllRows();
 }
 
 function saveRow(i,tr){
- if(!isAdmin()) return;
+ if(adminLocked && !isAdmin()) return;
 
- let name = document.getElementById("userName").value || "Admin";
+ let name = document.getElementById("userName").value || "Okänd";
  let time = new Date().toLocaleString();
  let inputs = tr.querySelectorAll("input");
 
  let data = {
-  bathMontage: inputs[0].checked,
-  kitchenMontage: inputs[1].checked,
-  bm: inputs[2].checked,
-  bmon: inputs[3].checked,
-  km: inputs[4].checked,
-  kmon: inputs[5].checked,
+  mBath:inputs[0].checked,
+  mKitchen:inputs[1].checked,
+  bm:inputs[2].checked,
+  bmon:inputs[3].checked,
+  km:inputs[4].checked,
+  kmon:inputs[5].checked,
   comment: tr.querySelector(".comment").value,
   commentUser: name,
   time: time,
   user: name
  };
 
- db.collection("rows").doc("row"+i).set(data,{merge:true});
+ db.collection("rows").doc("row"+i).set(data);
 }
 
 db.collection("rows").onSnapshot(snapshot=>{
@@ -148,8 +140,8 @@ db.collection("rows").onSnapshot(snapshot=>{
   let d = doc.data();
   let inputs = tr.querySelectorAll("input");
 
-  inputs[0].checked = d.bathMontage;
-  inputs[1].checked = d.kitchenMontage;
+  inputs[0].checked = d.mBath;
+  inputs[1].checked = d.mKitchen;
   inputs[2].checked = d.bm;
   inputs[3].checked = d.bmon;
   inputs[4].checked = d.km;
@@ -162,86 +154,40 @@ db.collection("rows").onSnapshot(snapshot=>{
 
   updateRow(tr);
  });
- updateSummary();
 });
 
 function updateRow(tr){
  let inputs = tr.querySelectorAll("input");
  let statusCell = tr.querySelector(".status");
 
- // ALLA måste vara ikryssade för "Klar"
  let allChecked = true;
  inputs.forEach(inp=>{
    if(!inp.checked) allChecked = false;
  });
 
- tr.classList.remove("red","yellow","green");
+ tr.classList.remove("red","yellow","green","locked");
 
- if(allChecked){
+ if(adminLocked && !isAdmin()){
+   tr.classList.add("locked");
+   statusCell.textContent = "Låst av Admin";
+ } else if(allChecked){
    tr.classList.add("green");
-   statusCell.textContent="Klar";
+   statusCell.textContent = "Klar";
  } else {
    tr.classList.add("yellow");
-   statusCell.textContent="Pågår";
+   statusCell.textContent = "Pågår";
  }
 
- let allow = isAdmin();
- inputs.forEach(inp=>inp.disabled = !allow);
+ let allow = (!adminLocked || isAdmin());
+ inputs.forEach(inp=> inp.disabled = !allow);
  tr.querySelector(".comment").disabled = !allow;
 }
 
-function refreshLocking(){
+function updateAllRows(){
  Array.from(table.rows).forEach((row,i)=>{
-  if(i===0) return;
-  updateRow(row);
+   if(i===0) return;
+   updateRow(row);
  });
-}
-
-function applyFilters(){
- let house = document.getElementById("houseFilter").value;
- let aptSearch = document.getElementById("aptSearch").value.toLowerCase();
-
- Array.from(table.rows).forEach((row,i)=>{
-  if(i===0) return;
-  let matchHouse = (house==="all" || row.dataset.house===house);
-  let matchApt = row.dataset.apt.toLowerCase().includes(aptSearch);
-  row.style.display = (matchHouse && matchApt) ? "" : "none";
- });
-}
-
-function updateSummary(){
- let count = {};
- apartments.forEach((f,i)=>{
-  let row = table.rows[i+1];
-  let status = row.classList.contains("green")?"green":"yellow";
-  if(!count[f.house]) count[f.house]={yellow:0,green:0};
-  count[f.house][status]++;
- });
-
- let sTable = document.getElementById("summary");
- sTable.innerHTML = `
-<tr>
-<th>Hus</th><th>🟡 Pågår</th><th>🟢 Klar</th>
-</tr>`;
- for(let h in count){
-  sTable.innerHTML += `
-  <tr class="summary">
-   <td>${h}</td>
-   <td>${count[h].yellow}</td>
-   <td>${count[h].green}</td>
-  </tr>`;
- }
-}
-
-function exportToExcel(){
- let html = "<table border='1'>";
- html += table.innerHTML;
- html += "</table>";
- let blob = new Blob([html],{type:"application/vnd.ms-excel"});
- let link = document.createElement("a");
- link.href = URL.createObjectURL(blob);
- link.download = "bankskivor_lagenheter.xls";
- link.click();
 }
 </script>
 
