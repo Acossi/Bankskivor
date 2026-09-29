@@ -1,270 +1,1383 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<title>Bänkskivor – Lägenhetsstatus</title>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NCC Bänkskivor V2</title>
 
 <style>
-body { font-family: Arial, sans-serif; padding:20px; }
-table { border-collapse: collapse; width:100%; margin-bottom:20px;}
-th, td { border:1px solid #999; padding:6px; text-align:center; }
-th { background:#eee; }
 
-.red { background:#f8b4b4; }
-.yellow { background:#fff3b0; }
-.green { background:#b7f7b7; }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-.comment { width:100%; }
+body{
 
-button, select, input { padding:6px 10px; font-size:14px; margin-right:10px; }
-.summary td { font-weight:bold; }
+font-family:'Segoe UI',sans-serif;
+
+background:
+
+radial-gradient(
+circle at top right,
+rgba(0,120,212,0.20),
+transparent 30%
+),
+
+radial-gradient(
+circle at bottom left,
+rgba(34,197,94,0.12),
+transparent 40%
+),
+
+linear-gradient(
+135deg,
+#020617 0%,
+#0f172a 50%,
+#1e293b 100%
+);
+
+min-height:100vh;
+padding:20px;
+color:white;
+
+}
+
+body::before{
+
+content:"NCC";
+
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:
+translate(-50%,-50%);
+
+font-size:350px;
+font-weight:900;
+
+opacity:.03;
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+.login-screen{
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+height:100vh;
+
+}
+
+.login-box{
+
+background:white;
+color:black;
+
+width:420px;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:
+0 20px 50px rgba(0,0,0,.35);
+
+}
+
+.login-box h2{
+
+text-align:center;
+margin-bottom:20px;
+color:#005AA9;
+
+}
+
+.login-box select,
+.login-box input{
+
+width:100%;
+
+padding:12px;
+
+margin-top:10px;
+
+border-radius:8px;
+
+border:1px solid #ccc;
+
+}
+
+.login-box button{
+
+width:100%;
+padding:12px;
+
+margin-top:15px;
+
+background:#005AA9;
+color:white;
+
+border:none;
+
+border-radius:8px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.container{
+
+display:none;
+
+max-width:1900px;
+
+margin:auto;
+
+}
+
+.header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:25px;
+
+margin-bottom:20px;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.05);
+
+backdrop-filter:blur(15px);
+
+}
+
+.logo-box{
+
+background:white;
+
+padding:15px 25px;
+
+border-radius:15px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+}
+
+.logo-main{
+
+font-size:36px;
+font-weight:900;
+
+color:#005AA9;
+
+line-height:1;
+
+}
+
+.logo-sub{
+
+font-size:12px;
+
+font-weight:bold;
+
+color:#444;
+
+text-transform:uppercase;
+
+}
+
+.card{
+
+background:
+rgba(255,255,255,.06);
+
+backdrop-filter:blur(15px);
+
+padding:20px;
+
+border-radius:20px;
+
+margin-bottom:20px;
+
+}
+
+.row{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+
+}
+
+input[type=text],
+input[type=date],
+select{
+
+width:100%;
+
+padding:10px;
+
+border:none;
+
+border-radius:10px;
+
+margin-top:5px;
+
+}
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.stat{
+
+background:
+linear-gradient(
+135deg,
+#005AA9,
+#0078D4
+);
+
+padding:20px;
+
+border-radius:20px;
+
+text-align:center;
+
+}
+
+.stat h2{
+
+font-size:36px;
+
+}
+
+.progress{
+
+height:35px;
+
+background:#1e293b;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+.progress-bar{
+
+height:100%;
+width:0;
+
+background:
+linear-gradient(
+90deg,
+#22c55e,
+#16a34a
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-weight:bold;
+
+}
+
+#search{
+
+width:100%;
+
+margin-bottom:15px;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+}
+
+th{
+
+background:#005AA9;
+
+padding:12px;
+
+font-size:13px;
+
+}
+
+td{
+
+background:
+rgba(255,255,255,.05);
+
+padding:8px;
+
+border-bottom:
+1px solid rgba(255,255,255,.08);
+
+}
+
+tr:hover td{
+
+background:#334155;
+
+}
+
+/* Kolumnstorlekar */
+
+.col-trapphus{
+
+width:70px;
+min-width:70px;
+
+}
+
+.col-lgh{
+
+width:130px;
+min-width:130px;
+
+}
+
+.col-date{
+
+width:140px;
+min-width:140px;
+
+}
+
+.col-material{
+
+width:120px;
+min-width:120px;
+
+}
+
+/* Färgstatus */
+
+.rad-mattad td{
+
+background:
+rgba(34,197,94,0.10) !important;
+
+}
+
+.rad-monterad td{
+
+background:
+rgba(34,197,94,0.28) !important;
+
+font-weight:600;
+
+}
+
+.rad-mattad:hover td{
+
+background:
+rgba(34,197,94,0.18) !important;
+
+}
+
+.rad-monterad:hover td{
+
+background:
+rgba(34,197,94,0.40) !important;
+
+}
+
+button{
+
+padding:12px 18px;
+
+border:none;
+
+border-radius:8px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+margin:3px;
+
+}
+
+.add-btn{
+background:#16a34a;
+color:white;
+}
+
+.pdf-btn{
+background:#0078d4;
+color:white;
+}
+
+.clear-btn{
+background:#d97706;
+color:white;
+}
+
+.delete-btn{
+background:#dc2626;
+color:white;
+}
+
+footer{
+
+margin-top:20px;
+
+text-align:center;
+
+opacity:.7;
+
+}
+
+@media print{
+
+button,
+#search{
+display:none !important;
+}
+
+body{
+background:white;
+color:black;
+}
+
+.card{
+background:white;
+border:1px solid #ccc;
+}
+
+td{
+color:black;
+}
+
+}
+
 </style>
+
 </head>
+
 <body>
 
-<h2>Status bänkskivor – badrum & kök (per lägenhet)</h2>
+<div
+class="login-screen"
+id="loginScreen">
 
-<label>Ditt namn:
-<input type="text" id="userName" placeholder="Skriv ditt namn" onkeyup="refreshLocking()"></label>
+<div class="login-box">
 
-<br><br>
+<h2>Bänkskivor Sångvägen</h2>
 
-<select id="houseFilter" onchange="applyFilters()">
-<option value="all">Visa alla hus</option>
-<option value="516">516</option>
-<option value="515">515</option>
-<option value="514">514</option>
-<option value="513">513</option>
+<select id="username">
+
+<option>Adrian</option>
+<option>Stefan</option>
+<option>Alexander</option>
+<option>Rebecka</option>
+<option>Annan</option>
+
 </select>
 
-<input type="text" id="aptSearch" placeholder="Sök lägenhetsnr" onkeyup="applyFilters()">
+<input
+id="password"
+type="password"
+placeholder="Lösenord">
 
-<button onclick="exportToExcel()">📤 Exportera till Excel</button>
+<button onclick="login()">
+Logga in
+</button>
 
-<table id="table"></table>
+<p
+id="loginError"
+style="color:red;margin-top:10px;">
+</p>
 
-<h3>Sammanställning per hus</h3>
-<table id="summary"></table>
+</div>
+
+</div>
+
+<div
+class="container"
+id="app">
+
+<div class="header">
+
+<div>
+
+<h1>Bänkskivor Sångvägen</h1>
+
+<p id="loggedUser">
+Inloggad som:
+</p>
+
+</div>
+
+<div class="logo-box">
+
+<div class="logo-main">
+Tidplan
+</div>
+
+<div class="logo-sub">
+Bänkskivor
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="row">
+
+<div>
+<label>Projekt</label>
+<input type="text">
+</div>
+
+<div>
+<label>Projektnummer</label>
+<input type="text">
+</div>
+
+<div>
+<label>Adress</label>
+<input type="text">
+</div>
+
+<div>
+<label>Kontaktperson</label>
+<input type="text">
+</div>
+
+<div>
+<label>Måttansvarig</label>
+<input type="text">
+</div>
+
+<div>
+<label>Datum</label>
+<input type="date">
+</div>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h2 id="klara">0</h2>
+<p>Färdigmonterade</p>
+</div>
+
+<div class="stat">
+<h2 id="ejklara">0</h2>
+<p>Kvar</p>
+</div>
+
+<div class="stat">
+<h2 id="procent">0%</h2>
+<p>Projekt klart</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Projektstatus</h3>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+id="progressBar">
+
+0%
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<input
+
+type="text"
+
+id="search"
+
+placeholder="🔎 Sök trapphus eller lägenhet..."
+
+onkeyup="searchTable()"
+
+>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th class="col-trapphus">
+Trapphus
+</th>
+
+<th class="col-lgh">
+Lgh
+</th>
+
+<th>
+Färg Köksbänkskiva
+</th>
+
+<th>
+Färg Fönsterbänk
+</th>
+
+<th class="col-material">
+Material kök
+</th>
+
+<th class="col-date">
+Datum måttning köksbänk
+</th>
+
+<th class="col-date">
+Datum måttning fönsterbänk
+</th>
+
+<th class="col-date">
+Datum montage köksbänk
+</th>
+
+<th class="col-date">
+Datum montage fönsterbänk
+</th>
+
+<th>
+Senast ändrad av
+</th>
+
+<th class="col-date">
+Ändrad datum
+</th>
+
+<th>
+Kommentar
+</th>
+
+<th>
+Ta bort
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbody">
+
+</tbody>
+
+</table>
+
+<br>
+
+<button
+class="add-btn"
+onclick="addRow()">
+
+➕ Lägg till lägenhet
+
+</button>
+
+<button
+class="pdf-btn"
+onclick="window.print()">
+
+📄 Exportera PDF
+
+</button>
+
+<button
+
+class="clear-btn"
+
+onclick="if(confirm('Rensa allt?')){localStorage.clear();location.reload();}">
+
+♻️ Rensa allt
+
+</button>
+
+</div>
 
 <script>
-// ===== ADMINER =====
-const admins = ["Admin", "Bossen", "Projektledare", "Adrian"];
 
-// ===== FIREBASE =====
-const firebaseConfig = {
-  apiKey: "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
-  authDomain: "bankskivor-status.firebaseapp.com",
-  projectId: "bankskivor-status",
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+let currentUser="";
 
-// ===== DATA =====
-const apartments = [
-{house:"516",floor:5,apt:"1001"},
-{house:"516",floor:6,apt:"1101"},{house:"516",floor:6,apt:"1102"},{house:"516",floor:6,apt:"1103"},{house:"516",floor:6,apt:"1104"},
-{house:"516",floor:7,apt:"1201"},{house:"516",floor:7,apt:"1202"},{house:"516",floor:7,apt:"1203"},{house:"516",floor:7,apt:"1204"},
-{house:"516",floor:8,apt:"1301"},{house:"516",floor:8,apt:"1302"},{house:"516",floor:8,apt:"1303"},{house:"516",floor:8,apt:"1304"},
-{house:"516",floor:9,apt:"1401"},{house:"516",floor:9,apt:"1402"},{house:"516",floor:9,apt:"1403"},{house:"516",floor:9,apt:"1404"},
-{house:"516",floor:10,apt:"1501"},{house:"516",floor:10,apt:"1502"},{house:"516",floor:10,apt:"1503"},{house:"516",floor:10,apt:"1504"},
-{house:"516",floor:11,apt:"1601"},{house:"516",floor:11,apt:"1602"},{house:"516",floor:11,apt:"1603"},
-{house:"516",floor:12,apt:"1701"},{house:"516",floor:12,apt:"1702"},{house:"516",floor:12,apt:"1703"},
+function timestamp(){
 
-{house:"515",floor:5,apt:"1001"},{house:"515",floor:5,apt:"1002"},
-{house:"515",floor:6,apt:"1101"},{house:"515",floor:6,apt:"1102"},{house:"515",floor:6,apt:"1103"},{house:"515",floor:6,apt:"1104"},{house:"515",floor:6,apt:"1105"},{house:"515",floor:6,apt:"1106"},
-{house:"515",floor:7,apt:"1201"},{house:"515",floor:7,apt:"1202"},{house:"515",floor:7,apt:"1203"},{house:"515",floor:7,apt:"1204"},{house:"515",floor:7,apt:"1205"},{house:"515",floor:7,apt:"1206"},
-{house:"515",floor:8,apt:"1301"},{house:"515",floor:8,apt:"1302"},{house:"515",floor:8,apt:"1303"},{house:"515",floor:8,apt:"1304"},{house:"515",floor:8,apt:"1305"},{house:"515",floor:8,apt:"1306"},
-{house:"515",floor:9,apt:"1401"},{house:"515",floor:9,apt:"1402"},{house:"515",floor:9,apt:"1403"},{house:"515",floor:9,apt:"1404"},{house:"515",floor:9,apt:"1405"},{house:"515",floor:9,apt:"1406"},
-{house:"515",floor:10,apt:"1501"},{house:"515",floor:10,apt:"1502"},{house:"515",floor:10,apt:"1503"},{house:"515",floor:10,apt:"1504"},{house:"515",floor:10,apt:"1505"},{house:"515",floor:10,apt:"1506"},
+return new Date()
+.toLocaleString("sv-SE");
 
-{house:"514",floor:5,apt:"1001"},{house:"514",floor:5,apt:"1002"},{house:"514",floor:5,apt:"1003"},{house:"514",floor:5,apt:"1004"},{house:"514",floor:5,apt:"1005"},
-{house:"514",floor:6,apt:"1101"},{house:"514",floor:6,apt:"1102"},{house:"514",floor:6,apt:"1103"},
-{house:"514",floor:7,apt:"1201"},{house:"514",floor:7,apt:"1202"},{house:"514",floor:7,apt:"1203"},{house:"514",floor:7,apt:"1204"},
-{house:"514",floor:8,apt:"1301"},{house:"514",floor:8,apt:"1302"},{house:"514",floor:8,apt:"1303"},{house:"514",floor:8,apt:"1304"},
-{house:"514",floor:9,apt:"1401"},{house:"514",floor:9,apt:"1402"},{house:"514",floor:9,apt:"1403"},{house:"514",floor:9,apt:"1404"},
-{house:"514",floor:10,apt:"1501"},{house:"514",floor:10,apt:"1502"},{house:"514",floor:10,apt:"1503"},{house:"514",floor:10,apt:"1504"},
-{house:"514",floor:11,apt:"1601"},
+}
 
-{house:"513",floor:5,apt:"1001"},{house:"513",floor:5,apt:"1002"},
-{house:"513",floor:6,apt:"1101"},{house:"513",floor:6,apt:"1102"},
-{house:"513",floor:7,apt:"1201"},{house:"513",floor:7,apt:"1202"},{house:"513",floor:7,apt:"1203"},{house:"513",floor:7,apt:"1204"},
-{house:"513",floor:8,apt:"1301"},{house:"513",floor:8,apt:"1302"},{house:"513",floor:8,apt:"1303"},{house:"513",floor:8,apt:"1304"},
-{house:"513",floor:9,apt:"1401"},{house:"513",floor:9,apt:"1402"},{house:"513",floor:9,apt:"1403"},{house:"513",floor:9,apt:"1404"},
-{house:"513",floor:10,apt:"1501"},{house:"513",floor:10,apt:"1502"},
+function addRow(data={}){
+
+let row =
+document.createElement("tr");
+
+row.innerHTML = `
+<td class="col-trapphus">
+<input
+type="text"
+value="${data.trapphus||''}">
+</td>
+
+<td class="col-lgh">
+<input
+type="text"
+value="${data.lgh||''}">
+</td>
+
+<td>
+<input
+type="text"
+value="${data.fargKok||''}">
+</td>
+
+<td>
+<input
+type="text"
+value="${data.fargFonster||''}">
+</td>
+
+<td class="col-material">
+
+<select>
+
+<option
+value="Komposit"
+${data.material==='Komposit' ? 'selected' : ''}>
+
+Komposit
+
+</option>
+
+<option
+value="Ek"
+${data.material==='Ek' ? 'selected' : ''}>
+
+Ek
+
+</option>
+
+</select>
+
+</td>
+
+<td class="col-date">
+<input
+type="date"
+value="${data.datumMattningKok||''}">
+</td>
+
+<td class="col-date">
+<input
+type="date"
+value="${data.datumMattningFonster||''}">
+</td>
+
+<td class="col-date">
+<input
+type="date"
+value="${data.datumMontageKok||''}">
+</td>
+
+<td class="col-date">
+<input
+type="date"
+value="${data.datumMontageFonster||''}">
+</td>
+
+<td>
+${data.editedBy||''}
+</td>
+
+<td class="col-date">
+${data.editedDate||''}
+</td>
+
+<td>
+<input
+type="text"
+value="${data.kommentar||''}">
+</td>
+
+<td>
+<button class="delete-btn">
+X
+</button>
+</td>
+
+`;
+
+document
+.getElementById("tbody")
+.appendChild(row);
+
+/* Färgkontroll vid laddning */
+
+updateRowColor(row);
+
+row.querySelectorAll(
+"input, select"
+)
+.forEach(input=>{
+
+input.addEventListener("change",()=>{
+
+row.cells[9].innerText =
+currentUser;
+
+row.cells[10].innerText =
+timestamp();
+
+updateRowColor(row);
+
+sortRows();
+
+saveData();
+
+updateStats();
+
+});
+
+});
+
+row.querySelector(".delete-btn")
+.addEventListener("click",()=>{
+
+row.remove();
+
+saveData();
+
+updateStats();
+
+});
+
+sortRows();
+
+saveData();
+
+updateStats();
+
+}
+
+function updateRowColor(row){
+
+const datumMattningKok =
+
+row.cells[5]
+.querySelector("input")
+.value;
+
+const datumMattningFonster =
+
+row.cells[6]
+.querySelector("input")
+.value;
+
+const datumMontageKok =
+
+row.cells[7]
+.querySelector("input")
+.value;
+
+const datumMontageFonster =
+
+row.cells[8]
+.querySelector("input")
+.value;
+
+row.classList.remove(
+"rad-mattad",
+"rad-monterad"
+);
+
+/* Färdigmonterad */
+
+if(
+
+datumMontageKok !== ""
+
+&&
+
+datumMontageFonster !== ""
+
+){
+
+row.classList.add(
+"rad-monterad"
+);
+
+return;
+
+}
+
+/* Måttad */
+
+if(
+
+datumMattningKok !== ""
+
+||
+
+datumMattningFonster !== ""
+
+){
+
+row.classList.add(
+"rad-mattad"
+);
+
+}
+
+}
+
+function saveData(){
+
+let data=[];
+
+document
+.querySelectorAll("#tbody tr")
+.forEach(row=>{
+
+data.push({
+
+trapphus:
+row.cells[0]
+.querySelector("input")
+.value,
+
+lgh:
+row.cells[1]
+.querySelector("input")
+.value,
+
+fargKok:
+row.cells[2]
+.querySelector("input")
+.value,
+
+fargFonster:
+row.cells[3]
+.querySelector("input")
+.value,
+
+material:
+row.cells[4]
+.querySelector("select")
+.value,
+
+datumMattningKok:
+row.cells[5]
+.querySelector("input")
+.value,
+
+datumMattningFonster:
+row.cells[6]
+.querySelector("input")
+.value,
+
+datumMontageKok:
+row.cells[7]
+.querySelector("input")
+.value,
+
+datumMontageFonster:
+row.cells[8]
+.querySelector("input")
+.value,
+
+editedBy:
+row.cells[9]
+.innerText,
+
+editedDate:
+row.cells[10]
+.innerText,
+
+kommentar:
+row.cells[11]
+.querySelector("input")
+.value
+
+});
+
+});
+
+localStorage.setItem(
+
+"NCC_Bankskivor_Data",
+
+JSON.stringify(data)
+
+);
+
+}
+
+function updateStats(){
+
+let rows =
+
+document.querySelectorAll(
+"#tbody tr"
+);
+
+let total =
+rows.length;
+
+let klara = 0;
+
+/* Färdig när båda montagedatumen finns */
+
+rows.forEach(row=>{
+
+const montageKok =
+
+row.cells[7]
+.querySelector("input")
+.value;
+
+const montageFonster =
+
+row.cells[8]
+.querySelector("input")
+.value;
+
+if(
+montageKok !== ""
+&&
+montageFonster !== ""
+){
+
+klara++;
+
+}
+
+});
+
+let kvar =
+total - klara;
+
+let procent =
+
+total === 0
+
+? 0
+
+: Math.round(
+(klara / total) * 100
+);
+
+document
+.getElementById("klara")
+.innerText = klara;
+
+document
+.getElementById("ejklara")
+.innerText = kvar;
+
+document
+.getElementById("procent")
+.innerText =
+procent + "%";
+
+let bar =
+
+document.getElementById(
+"progressBar"
+);
+
+bar.style.width =
+procent + "%";
+
+bar.innerText =
+procent + "%";
+
+}
+
+function sortRows(){
+
+const tbody =
+
+document.getElementById(
+"tbody"
+);
+
+const rows =
+
+Array.from(
+tbody.querySelectorAll("tr")
+);
+
+rows.sort((a,b)=>{
+
+const trA =
+
+a.cells[0]
+.querySelector("input")
+.value
+.trim();
+
+const trB =
+
+b.cells[0]
+.querySelector("input")
+.value
+.trim();
+
+if(trA !== trB){
+
+return trA.localeCompare(
+trB,
+'sv'
+);
+
+}
+
+const lghA =
+
+a.cells[1]
+.querySelector("input")
+.value
+.trim();
+
+const lghB =
+
+b.cells[1]
+.querySelector("input")
+.value
+.trim();
+
+return lghA.localeCompare(
+lghB,
+'sv',
+{
+numeric:true
+}
+);
+
+});
+
+rows.forEach(row=>{
+
+tbody.appendChild(row);
+
+});
+
+}
+function loadData(){
+
+let data =
+
+JSON.parse(
+
+localStorage.getItem(
+"NCC_Bankskivor_Data"
+)
+
+|| "[]"
+
+);
+
+if(data.length===0){
+
+addRow();
+
+}else{
+
+data.forEach(item=>{
+
+addRow(item);
+
+});
+
+}
+
+sortRows();
+
+updateStats();
+
+}
+
+function searchTable(){
+
+let filter =
+
+document
+.getElementById("search")
+.value
+.toUpperCase();
+
+let rows =
+
+document.querySelectorAll(
+"#tbody tr"
+);
+
+rows.forEach(row=>{
+
+let trapphus =
+
+row.cells[0]
+.querySelector("input")
+.value
+.toUpperCase();
+
+let lgh =
+
+row.cells[1]
+.querySelector("input")
+.value
+.toUpperCase();
+
+row.style.display =
+
+(
+trapphus.includes(filter)
+||
+lgh.includes(filter)
+)
+
+? ""
+
+: "none";
+
+});
+
+}
+
+function login(){
+
+const u =
+
+document
+.getElementById("username")
+.value
+.trim();
+
+const p =
+
+document
+.getElementById("password")
+.value;
+
+const users=[
+
+"Adrian",
+"Stefan",
+"Alexander",
+"Rebecka",
+"Annan"
+
 ];
 
-// ===== TABELL =====
-const table = document.getElementById("table");
-table.innerHTML = `
-<tr>
-<th>Hus</th><th>Plan</th><th>Lgh</th>
-<th>Montage badrum klart</th><th>Montage kök klart</th>
-<th>Badrum Måttad</th><th>Badrum Monterad</th>
-<th>Kök Måttad</th><th>Kök Monterad</th>
-<th>Status</th><th>Kommentar</th><th>Kommentar av</th><th>Senast ändrad</th><th>Av</th>
-</tr>`;
+if(
 
-apartments.forEach((row,i)=>{
- let tr = document.createElement("tr");
- tr.dataset.house = row.house;
- tr.dataset.apt = row.apt;
- tr.innerHTML = `
-<td>${row.house}</td>
-<td>Plan ${row.floor}</td>
-<td>${row.apt}</td>
-<td><input type="checkbox"></td>
-<td><input type="checkbox"></td>
-<td><input type="checkbox"></td>
-<td><input type="checkbox"></td>
-<td><input type="checkbox"></td>
-<td><input type="checkbox"></td>
-<td class="status"></td>
-<td><input type="text" class="comment"></td>
-<td class="commentUser"></td>
-<td class="time"></td>
-<td class="user"></td>`;
- table.appendChild(tr);
+users.includes(u)
 
- tr.querySelectorAll("input").forEach(inp=>{
-  inp.addEventListener("change",()=>saveRow(i,tr));
- });
-});
+&&
 
-// ===== FUNKTIONER =====
-function isAdmin(){
- let name = document.getElementById("userName").value || "";
- return admins.includes(name);
+p==="12345"
+
+){
+
+currentUser=u;
+
+document
+.getElementById("loginScreen")
+.style.display="none";
+
+document
+.getElementById("app")
+.style.display="block";
+
+document
+.getElementById("loggedUser")
+.innerText=
+"Inloggad som: "
++
+currentUser;
+
+loadData();
+
+}else{
+
+document
+.getElementById("loginError")
+.innerText=
+"Fel användarnamn eller lösenord";
+
 }
 
-function saveRow(i,tr){
- if(!isAdmin()) return;
-
- let name = document.getElementById("userName").value || "Admin";
- let time = new Date().toLocaleString();
- let inputs = tr.querySelectorAll('input[type="checkbox"]');
-
- let data = {
-  bathMontage: inputs[0].checked,
-  kitchenMontage: inputs[1].checked,
-  bm: inputs[2].checked,
-  bmon: inputs[3].checked,
-  km: inputs[4].checked,
-  kmon: inputs[5].checked,
-  comment: tr.querySelector(".comment").value,
-  commentUser: name,
-  time: time,
-  user: name
- };
-
- db.collection("rows").doc("row"+i).set(data,{merge:true});
 }
 
-db.collection("rows").onSnapshot(snapshot=>{
- snapshot.forEach(doc=>{
-  let i = parseInt(doc.id.replace("row",""));
-  let tr = table.rows[i+1];
-  if(!tr) return;
-  let d = doc.data();
-  let inputs = tr.querySelectorAll('input[type="checkbox"]');
+/* Startläge */
 
-  inputs[0].checked = d.bathMontage;
-  inputs[1].checked = d.kitchenMontage;
-  inputs[2].checked = d.bm;
-  inputs[3].checked = d.bmon;
-  inputs[4].checked = d.km;
-  inputs[5].checked = d.kmon;
+document
+.getElementById("app")
+.style.display="none";
 
-  tr.querySelector(".comment").value = d.comment || "";
-  tr.querySelector(".commentUser").textContent = d.commentUser || "";
-  tr.querySelector(".time").textContent = d.time;
-  tr.querySelector(".user").textContent = d.user;
-
-  updateRow(tr);
- });
- updateSummary();
-});
-
-function updateRow(tr){
- let inputs = tr.querySelectorAll('input[type="checkbox"]');
- let statusCell = tr.querySelector(".status");
-
- let allChecked = true;
- inputs.forEach(inp=>{
-   if(!inp.checked) allChecked = false;
- });
-
- tr.classList.remove("red","yellow","green");
-
- if(allChecked){
-   tr.classList.add("green");
-   statusCell.textContent="Klar";
- } else {
-   tr.classList.add("yellow");
-   statusCell.textContent="Pågår";
- }
-
- let allow = isAdmin();
- inputs.forEach(inp=>inp.disabled = !allow);
- tr.querySelector(".comment").disabled = !allow;
-}
-
-function refreshLocking(){
- Array.from(table.rows).forEach((row,i)=>{
-  if(i===0) return;
-  updateRow(row);
- });
-}
-
-function applyFilters(){
- let house = document.getElementById("houseFilter").value;
- let aptSearch = document.getElementById("aptSearch").value.toLowerCase();
-
- Array.from(table.rows).forEach((row,i)=>{
-  if(i===0) return;
-  let matchHouse = (house==="all" || row.dataset.house===house);
-  let matchApt = row.dataset.apt.toLowerCase().includes(aptSearch);
-  row.style.display = (matchHouse && matchApt) ? "" : "none";
- });
-}
-
-function updateSummary(){
- let count = {};
- apartments.forEach((f,i)=>{
-  let row = table.rows[i+1];
-  let status = row.classList.contains("green")?"green":"yellow";
-  if(!count[f.house]) count[f.house]={yellow:0,green:0};
-  count[f.house][status]++;
- });
-
- let sTable = document.getElementById("summary");
- sTable.innerHTML = `
-<tr>
-<th>Hus</th><th>🟡 Pågår</th><th>🟢 Klar</th>
-</tr>`;
- for(let h in count){
-  sTable.innerHTML += `
-  <tr class="summary">
-   <td>${h}</td>
-   <td>${count[h].yellow}</td>
-   <td>${count[h].green}</td>
-  </tr>`;
- }
-}
-
-function exportToExcel(){
- let html = "<table border='1'>";
- html += table.innerHTML;
- html += "</table>";
- let blob = new Blob([html],{type:"application/vnd.ms-excel"});
- let link = document.createElement("a");
- link.href = URL.createObjectURL(blob);
- link.download = "bankskivor_lagenheter.xls";
- link.click();
-}
 </script>
+
+<footer>
+
+NCC Bänkskivor V2 |
+Komposit & Ek |
+Köksbänkar & Fönsterbänkar
+
+</footer>
+
+</div>
 
 </body>
 </html>
