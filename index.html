@@ -518,7 +518,7 @@ id="password"
 type="password"
 placeholder="Lösenord">
 
-<button onclick="login()">
+<button onclick="firebaseLogin()">
 Logga in
 </button>
 
@@ -1296,76 +1296,54 @@ lgh.includes(filter)
 
 }
 
-function login(){
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-const u =
+  const firebaseConfig = {
+  apiKey: "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
+  authDomain: "bankskivor-status.firebaseapp.com",
+  projectId: "bankskivor-status",
+  storageBucket: "bankskivor-status.firebasestorage.app",
+  messagingSenderId: "424686541436",
+  appId: "1:424686541436:web:a495bd7d2ab1586a11c7f9",
+  measurementId: "G-NTLCQJM6H6"
+  };
 
-document
-.getElementById("username")
-.value
-.trim();
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-const p =
+  window.firebaseLogin = async function () {
 
-document
-.getElementById("password")
-.value;
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value;
 
-const users=[
+    try {
 
-"Adrian",
-"Stefan",
-"Alexander",
-"Rebecka",
-"Annan"
+      const result =
+        await signInWithEmailAndPassword(auth, u, p);
 
-];
+      const user = result.user;
 
-if(
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("app").style.display = "block";
 
-users.includes(u)
+      document.getElementById("loggedUser").innerText =
+        "Inloggad som: " + user.email;
 
-&&
+      loadData();
 
-p==="12345"
+    } catch (error) {
 
-){
+      document.getElementById("loginError").innerText =
+        "Fel e-postadress eller lösenord";
 
-currentUser=u;
-
-document
-.getElementById("loginScreen")
-.style.display="none";
-
-document
-.getElementById("app")
-.style.display="block";
-
-document
-.getElementById("loggedUser")
-.innerText=
-"Inloggad som: "
-+
-currentUser;
-
-loadData();
-
-}else{
-
-document
-.getElementById("loginError")
-.innerText=
-"Fel användarnamn eller lösenord";
-
-}
-
-}
-
-/* Startläge */
-
-document
-.getElementById("app")
-.style.display="none";
+      console.error(error);
+    }
+  };
 
 </script>
 
