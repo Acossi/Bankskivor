@@ -21,7 +21,14 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      - name: Create Firebase credentials
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase-key.json
+
       - name: Deploy to Firebase
         run: firebase deploy --only hosting --project bankskivor-status
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-key.json
+
+      - name: Remove Firebase credentials
+        if: always()
+        run: rm -f firebase-key.json
