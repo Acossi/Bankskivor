@@ -982,85 +982,106 @@ row.classList.add(
 
 }
 
-function saveData(){
+async function saveData(){
 
-let data=[];
+  const rows = [];
 
-document
-.querySelectorAll("#tbody tr")
-.forEach(row=>{
+  document
+    .querySelectorAll("#tbody tr")
+    .forEach(row => {
 
-data.push({
+      rows.push({
 
-trapphus:
-row.cells[0]
-.querySelector("input")
-.value,
+        trapphus:
+          row.cells[0]
+            .querySelector("input").value,
 
-lgh:
-row.cells[1]
-.querySelector("input")
-.value,
+        lgh:
+          row.cells[1]
+            .querySelector("input").value,
 
-fargKok:
-row.cells[2]
-.querySelector("input")
-.value,
+        fargKok:
+          row.cells[2]
+            .querySelector("input").value,
 
-fargFonster:
-row.cells[3]
-.querySelector("input")
-.value,
+        fargFonster:
+          row.cells[3]
+            .querySelector("input").value,
 
-material:
-row.cells[4]
-.querySelector("select")
-.value,
+        material:
+          row.cells[4]
+            .querySelector("select").value,
 
-datumMattningKok:
-row.cells[5]
-.querySelector("input")
-.value,
+        datumMattningKok:
+          row.cells[5]
+            .querySelector("input").value,
 
-datumMattningFonster:
-row.cells[6]
-.querySelector("input")
-.value,
+        datumMattningFonster:
+          row.cells[6]
+            .querySelector("input").value,
 
-datumMontageKok:
-row.cells[7]
-.querySelector("input")
-.value,
+        datumMontageKok:
+          row.cells[7]
+            .querySelector("input").value,
 
-datumMontageFonster:
-row.cells[8]
-.querySelector("input")
-.value,
+        datumMontageFonster:
+          row.cells[8]
+            .querySelector("input").value,
 
-editedBy:
-row.cells[9]
-.innerText,
+        editedBy:
+          row.cells[9].innerText,
 
-editedDate:
-row.cells[10]
-.innerText,
+        editedDate:
+          row.cells[10].innerText,
 
-kommentar:
-row.cells[11]
-.querySelector("input")
-.value
+        kommentar:
+          row.cells[11]
+            .querySelector("input").value
 
-});
+      });
 
-});
+    });
 
-localStorage.setItem(
 
-"NCC_Bankskivor_Data",
+  try {
 
-JSON.stringify(data)
+    const snapshot =
+      await getDocs(
+        collection(db, "bankskivor")
+      );
 
-);
+    for (const documentSnapshot of snapshot.docs) {
+
+      await deleteDoc(
+        doc(
+          db,
+          "bankskivor",
+          documentSnapshot.id
+        )
+      );
+
+    }
+
+
+    for (const row of rows) {
+
+      await addDoc(
+        collection(db, "bankskivor"),
+        row
+      );
+
+    }
+
+    console.log("Data sparad i Firestore");
+
+  } catch(error) {
+
+    console.error(
+      "Kunde inte spara:",
+      error
+    );
+
+  }
 
 }
 
