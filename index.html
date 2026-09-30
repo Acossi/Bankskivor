@@ -505,11 +505,11 @@ id="loginScreen">
 
 <select id="username">
 
-<option>Adrian@ncc.se</option>
-<option>Stefan@ncc.se</option>
-<option>Alexander@ncc.se</option>
-<option>Rebecka@ncc.se</option>
-<option>Annan@ncc.se</option>
+<option value="Adrian@ncc.se">Adrian</option>
+<option value="Stefan@ncc.se">Stefan</option>
+<option value="Alexander@ncc.se">Alexander</option>
+<option value="Rebecka@ncc.se">Rebecka</option>
+<option value="Annan@ncc.se">Annan</option>
 
 </select>
 
@@ -1390,15 +1390,14 @@ async function(){
 
   } catch(error){
 
-    console.error(error);
+  console.error(error);
 
+  document
+  .getElementById("loginError")
+  .innerText =
+  error.code + ": " + error.message;
 
-    document
-    .getElementById("loginError")
-    .innerText =
-    "Fel e-postadress eller lösenord";
-
-  }
+}
 
 };
 
