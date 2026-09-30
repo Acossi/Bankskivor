@@ -1309,6 +1309,16 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
 
@@ -1340,6 +1350,9 @@ initializeApp(firebaseConfig);
 
 const auth =
 getAuth(app);
+
+const db =
+getFirestore(app);
 
 
 window.firebaseLogin =
