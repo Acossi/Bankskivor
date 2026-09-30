@@ -505,11 +505,11 @@ id="loginScreen">
 
 <select id="username">
 
-<option>Adrian</option>
-<option>Stefan</option>
-<option>Alexander</option>
-<option>Rebecka</option>
-<option>Annan</option>
+<option>Adrian@ncc.se</option>
+<option>Stefan@ncc.se</option>
+<option>Alexander@ncc.se</option>
+<option>Rebecka@ncc.se</option>
+<option>Annan@ncc.se</option>
 
 </select>
 
@@ -1297,53 +1297,110 @@ lgh.includes(filter)
 }
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-  import {
-    getAuth,
-    signInWithEmailAndPassword
-  } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-  const firebaseConfig = {
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+
   apiKey: "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
-  authDomain: "bankskivor-status.firebaseapp.com",
-  projectId: "bankskivor-status",
-  storageBucket: "bankskivor-status.firebasestorage.app",
-  messagingSenderId: "424686541436",
-  appId: "1:424686541436:web:a495bd7d2ab1586a11c7f9",
-  measurementId: "G-NTLCQJM6H6"
-  };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  authDomain:
+  "bankskivor-status.firebaseapp.com",
 
-  window.firebaseLogin = async function () {
+  projectId:
+  "bankskivor-status",
 
-    const u = document.getElementById("username").value.trim();
-    const p = document.getElementById("password").value;
+  storageBucket:
+  "bankskivor-status.firebasestorage.app",
 
-    try {
+  messagingSenderId:
+  "424686541436",
 
-      const result =
-        await signInWithEmailAndPassword(auth, u, p);
+  appId:
+  "1:424686541436:web:a495bd7d2ab1586a11c7f9",
 
-      const user = result.user;
+  measurementId:
+  "G-NTLCQJM6H6"
 
-      document.getElementById("loginScreen").style.display = "none";
-      document.getElementById("app").style.display = "block";
+};
 
-      document.getElementById("loggedUser").innerText =
-        "Inloggad som: " + user.email;
 
-      loadData();
+const app =
+initializeApp(firebaseConfig);
 
-    } catch (error) {
+const auth =
+getAuth(app);
 
-      document.getElementById("loginError").innerText =
-        "Fel e-postadress eller lösenord";
 
-      console.error(error);
-    }
-  };
+window.firebaseLogin =
+async function(){
+
+  const email =
+  document
+  .getElementById("username")
+  .value;
+
+  const password =
+  document
+  .getElementById("password")
+  .value;
+
+
+  try {
+
+    const result =
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+
+    const user =
+    result.user;
+
+
+    document
+    .getElementById("loginScreen")
+    .style.display="none";
+
+
+    document
+    .getElementById("app")
+    .style.display="block";
+
+
+    document
+    .getElementById("loggedUser")
+    .innerText =
+    "Inloggad som: "
+    + user.email;
+
+
+    loadData();
+
+
+  } catch(error){
+
+    console.error(error);
+
+
+    document
+    .getElementById("loginError")
+    .innerText =
+    "Fel e-postadress eller lösenord";
+
+  }
+
+};
 
 </script>
 
