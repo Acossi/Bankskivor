@@ -1184,33 +1184,35 @@ row.querySelectorAll(
 .forEach(input => {
 
 input.addEventListener(
-"change",
-async () => {
+  "change",
+  async () => {
 
-if(loadingData){
-return;
-}
+    if(loadingData){
+      return;
+    }
 
+    // Spara var användaren befinner sig på sidan
+    const scrollPosition = window.scrollY;
 
-row.cells[9].innerText =
-currentUser;
+    row.cells[9].innerText =
+      currentUser;
 
-row.cells[10].innerText =
-timestamp();
+    row.cells[10].innerText =
+      timestamp();
 
+    updateRowColor(row);
 
-updateRowColor(row);
+    sortRows();
 
-sortRows();
+    updateStats();
 
-updateStats();
+    await saveRow(row);
 
-await saveRow(row);
+    // Gå tillbaka till exakt samma position
+    window.scrollTo(0, scrollPosition);
 
-});
-
-});
-
+  }
+);
 
 /* =========================
    TA BORT
