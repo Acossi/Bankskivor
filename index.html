@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
 
 <meta charset="UTF-8">
@@ -60,6 +61,7 @@ font-weight:900;
 opacity:.03;
 
 pointer-events:none;
+
 z-index:-1;
 }
 
@@ -67,6 +69,7 @@ z-index:-1;
 display:flex;
 justify-content:center;
 align-items:center;
+
 height:100vh;
 }
 
@@ -86,46 +89,62 @@ box-shadow:
 
 .login-box h2{
 text-align:center;
+
 margin-bottom:20px;
+
 color:#005AA9;
 }
 
 .login-box select,
 .login-box input{
 width:100%;
+
 padding:12px;
+
 margin-top:10px;
+
 border-radius:8px;
+
 border:1px solid #ccc;
 }
 
 .login-box button{
 width:100%;
+
 padding:12px;
+
 margin-top:15px;
 
 background:#005AA9;
+
 color:white;
 
 border:none;
+
 border-radius:8px;
 
 font-weight:bold;
+
 cursor:pointer;
 }
 
 .container{
 display:none;
+
 max-width:1900px;
+
 margin:auto;
 }
 
 .header{
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
 
 padding:25px;
+
 margin-bottom:20px;
 
 border-radius:20px;
@@ -144,12 +163,15 @@ padding:15px 25px;
 border-radius:15px;
 
 display:flex;
+
 flex-direction:column;
+
 align-items:center;
 }
 
 .logo-main{
 font-size:36px;
+
 font-weight:900;
 
 color:#005AA9;
@@ -159,6 +181,7 @@ line-height:1;
 
 .logo-sub{
 font-size:12px;
+
 font-weight:bold;
 
 color:#444;
@@ -257,6 +280,7 @@ linear-gradient(
 display:flex;
 
 justify-content:center;
+
 align-items:center;
 
 font-weight:bold;
@@ -264,11 +288,13 @@ font-weight:bold;
 
 #search{
 width:100%;
+
 margin-bottom:15px;
 }
 
 table{
 width:100%;
+
 border-collapse:collapse;
 }
 
@@ -352,27 +378,50 @@ margin:3px;
 
 .add-btn{
 background:#16a34a;
+
 color:white;
 }
 
 .pdf-btn{
 background:#0078d4;
-color:white;
-}
 
-.clear-btn{
-background:#d97706;
 color:white;
 }
 
 .delete-btn{
 background:#dc2626;
+
 color:white;
 }
 
 .save-info-btn{
 background:#16a34a;
+
 color:white;
+}
+
+.save-info-btn:disabled{
+background:#64748b;
+
+cursor:not-allowed;
+}
+
+.save-message{
+display:inline-block;
+
+margin-left:10px;
+
+color:#22c55e;
+
+font-weight:bold;
+
+opacity:0;
+
+transition:.2s;
+}
+
+.save-message.show{
+opacity:1;
 }
 
 footer{
@@ -386,17 +435,20 @@ opacity:.7;
 @media print{
 
 button,
-#search{
+#search,
+.save-message{
 display:none !important;
 }
 
 body{
 background:white;
+
 color:black;
 }
 
 .card{
 background:white;
+
 border:1px solid #ccc;
 }
 
@@ -423,7 +475,9 @@ id="loginScreen">
 
 <div class="login-box">
 
-<h2>Bänkskivor Sångvägen</h2>
+<h2>
+Bänkskivor Sångvägen
+</h2>
 
 <select id="username">
 
@@ -454,8 +508,11 @@ id="password"
 type="password"
 placeholder="Lösenord">
 
-<button onclick="firebaseLogin()">
+<button
+onclick="firebaseLogin()">
+
 Logga in
+
 </button>
 
 <p
@@ -464,6 +521,7 @@ style="color:red;margin-top:10px;">
 </p>
 
 </div>
+
 </div>
 
 
@@ -475,6 +533,8 @@ style="color:red;margin-top:10px;">
 class="container"
 id="app">
 
+
+<!-- HEADER -->
 
 <div class="header">
 
@@ -489,7 +549,6 @@ Inloggad som:
 </p>
 
 </div>
-
 
 <div class="logo-box">
 
@@ -605,16 +664,24 @@ id="projektdatum">
 
 </div>
 
-
 <br>
 
 <button
 class="save-info-btn"
+id="saveProjectButton"
 onclick="saveProjectInfo()">
 
 💾 Spara projektinformation
 
 </button>
+
+<span
+id="projectSaveMessage"
+class="save-message">
+
+✓ Sparat
+
+</span>
 
 </div>
 
@@ -793,7 +860,6 @@ onclick="window.print()">
 
 </button>
 
-
 </div>
 
 
@@ -808,6 +874,10 @@ Köksbänkar & Fönsterbänkar
 </div>
 
 
+<!-- =====================================================
+     VANLIG JAVASCRIPT
+===================================================== -->
+
 <script>
 
 let currentUser = "";
@@ -819,6 +889,8 @@ let loadingData = false;
 let unsubscribeFirestore = null;
 
 let unsubscribeProjectInfo = null;
+
+let savingProjectInfo = false;
 
 
 /* =========================
@@ -876,6 +948,20 @@ return new Date()
 
 async function addNewApartment(){
 
+const db =
+window.firestoreDb;
+
+if(!db){
+
+alert(
+"Firebase är inte redo ännu."
+);
+
+return;
+
+}
+
+
 const rowData = {
 
 trapphus:"",
@@ -909,7 +995,7 @@ const newDoc =
 await window.firestoreAddDoc(
 
 window.firestoreCollection(
-window.firestoreDb,
+db,
 "bankskivor"
 ),
 
@@ -922,11 +1008,16 @@ console.log(
 newDoc.id
 );
 
+
 }catch(error){
 
 console.error(
 "Kunde inte skapa lägenhet:",
 error
+);
+
+alert(
+"Kunde inte lägga till lägenheten."
 );
 
 }
@@ -946,6 +1037,7 @@ data.firebaseId || "";
 const row =
 document.createElement("tr");
 
+
 row.dataset.firebaseId =
 firebaseId;
 
@@ -960,7 +1052,6 @@ value="${data.trapphus || ''}">
 
 </td>
 
-
 <td class="col-lgh">
 
 <input
@@ -968,7 +1059,6 @@ type="text"
 value="${data.lgh || ''}">
 
 </td>
-
 
 <td>
 
@@ -978,7 +1068,6 @@ value="${data.fargKok || ''}">
 
 </td>
 
-
 <td>
 
 <input
@@ -986,7 +1075,6 @@ type="text"
 value="${data.fargFonster || ''}">
 
 </td>
-
 
 <td class="col-material">
 
@@ -1012,7 +1100,6 @@ Ek
 
 </td>
 
-
 <td class="col-date">
 
 <input
@@ -1020,7 +1107,6 @@ type="date"
 value="${data.datumMattningKok || ''}">
 
 </td>
-
 
 <td class="col-date">
 
@@ -1030,7 +1116,6 @@ value="${data.datumMattningFonster || ''}">
 
 </td>
 
-
 <td class="col-date">
 
 <input
@@ -1038,7 +1123,6 @@ type="date"
 value="${data.datumMontageKok || ''}">
 
 </td>
-
 
 <td class="col-date">
 
@@ -1048,20 +1132,17 @@ value="${data.datumMontageFonster || ''}">
 
 </td>
 
-
 <td>
 
 ${data.editedBy || ''}
 
 </td>
 
-
 <td class="col-date">
 
 ${data.editedDate || ''}
 
 </td>
-
 
 <td>
 
@@ -1070,7 +1151,6 @@ type="text"
 value="${data.kommentar || ''}">
 
 </td>
-
 
 <td>
 
@@ -1111,11 +1191,13 @@ if(loadingData){
 return;
 }
 
+
 row.cells[9].innerText =
 currentUser;
 
 row.cells[10].innerText =
 timestamp();
+
 
 updateRowColor(row);
 
@@ -1140,6 +1222,7 @@ row.querySelector(
 .addEventListener(
 "click",
 async () => {
+
 
 if(
 !deleteUsers.includes(
@@ -1198,12 +1281,15 @@ firebaseId
 
 );
 
-
 }catch(error){
 
 console.error(
 "Kunde inte ta bort lägenheten:",
 error
+);
+
+alert(
+"Kunde inte ta bort lägenheten."
 );
 
 }
@@ -1290,15 +1376,23 @@ if(loadingData){
 return;
 }
 
+
 const db =
 window.firestoreDb;
+
 
 const firebaseId =
 row.dataset.firebaseId;
 
 
 if(!db){
+
+console.error(
+"Firestore är inte redo."
+);
+
 return;
+
 }
 
 
@@ -1306,39 +1400,48 @@ const rowData = {
 
 trapphus:
 row.cells[0]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 lgh:
 row.cells[1]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 fargKok:
 row.cells[2]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 fargFonster:
 row.cells[3]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 material:
 row.cells[4]
-.querySelector("select").value,
+.querySelector("select")
+.value,
 
 datumMattningKok:
 row.cells[5]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 datumMattningFonster:
 row.cells[6]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 datumMontageKok:
 row.cells[7]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 datumMontageFonster:
 row.cells[8]
-.querySelector("input").value,
+.querySelector("input")
+.value,
 
 editedBy:
 row.cells[9].innerText,
@@ -1348,7 +1451,8 @@ row.cells[10].innerText,
 
 kommentar:
 row.cells[11]
-.querySelector("input").value
+.querySelector("input")
+.value
 
 };
 
@@ -1400,14 +1504,50 @@ error
 }
 
 
-/* =========================
-   PROJEKTINFO
-========================= */
+/* =====================================================
+   SPARA PROJEKTINFORMATION
+===================================================== */
 
 async function saveProjectInfo(){
 
+if(savingProjectInfo){
+return;
+}
+
+
 const db =
 window.firestoreDb;
+
+
+if(!db){
+
+alert(
+"Firebase är inte redo ännu. Försök igen."
+);
+
+return;
+
+}
+
+
+const saveButton =
+document.getElementById(
+"saveProjectButton"
+);
+
+
+const saveMessage =
+document.getElementById(
+"projectSaveMessage"
+);
+
+
+savingProjectInfo = true;
+
+saveButton.disabled = true;
+
+saveButton.innerText =
+"💾 Sparar...";
 
 
 const projectData = {
@@ -1415,27 +1555,32 @@ const projectData = {
 projekt:
 document
 .getElementById("projekt")
-.value,
+.value
+.trim(),
 
 projektnummer:
 document
 .getElementById("projektnummer")
-.value,
+.value
+.trim(),
 
 adress:
 document
 .getElementById("adress")
-.value,
+.value
+.trim(),
 
 kontaktperson:
 document
 .getElementById("kontaktperson")
-.value,
+.value
+.trim(),
 
 mattansvarig:
 document
 .getElementById("mattansvarig")
-.value,
+.value
+.trim(),
 
 datum:
 document
@@ -1453,6 +1598,14 @@ timestamp()
 
 try{
 
+
+/*
+  Projektinformationen ligger alltid
+  i samma dokument:
+
+  projektinfo / projekt
+*/
+
 await window.firestoreSetDoc(
 
 window.firestoreDoc(
@@ -1461,13 +1614,39 @@ db,
 "projekt"
 ),
 
-projectData
+projectData,
+
+{
+merge:true
+}
 
 );
 
 
+/*
+  Visa bekräftelse
+*/
+
+saveMessage.classList.add(
+"show"
+);
+
+
+setTimeout(
+() => {
+
+saveMessage.classList.remove(
+"show"
+);
+
+},
+2500
+);
+
+
 console.log(
-"Projektinformation sparad."
+"Projektinformation sparad:",
+projectData
 );
 
 
@@ -1478,14 +1657,31 @@ console.error(
 error
 );
 
-}
+
+alert(
+"Kunde inte spara projektinformationen.\n\n"
++
+error.message
+);
+
+
+}finally{
+
+savingProjectInfo = false;
+
+saveButton.disabled = false;
+
+saveButton.innerText =
+"💾 Spara projektinformation";
 
 }
 
+}
 
-/* =========================
-   LADDA PROJEKTINFO
-========================= */
+
+/* =====================================================
+   REALTID PROJEKTINFO
+===================================================== */
 
 function startProjectInfoRealtime(){
 
@@ -1493,12 +1689,13 @@ if(unsubscribeProjectInfo){
 
 unsubscribeProjectInfo();
 
+unsubscribeProjectInfo =
+null;
+
 }
 
 
-unsubscribeProjectInfo =
-window.firestoreOnSnapshot(
-
+const projectRef =
 window.firestoreDoc(
 
 window.firestoreDb,
@@ -1507,18 +1704,35 @@ window.firestoreDb,
 
 "projekt"
 
-),
+);
+
+
+unsubscribeProjectInfo =
+window.firestoreOnSnapshot(
+
+projectRef,
 
 snapshot => {
 
+
 if(!snapshot.exists()){
+
+console.log(
+"Ingen projektinformation sparad ännu."
+);
+
 return;
+
 }
 
 
 const data =
 snapshot.data();
 
+
+/*
+  Uppdatera fälten från Firebase.
+*/
 
 document
 .getElementById("projekt")
@@ -1586,6 +1800,9 @@ if(unsubscribeFirestore){
 
 unsubscribeFirestore();
 
+unsubscribeFirestore =
+null;
+
 }
 
 
@@ -1598,6 +1815,7 @@ window.firestoreDb,
 ),
 
 snapshot => {
+
 
 loadingData = true;
 
@@ -1614,11 +1832,14 @@ tbody.innerHTML = "";
 snapshot.forEach(
 documentSnapshot => {
 
+
 const data =
 documentSnapshot.data();
 
+
 data.firebaseId =
 documentSnapshot.id;
+
 
 addRow(data);
 
@@ -1668,18 +1889,22 @@ document.querySelectorAll(
 "#tbody tr"
 );
 
+
 const total =
 rows.length;
+
 
 let klara = 0;
 
 
 rows.forEach(row => {
 
+
 const montageKok =
 row.cells[7]
 .querySelector("input")
 .value;
+
 
 const montageFonster =
 row.cells[8]
@@ -1688,8 +1913,11 @@ row.cells[8]
 
 
 if(
+
 montageKok !== "" &&
+
 montageFonster !== ""
+
 ){
 
 klara++;
@@ -1705,7 +1933,9 @@ total - klara;
 
 const procent =
 total === 0
+
 ? 0
+
 : Math.round(
 (klara / total) * 100
 );
@@ -1738,6 +1968,7 @@ document.getElementById(
 bar.style.width =
 procent + "%";
 
+
 bar.innerText =
 procent + "%";
 
@@ -1755,6 +1986,7 @@ document.getElementById(
 "tbody"
 );
 
+
 const rows =
 Array.from(
 tbody.querySelectorAll("tr")
@@ -1763,11 +1995,13 @@ tbody.querySelectorAll("tr")
 
 rows.sort((a,b) => {
 
+
 const trA =
 a.cells[0]
 .querySelector("input")
 .value
 .trim();
+
 
 const trB =
 b.cells[0]
@@ -1791,6 +2025,7 @@ a.cells[1]
 .querySelector("input")
 .value
 .trim();
+
 
 const lghB =
 b.cells[1]
@@ -1840,6 +2075,7 @@ document.querySelectorAll(
 
 rows.forEach(row => {
 
+
 const trapphus =
 row.cells[0]
 .querySelector("input")
@@ -1855,8 +2091,13 @@ row.cells[1]
 
 
 if(
-trapphus.includes(search) ||
+
+trapphus.includes(search)
+
+||
+
 lgh.includes(search)
+
 ){
 
 row.style.display = "";
@@ -1874,40 +2115,63 @@ row.style.display = "none";
 </script>
 
 
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
 <script type="module">
 
 import {
+
 initializeApp
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 
 
 import {
+
 getAuth,
+
 signInWithEmailAndPassword
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 
 import {
+
 getFirestore,
+
 collection,
+
 addDoc,
-getDocs,
+
 doc,
+
 updateDoc,
+
 deleteDoc,
+
 setDoc,
+
 onSnapshot
+
 }
+
 from
+
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
 /* =========================
-   FIREBASE
+   FIREBASE CONFIG
 ========================= */
 
 const firebaseConfig = {
@@ -1935,6 +2199,10 @@ measurementId:
 
 };
 
+
+/* =========================
+   STARTA FIREBASE
+========================= */
 
 const app =
 initializeApp(
@@ -1964,9 +2232,6 @@ collection;
 window.firestoreAddDoc =
 addDoc;
 
-window.firestoreGetDocs =
-getDocs;
-
 window.firestoreDoc =
 doc;
 
@@ -1990,6 +2255,7 @@ onSnapshot;
 window.firebaseLogin =
 async function(){
 
+
 const email =
 document
 .getElementById("username")
@@ -2012,6 +2278,7 @@ loginError.innerText = "";
 
 try{
 
+
 const result =
 await signInWithEmailAndPassword(
 
@@ -2033,10 +2300,19 @@ user.email
 .toLowerCase();
 
 
+/*
+  Visa namn istället
+  för e-postadress.
+*/
+
 currentUser =
 userNames[
 normalizedEmail
-] || "Övrig";
+]
+
+||
+
+"Övrig";
 
 
 currentUserUid =
@@ -2074,7 +2350,7 @@ currentUser;
 
 
 /* =========================
-   STARTA REALTID
+   STARTA SYNKNING
 ========================= */
 
 startRealtime();
@@ -2083,6 +2359,7 @@ startProjectInfoRealtime();
 
 
 }catch(error){
+
 
 console.error(error);
 
@@ -2101,4 +2378,5 @@ error.message;
 </script>
 
 </body>
+
 </html>
