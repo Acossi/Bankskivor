@@ -999,21 +999,17 @@ setDoc;
 ========================= */
 
 const userNames = {
+  "adrian@google.se": "Adrian",
+  "stefan@google.se": "Stefan",
+  "alexander@google.se": "Alexander",
+  "rebecka@google.se": "Rebecka",
+  "övrig@google.se": "Övrig"
+};
 
-"Adrian@google.se":
-"Adrian",
+const email = user.email.toLowerCase();
 
-"Stefan@google.se":
-"Stefan",
-
-"Alexander@google.se":
-"Alexander",
-
-"Rebecka@google.se":
-"Rebecka",
-
-"övrig@google.se":
-"Övrig"
+currentUser =
+  userNames[email] || "Övrig";
 
 };
 
@@ -1336,8 +1332,7 @@ input.addEventListener(
 "change",
 async () => {
 
-row.cells[9].innerText =
-currentUser;
+row.cells[9].innerText = currentUser;
 
 row.cells[10].innerText =
 timestamp();
