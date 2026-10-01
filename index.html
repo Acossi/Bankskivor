@@ -1271,32 +1271,15 @@ tbody.appendChild(row);
 }
 async function loadData(){
 
-  const db = window.firestoreDb;
-
-  if (!db) {
-
-    console.error(
-      "Firestore är inte redo."
-    );
-
-    return;
-
-  }
-
-
-  loadingData = true;
-
-
   try {
 
     const snapshot =
-      await window.firestoreGetDocs(
-        window.firestoreCollection(
+      await getDocs(
+        collection(
           db,
           "bankskivor"
         )
       );
-
 
     document
       .getElementById("tbody")
@@ -1308,10 +1291,6 @@ async function loadData(){
       console.log(
         "Firestore är tom."
       );
-
-      loadingData = false;
-
-      addRow();
 
       return;
 
@@ -1350,6 +1329,8 @@ async function loadData(){
     );
 
   }
+
+}
 
 
   loadingData = false;
