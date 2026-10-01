@@ -1319,6 +1319,7 @@ lgh.includes(filter)
 
   </script>
   
+```html
 <script type="module">
 
 import { initializeApp }
@@ -1334,12 +1335,9 @@ import {
   getFirestore,
   collection,
   addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+  getDocs
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -1377,68 +1375,190 @@ const db =
 getFirestore(app);
 
 
+/* =========================================
+   MIGRERA GAMMAL LOCALSTORAGE-DATA
+   ========================================= */
+
+async function migrateLocalDataToFirestore() {
+
+  const oldData = JSON.parse(
+    localStorage.getItem(
+      "NCC_Bankskivor_Data"
+    ) || "[]"
+  );
+
+
+  if (oldData.length === 0) {
+
+    console.log(
+      "Ingen gammal data hittades."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "bankskivor"
+        )
+      );
+
+
+    /* Om Firestore redan har data
+       migrerar vi inte igen */
+
+    if (!snapshot.empty) {
+
+      console.log(
+        "Firestore innehåller redan data."
+      );
+
+      return;
+
+    }
+
+
+    console.log(
+      "Migrerar "
+      + oldData.length
+      + " rader till Firestore..."
+    );
+
+
+    for (const row of oldData) {
+
+      await addDoc(
+        collection(
+          db,
+          "bankskivor"
+        ),
+        row
+      );
+
+    }
+
+
+    console.log(
+      "KLART! "
+      + oldData.length
+      + " rader har sparats i Firestore."
+    );
+
+
+    alert(
+      oldData.length
+      + " rader har flyttats till Firebase."
+    );
+
+
+  } catch(error) {
+
+    console.error(
+      "Migrering misslyckades:",
+      error
+    );
+
+    alert(
+      "Fel vid migrering till Firebase. "
+      + error.message
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   LOGIN
+   ========================================= */
+
 window.firebaseLogin =
 async function(){
 
   const email =
-  document
-  .getElementById("username")
-  .value;
+    document
+      .getElementById("username")
+      .value;
 
   const password =
-  document
-  .getElementById("password")
-  .value;
+    document
+      .getElementById("password")
+      .value;
 
 
   try {
 
     const result =
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
 
     const user =
-    result.user;
+      result.user;
 
 
     document
-    .getElementById("loginScreen")
-    .style.display="none";
+      .getElementById("loginScreen")
+      .style.display =
+      "none";
 
 
     document
-    .getElementById("app")
-    .style.display="block";
+      .getElementById("app")
+      .style.display =
+      "block";
 
 
     document
-    .getElementById("loggedUser")
-    .innerText =
-    "Inloggad som: "
-    + user.email;
+      .getElementById("loggedUser")
+      .innerText =
+      "Inloggad som: "
+      + user.email;
 
+
+    /*
+      Första gången en användare
+      loggar in flyttar vi den gamla
+      localStorage-datan till Firestore.
+    */
+
+    await migrateLocalDataToFirestore();
+
+
+    /*
+      Laddar sedan sidan som vanligt.
+      Vi ändrar INTE loadData ännu.
+    */
 
     loadData();
 
 
   } catch(error){
 
-  console.error(error);
+    console.error(error);
 
-  document
-  .getElementById("loginError")
-  .innerText =
-  error.code + ": " + error.message;
+    document
+      .getElementById("loginError")
+      .innerText =
+      error.code
+      + ": "
+      + error.message;
 
-}
+  }
 
 };
 
 </script>
+```
 
 <footer>
 
