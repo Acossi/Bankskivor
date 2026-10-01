@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
 
 <meta charset="UTF-8">
@@ -17,11 +16,9 @@ box-sizing:border-box;
 }
 
 body{
-
 font-family:'Segoe UI',sans-serif;
 
 background:
-
 radial-gradient(
 circle at top right,
 rgba(0,120,212,0.20),
@@ -42,15 +39,11 @@ linear-gradient(
 );
 
 min-height:100vh;
-
 padding:20px;
-
 color:white;
-
 }
 
 body::before{
-
 content:"NCC";
 
 position:fixed;
@@ -62,38 +55,23 @@ transform:
 translate(-50%,-50%);
 
 font-size:350px;
-
 font-weight:900;
 
 opacity:.03;
 
 pointer-events:none;
-
 z-index:-1;
-
 }
 
-
-/* =========================
-   LOGIN
-========================= */
-
 .login-screen{
-
 display:flex;
-
 justify-content:center;
-
 align-items:center;
-
 height:100vh;
-
 }
 
 .login-box{
-
 background:white;
-
 color:black;
 
 width:420px;
@@ -104,87 +82,50 @@ border-radius:20px;
 
 box-shadow:
 0 20px 50px rgba(0,0,0,.35);
-
 }
 
 .login-box h2{
-
 text-align:center;
-
 margin-bottom:20px;
-
 color:#005AA9;
-
 }
 
 .login-box select,
 .login-box input{
-
 width:100%;
-
 padding:12px;
-
 margin-top:10px;
-
 border-radius:8px;
-
 border:1px solid #ccc;
-
 }
 
 .login-box button{
-
 width:100%;
-
 padding:12px;
-
 margin-top:15px;
 
 background:#005AA9;
-
 color:white;
 
 border:none;
-
 border-radius:8px;
 
 font-weight:bold;
-
 cursor:pointer;
-
 }
-
-.login-box button:hover{
-
-background:#0078D4;
-
-}
-
-
-/* =========================
-   APP
-========================= */
 
 .container{
-
 display:none;
-
 max-width:1900px;
-
 margin:auto;
-
 }
 
 .header{
-
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
 
 padding:25px;
-
 margin-bottom:20px;
 
 border-radius:20px;
@@ -193,11 +134,9 @@ background:
 rgba(255,255,255,.05);
 
 backdrop-filter:blur(15px);
-
 }
 
 .logo-box{
-
 background:white;
 
 padding:15px 25px;
@@ -205,39 +144,29 @@ padding:15px 25px;
 border-radius:15px;
 
 display:flex;
-
 flex-direction:column;
-
 align-items:center;
-
 }
 
 .logo-main{
-
 font-size:36px;
-
 font-weight:900;
 
 color:#005AA9;
 
 line-height:1;
-
 }
 
 .logo-sub{
-
 font-size:12px;
-
 font-weight:bold;
 
 color:#444;
 
 text-transform:uppercase;
-
 }
 
 .card{
-
 background:
 rgba(255,255,255,.06);
 
@@ -248,24 +177,20 @@ padding:20px;
 border-radius:20px;
 
 margin-bottom:20px;
-
 }
 
 .row{
-
 display:grid;
 
 grid-template-columns:
 repeat(auto-fit,minmax(220px,1fr));
 
 gap:15px;
-
 }
 
 input[type=text],
 input[type=date],
 select{
-
 width:100%;
 
 padding:10px;
@@ -275,11 +200,9 @@ border:none;
 border-radius:10px;
 
 margin-top:5px;
-
 }
 
 .stats{
-
 display:grid;
 
 grid-template-columns:
@@ -288,11 +211,9 @@ repeat(auto-fit,minmax(250px,1fr));
 gap:15px;
 
 margin-bottom:20px;
-
 }
 
 .stat{
-
 background:
 linear-gradient(
 135deg,
@@ -305,17 +226,13 @@ padding:20px;
 border-radius:20px;
 
 text-align:center;
-
 }
 
 .stat h2{
-
 font-size:36px;
-
 }
 
 .progress{
-
 height:35px;
 
 background:#1e293b;
@@ -323,11 +240,9 @@ background:#1e293b;
 border-radius:20px;
 
 overflow:hidden;
-
 }
 
 .progress-bar{
-
 height:100%;
 
 width:0;
@@ -342,41 +257,30 @@ linear-gradient(
 display:flex;
 
 justify-content:center;
-
 align-items:center;
 
 font-weight:bold;
-
 }
 
 #search{
-
 width:100%;
-
 margin-bottom:15px;
-
 }
 
 table{
-
 width:100%;
-
 border-collapse:collapse;
-
 }
 
 th{
-
 background:#005AA9;
 
 padding:12px;
 
 font-size:13px;
-
 }
 
 td{
-
 background:
 rgba(255,255,255,.05);
 
@@ -384,94 +288,55 @@ padding:8px;
 
 border-bottom:
 1px solid rgba(255,255,255,.08);
-
 }
 
 tr:hover td{
-
 background:#334155;
-
 }
 
-
-/* =========================
-   KOLUMNER
-========================= */
-
 .col-trapphus{
-
 width:70px;
-
 min-width:70px;
-
 }
 
 .col-lgh{
-
 width:130px;
-
 min-width:130px;
-
 }
 
 .col-date{
-
 width:140px;
-
 min-width:140px;
-
 }
 
 .col-material{
-
 width:120px;
-
 min-width:120px;
-
 }
 
-
-/* =========================
-   FÄRGSTATUS
-========================= */
-
 .rad-mattad td{
-
 background:
 rgba(34,197,94,0.10) !important;
-
 }
 
 .rad-monterad td{
-
 background:
 rgba(34,197,94,0.28) !important;
 
 font-weight:600;
-
 }
 
 .rad-mattad:hover td{
-
 background:
 rgba(34,197,94,0.18) !important;
-
 }
 
 .rad-monterad:hover td{
-
 background:
 rgba(34,197,94,0.40) !important;
-
 }
 
-
-/* =========================
-   KNAPPAR
-========================= */
-
 button{
-
 padding:12px 18px;
 
 border:none;
@@ -483,156 +348,60 @@ font-weight:bold;
 cursor:pointer;
 
 margin:3px;
-
 }
 
 .add-btn{
-
 background:#16a34a;
-
 color:white;
-
-}
-
-.add-btn:hover{
-
-background:#22c55e;
-
 }
 
 .pdf-btn{
-
 background:#0078d4;
-
 color:white;
-
-}
-
-.pdf-btn:hover{
-
-background:#0088ef;
-
 }
 
 .clear-btn{
-
 background:#d97706;
-
 color:white;
-
 }
 
 .delete-btn{
-
 background:#dc2626;
-
 color:white;
-
-padding:8px 12px;
-
 }
 
-.delete-btn:hover{
-
-background:#ef4444;
-
+.save-info-btn{
+background:#16a34a;
+color:white;
 }
-
-.delete-disabled{
-
-background:#64748b;
-
-cursor:not-allowed;
-
-opacity:.5;
-
-}
-
-
-/* =========================
-   FOOTER
-========================= */
 
 footer{
-
 margin-top:20px;
 
 text-align:center;
 
 opacity:.7;
-
 }
-
-
-/* =========================
-   PRINT
-========================= */
 
 @media print{
 
 button,
 #search{
-
 display:none !important;
-
 }
 
 body{
-
 background:white;
-
 color:black;
-
 }
 
 .card{
-
 background:white;
-
 border:1px solid #ccc;
-
 }
 
 td{
-
 color:black;
-
-}
-
-}
-
-
-/* =========================
-   MOBIL
-========================= */
-
-@media(max-width:900px){
-
-body{
-
-padding:10px;
-
-}
-
-.header{
-
-flex-direction:column;
-
-gap:20px;
-
-}
-
-table{
-
-font-size:12px;
-
-}
-
-th,
-td{
-
-padding:6px;
-
 }
 
 }
@@ -640,7 +409,6 @@ padding:6px;
 </style>
 
 </head>
-
 
 <body>
 
@@ -659,19 +427,19 @@ id="loginScreen">
 
 <select id="username">
 
-<option value="Adrian@google.se">
+<option value="adrian@google.se">
 Adrian
 </option>
 
-<option value="Stefan@google.se">
+<option value="stefan@google.se">
 Stefan
 </option>
 
-<option value="Alexander@google.se">
+<option value="alexander@google.se">
 Alexander
 </option>
 
-<option value="Rebecka@google.se">
+<option value="rebecka@google.se">
 Rebecka
 </option>
 
@@ -687,19 +455,15 @@ type="password"
 placeholder="Lösenord">
 
 <button onclick="firebaseLogin()">
-
 Logga in
-
 </button>
 
 <p
 id="loginError"
 style="color:red;margin-top:10px;">
-
 </p>
 
 </div>
-
 </div>
 
 
@@ -748,7 +512,14 @@ Bänkskivor
 
 <div class="card">
 
+<h3>
+Projektinformation
+</h3>
+
+<br>
+
 <div class="row">
+
 
 <div>
 
@@ -756,7 +527,10 @@ Bänkskivor
 Projekt
 </label>
 
-<input type="text">
+<input
+type="text"
+id="projekt"
+placeholder="Projekt">
 
 </div>
 
@@ -767,7 +541,10 @@ Projekt
 Projektnummer
 </label>
 
-<input type="text">
+<input
+type="text"
+id="projektnummer"
+placeholder="Projektnummer">
 
 </div>
 
@@ -778,7 +555,10 @@ Projektnummer
 Adress
 </label>
 
-<input type="text">
+<input
+type="text"
+id="adress"
+placeholder="Adress">
 
 </div>
 
@@ -789,7 +569,10 @@ Adress
 Kontaktperson
 </label>
 
-<input type="text">
+<input
+type="text"
+id="kontaktperson"
+placeholder="Kontaktperson">
 
 </div>
 
@@ -800,7 +583,10 @@ Kontaktperson
 Måttansvarig
 </label>
 
-<input type="text">
+<input
+type="text"
+id="mattansvarig"
+placeholder="Måttansvarig">
 
 </div>
 
@@ -811,11 +597,24 @@ Måttansvarig
 Datum
 </label>
 
-<input type="date">
+<input
+type="date"
+id="projektdatum">
 
 </div>
 
 </div>
+
+
+<br>
+
+<button
+class="save-info-btn"
+onclick="saveProjectInfo()">
+
+💾 Spara projektinformation
+
+</button>
 
 </div>
 
@@ -868,7 +667,7 @@ Projekt klart
 
 
 <!-- =========================
-     PROGRESS
+     STATUS
 ========================= -->
 
 <div class="card">
@@ -876,6 +675,8 @@ Projekt klart
 <h3>
 Projektstatus
 </h3>
+
+<br>
 
 <div class="progress">
 
@@ -902,8 +703,7 @@ id="progressBar">
 type="text"
 id="search"
 placeholder="🔎 Sök trapphus eller lägenhet..."
-onkeyup="searchTable()"
->
+onkeyup="searchTable()">
 
 
 <table>
@@ -968,13 +768,10 @@ Ta bort
 
 </thead>
 
-
 <tbody id="tbody">
-
 </tbody>
 
 </table>
-
 
 <br>
 
@@ -1008,13 +805,8 @@ Köksbänkar & Fönsterbänkar
 
 </footer>
 
-
 </div>
 
-
-<!-- =========================
-     JAVASCRIPT
-========================= -->
 
 <script>
 
@@ -1025,6 +817,8 @@ let currentUserUid = "";
 let loadingData = false;
 
 let unsubscribeFirestore = null;
+
+let unsubscribeProjectInfo = null;
 
 
 /* =========================
@@ -1052,7 +846,7 @@ const userNames = {
 
 
 /* =========================
-   ADMIN / DELETE-ANVÄNDARE
+   ADMIN
 ========================= */
 
 const deleteUsers = [
@@ -1062,15 +856,6 @@ const deleteUsers = [
 "DbsidbqWniV1ucawSw8f8EnBz4k1"
 
 ];
-
-
-function canDelete(){
-
-return deleteUsers.includes(
-currentUserUid
-);
-
-}
 
 
 /* =========================
@@ -1086,43 +871,25 @@ return new Date()
 
 
 /* =========================
-   LÄGG TILL NY LÄGENHET
+   NY LÄGENHET
 ========================= */
 
 async function addNewApartment(){
 
-const db =
-window.firestoreDb;
-
-if(!db){
-
-console.error(
-"Firestore är inte redo."
-);
-
-return;
-
-}
-
-
 const rowData = {
 
 trapphus:"",
-
 lgh:"",
 
 fargKok:"",
-
 fargFonster:"",
 
 material:"Komposit",
 
 datumMattningKok:"",
-
 datumMattningFonster:"",
 
 datumMontageKok:"",
-
 datumMontageFonster:"",
 
 editedBy:
@@ -1138,10 +905,11 @@ kommentar:""
 
 try{
 
+const newDoc =
 await window.firestoreAddDoc(
 
 window.firestoreCollection(
-db,
+window.firestoreDb,
 "bankskivor"
 ),
 
@@ -1150,9 +918,9 @@ rowData
 );
 
 console.log(
-"Ny lägenhet skapad."
+"Ny lägenhet skapad:",
+newDoc.id
 );
-
 
 }catch(error){
 
@@ -1167,7 +935,7 @@ error
 
 
 /* =========================
-   SKAPA TABELLRAD
+   VISA LÄGENHET
 ========================= */
 
 function addRow(data = {}){
@@ -1175,10 +943,8 @@ function addRow(data = {}){
 const firebaseId =
 data.firebaseId || "";
 
-
 const row =
 document.createElement("tr");
-
 
 row.dataset.firebaseId =
 firebaseId;
@@ -1190,7 +956,7 @@ row.innerHTML = `
 
 <input
 type="text"
-value="${escapeHtml(data.trapphus || "")}">
+value="${data.trapphus || ''}">
 
 </td>
 
@@ -1199,7 +965,7 @@ value="${escapeHtml(data.trapphus || "")}">
 
 <input
 type="text"
-value="${escapeHtml(data.lgh || "")}">
+value="${data.lgh || ''}">
 
 </td>
 
@@ -1208,7 +974,7 @@ value="${escapeHtml(data.lgh || "")}">
 
 <input
 type="text"
-value="${escapeHtml(data.fargKok || "")}">
+value="${data.fargKok || ''}">
 
 </td>
 
@@ -1217,7 +983,7 @@ value="${escapeHtml(data.fargKok || "")}">
 
 <input
 type="text"
-value="${escapeHtml(data.fargFonster || "")}">
+value="${data.fargFonster || ''}">
 
 </td>
 
@@ -1233,7 +999,6 @@ ${data.material === "Komposit" ? "selected" : ""}>
 Komposit
 
 </option>
-
 
 <option
 value="Ek"
@@ -1252,7 +1017,7 @@ Ek
 
 <input
 type="date"
-value="${data.datumMattningKok || ""}">
+value="${data.datumMattningKok || ''}">
 
 </td>
 
@@ -1261,7 +1026,7 @@ value="${data.datumMattningKok || ""}">
 
 <input
 type="date"
-value="${data.datumMattningFonster || ""}">
+value="${data.datumMattningFonster || ''}">
 
 </td>
 
@@ -1270,7 +1035,7 @@ value="${data.datumMattningFonster || ""}">
 
 <input
 type="date"
-value="${data.datumMontageKok || ""}">
+value="${data.datumMontageKok || ''}">
 
 </td>
 
@@ -1279,21 +1044,21 @@ value="${data.datumMontageKok || ""}">
 
 <input
 type="date"
-value="${data.datumMontageFonster || ""}">
+value="${data.datumMontageFonster || ''}">
 
 </td>
 
 
 <td>
 
-${escapeHtml(data.editedBy || "")}
+${data.editedBy || ''}
 
 </td>
 
 
 <td class="col-date">
 
-${escapeHtml(data.editedDate || "")}
+${data.editedDate || ''}
 
 </td>
 
@@ -1302,7 +1067,7 @@ ${escapeHtml(data.editedDate || "")}
 
 <input
 type="text"
-value="${escapeHtml(data.kommentar || "")}">
+value="${data.kommentar || ''}">
 
 </td>
 
@@ -1326,40 +1091,11 @@ document
 .appendChild(row);
 
 
-/* =========================
-   DELETE-KNAPP
-========================= */
-
-const deleteButton =
-row.querySelector(
-".delete-btn"
-);
-
-
-if(!canDelete()){
-
-deleteButton.disabled =
-true;
-
-deleteButton.classList.add(
-"delete-disabled"
-);
-
-deleteButton.title =
-"Endast Adrian och Stefan kan ta bort lägenheter.";
-
-}
-
-
-/* =========================
-   FÄRG
-========================= */
-
 updateRowColor(row);
 
 
 /* =========================
-   ÄNDRINGAR
+   ÄNDRING
 ========================= */
 
 row.querySelectorAll(
@@ -1372,11 +1108,8 @@ input.addEventListener(
 async () => {
 
 if(loadingData){
-
 return;
-
 }
-
 
 row.cells[9].innerText =
 currentUser;
@@ -1384,34 +1117,38 @@ currentUser;
 row.cells[10].innerText =
 timestamp();
 
-
 updateRowColor(row);
 
 sortRows();
 
 updateStats();
 
-
 await saveRow(row);
 
-}
-);
+});
 
 });
 
 
 /* =========================
-   DELETE
+   TA BORT
 ========================= */
 
-deleteButton.addEventListener(
+row.querySelector(
+".delete-btn"
+)
+.addEventListener(
 "click",
 async () => {
 
-if(!canDelete()){
+if(
+!deleteUsers.includes(
+currentUserUid
+)
+){
 
 alert(
-"Endast Adrian och Stefan kan ta bort lägenheter."
+"Du har inte behörighet att ta bort lägenheter."
 );
 
 return;
@@ -1462,12 +1199,6 @@ firebaseId
 );
 
 
-console.log(
-"Lägenhet borttagen:",
-firebaseId
-);
-
-
 }catch(error){
 
 console.error(
@@ -1475,21 +1206,9 @@ console.error(
 error
 );
 
-alert(
-"Kunde inte ta bort lägenheten."
-);
-
 }
 
-}
-);
-
-
-/* =========================
-   UPPDATERA
-========================= */
-
-updateStats();
+});
 
 }
 
@@ -1505,18 +1224,15 @@ row.cells[5]
 .querySelector("input")
 .value;
 
-
 const datumMattningFonster =
 row.cells[6]
 .querySelector("input")
 .value;
 
-
 const datumMontageKok =
 row.cells[7]
 .querySelector("input")
 .value;
-
 
 const datumMontageFonster =
 row.cells[8]
@@ -1529,8 +1245,6 @@ row.classList.remove(
 "rad-monterad"
 );
 
-
-/* Färdigmonterad */
 
 if(
 
@@ -1548,8 +1262,6 @@ return;
 
 }
 
-
-/* Måttad */
 
 if(
 
@@ -1569,83 +1281,64 @@ row.classList.add(
 
 
 /* =========================
-   SPARA EN RAD
+   SPARA RAD
 ========================= */
 
 async function saveRow(row){
 
 if(loadingData){
-
 return;
-
 }
-
 
 const db =
 window.firestoreDb;
 
-
-if(!db){
-
-console.error(
-"Firestore är inte redo."
-);
-
-return;
-
-}
-
-
 const firebaseId =
 row.dataset.firebaseId;
+
+
+if(!db){
+return;
+}
 
 
 const rowData = {
 
 trapphus:
 row.cells[0]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 lgh:
 row.cells[1]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 fargKok:
 row.cells[2]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 fargFonster:
 row.cells[3]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 material:
 row.cells[4]
-.querySelector("select")
-.value,
+.querySelector("select").value,
 
 datumMattningKok:
 row.cells[5]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 datumMattningFonster:
 row.cells[6]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 datumMontageKok:
 row.cells[7]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 datumMontageFonster:
 row.cells[8]
-.querySelector("input")
-.value,
+.querySelector("input").value,
 
 editedBy:
 row.cells[9].innerText,
@@ -1655,47 +1348,28 @@ row.cells[10].innerText,
 
 kommentar:
 row.cells[11]
-.querySelector("input")
-.value
+.querySelector("input").value
 
 };
 
 
 try{
 
-
-/* Befintlig rad */
-
 if(firebaseId){
 
 await window.firestoreUpdateDoc(
 
 window.firestoreDoc(
-
 db,
-
 "bankskivor",
-
 firebaseId
-
 ),
 
 rowData
 
 );
 
-
-console.log(
-"Lägenhet uppdaterad:",
-firebaseId
-);
-
-}
-
-
-/* Ny rad */
-
-else{
+}else{
 
 const newDoc =
 await window.firestoreAddDoc(
@@ -1709,18 +1383,10 @@ rowData
 
 );
 
-
 row.dataset.firebaseId =
 newDoc.id;
 
-
-console.log(
-"Ny lägenhet skapad:",
-newDoc.id
-);
-
 }
-
 
 }catch(error){
 
@@ -1730,6 +1396,263 @@ error
 );
 
 }
+
+}
+
+
+/* =========================
+   PROJEKTINFO
+========================= */
+
+async function saveProjectInfo(){
+
+const db =
+window.firestoreDb;
+
+
+const projectData = {
+
+projekt:
+document
+.getElementById("projekt")
+.value,
+
+projektnummer:
+document
+.getElementById("projektnummer")
+.value,
+
+adress:
+document
+.getElementById("adress")
+.value,
+
+kontaktperson:
+document
+.getElementById("kontaktperson")
+.value,
+
+mattansvarig:
+document
+.getElementById("mattansvarig")
+.value,
+
+datum:
+document
+.getElementById("projektdatum")
+.value,
+
+editedBy:
+currentUser,
+
+editedDate:
+timestamp()
+
+};
+
+
+try{
+
+await window.firestoreSetDoc(
+
+window.firestoreDoc(
+db,
+"projektinfo",
+"projekt"
+),
+
+projectData
+
+);
+
+
+console.log(
+"Projektinformation sparad."
+);
+
+
+}catch(error){
+
+console.error(
+"Kunde inte spara projektinformationen:",
+error
+);
+
+}
+
+}
+
+
+/* =========================
+   LADDA PROJEKTINFO
+========================= */
+
+function startProjectInfoRealtime(){
+
+if(unsubscribeProjectInfo){
+
+unsubscribeProjectInfo();
+
+}
+
+
+unsubscribeProjectInfo =
+window.firestoreOnSnapshot(
+
+window.firestoreDoc(
+
+window.firestoreDb,
+
+"projektinfo",
+
+"projekt"
+
+),
+
+snapshot => {
+
+if(!snapshot.exists()){
+return;
+}
+
+
+const data =
+snapshot.data();
+
+
+document
+.getElementById("projekt")
+.value =
+data.projekt || "";
+
+
+document
+.getElementById("projektnummer")
+.value =
+data.projektnummer || "";
+
+
+document
+.getElementById("adress")
+.value =
+data.adress || "";
+
+
+document
+.getElementById("kontaktperson")
+.value =
+data.kontaktperson || "";
+
+
+document
+.getElementById("mattansvarig")
+.value =
+data.mattansvarig || "";
+
+
+document
+.getElementById("projektdatum")
+.value =
+data.datum || "";
+
+
+console.log(
+"Projektinformation synkad."
+);
+
+},
+
+error => {
+
+console.error(
+"Projektinfo-fel:",
+error
+);
+
+}
+
+);
+
+}
+
+
+/* =========================
+   REALTID LÄGENHETER
+========================= */
+
+function startRealtime(){
+
+if(unsubscribeFirestore){
+
+unsubscribeFirestore();
+
+}
+
+
+unsubscribeFirestore =
+window.firestoreOnSnapshot(
+
+window.firestoreCollection(
+window.firestoreDb,
+"bankskivor"
+),
+
+snapshot => {
+
+loadingData = true;
+
+
+const tbody =
+document.getElementById(
+"tbody"
+);
+
+
+tbody.innerHTML = "";
+
+
+snapshot.forEach(
+documentSnapshot => {
+
+const data =
+documentSnapshot.data();
+
+data.firebaseId =
+documentSnapshot.id;
+
+addRow(data);
+
+});
+
+
+sortRows();
+
+updateStats();
+
+
+loadingData = false;
+
+
+console.log(
+"Firestore synkad:",
+snapshot.size,
+"rader"
+);
+
+},
+
+error => {
+
+loadingData = false;
+
+console.error(
+"Firestore-fel:",
+error
+);
+
+}
+
+);
 
 }
 
@@ -1745,10 +1668,8 @@ document.querySelectorAll(
 "#tbody tr"
 );
 
-
 const total =
 rows.length;
-
 
 let klara = 0;
 
@@ -1760,7 +1681,6 @@ row.cells[7]
 .querySelector("input")
 .value;
 
-
 const montageFonster =
 row.cells[8]
 .querySelector("input")
@@ -1768,11 +1688,8 @@ row.cells[8]
 
 
 if(
-
 montageKok !== "" &&
-
 montageFonster !== ""
-
 ){
 
 klara++;
@@ -1788,9 +1705,7 @@ total - klara;
 
 const procent =
 total === 0
-
 ? 0
-
 : Math.round(
 (klara / total) * 100
 );
@@ -1823,7 +1738,6 @@ document.getElementById(
 bar.style.width =
 procent + "%";
 
-
 bar.innerText =
 procent + "%";
 
@@ -1841,7 +1755,6 @@ document.getElementById(
 "tbody"
 );
 
-
 const rows =
 Array.from(
 tbody.querySelectorAll("tr")
@@ -1855,7 +1768,6 @@ a.cells[0]
 .querySelector("input")
 .value
 .trim();
-
 
 const trB =
 b.cells[0]
@@ -1879,7 +1791,6 @@ a.cells[1]
 .querySelector("input")
 .value
 .trim();
-
 
 const lghB =
 b.cells[1]
@@ -1944,11 +1855,8 @@ row.cells[1]
 
 
 if(
-
 trapphus.includes(search) ||
-
 lgh.includes(search)
-
 ){
 
 row.style.display = "";
@@ -1963,82 +1871,43 @@ row.style.display = "none";
 
 }
 
-
-/* =========================
-   HTML-SÄKERHET
-========================= */
-
-function escapeHtml(value){
-
-return String(value)
-
-.replaceAll("&","&amp;")
-
-.replaceAll("<","&lt;")
-
-.replaceAll(">","&gt;")
-
-.replaceAll('"',"&quot;")
-
-.replaceAll("'","&#039;");
-
-}
-
 </script>
 
-
-<!-- =========================
-     FIREBASE
-========================= -->
 
 <script type="module">
 
 import {
 initializeApp
 }
-
 from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 
 
 import {
-
 getAuth,
-
 signInWithEmailAndPassword
-
 }
-
 from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 
 import {
-
 getFirestore,
-
 collection,
-
 addDoc,
-
 getDocs,
-
 doc,
-
 updateDoc,
-
 deleteDoc,
-
+setDoc,
 onSnapshot
-
 }
-
 from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
 /* =========================
-   FIREBASE CONFIG
+   FIREBASE
 ========================= */
 
 const firebaseConfig = {
@@ -2067,10 +1936,6 @@ measurementId:
 };
 
 
-/* =========================
-   STARTA FIREBASE
-========================= */
-
 const app =
 initializeApp(
 firebaseConfig
@@ -2087,7 +1952,7 @@ getFirestore(app);
 
 /* =========================
    GÖR FIREBASE
-   TILLGÄNGLIG
+   TILLGÄNGLIGT
 ========================= */
 
 window.firestoreDb =
@@ -2111,94 +1976,11 @@ updateDoc;
 window.firestoreDeleteDoc =
 deleteDoc;
 
+window.firestoreSetDoc =
+setDoc;
 
-/* =========================
-   REALTIDSSYNKNING
-========================= */
-
-function startRealtime(){
-
-if(unsubscribeFirestore){
-
-unsubscribeFirestore();
-
-unsubscribeFirestore =
-null;
-
-}
-
-
-const tbody =
-document.getElementById(
-"tbody"
-);
-
-
-unsubscribeFirestore =
-onSnapshot(
-
-collection(
-db,
-"bankskivor"
-),
-
-
-snapshot => {
-
-loadingData = true;
-
-
-tbody.innerHTML = "";
-
-
-snapshot.forEach(
-documentSnapshot => {
-
-const data =
-documentSnapshot.data();
-
-
-data.firebaseId =
-documentSnapshot.id;
-
-
-addRow(data);
-
-});
-
-
-sortRows();
-
-updateStats();
-
-
-loadingData = false;
-
-
-console.log(
-"Firestore synkad:",
-snapshot.size,
-"rader"
-);
-
-},
-
-
-error => {
-
-loadingData = false;
-
-
-console.error(
-"Realtime Firestore-fel:",
-error
-);
-
-}
-
-);
-
-}
+window.firestoreOnSnapshot =
+onSnapshot;
 
 
 /* =========================
@@ -2210,33 +1992,25 @@ async function(){
 
 const email =
 document
-.getElementById(
-"username"
-)
+.getElementById("username")
 .value;
 
 
 const password =
 document
-.getElementById(
-"password"
-)
+.getElementById("password")
 .value;
 
 
 const loginError =
-document.getElementById(
-"loginError"
-);
+document
+.getElementById("loginError");
 
 
 loginError.innerText = "";
 
 
 try{
-
-
-/* Firebase-login */
 
 const result =
 await signInWithEmailAndPassword(
@@ -2254,26 +2028,19 @@ const user =
 result.user;
 
 
-/* =========================
-   SPARA UID
-========================= */
-
-currentUserUid =
-user.uid;
-
-
-/* =========================
-   ÖVERSÄTT E-POST
-   TILL NAMN
-========================= */
-
-const userEmail =
-user.email.toLowerCase();
+const normalizedEmail =
+user.email
+.toLowerCase();
 
 
 currentUser =
-userNames[userEmail]
-|| "Övrig";
+userNames[
+normalizedEmail
+] || "Övrig";
+
+
+currentUserUid =
+user.uid;
 
 
 /* =========================
@@ -2307,10 +2074,12 @@ currentUser;
 
 
 /* =========================
-   STARTA FIRESTORE
+   STARTA REALTID
 ========================= */
 
 startRealtime();
+
+startProjectInfoRealtime();
 
 
 }catch(error){
@@ -2319,7 +2088,11 @@ console.error(error);
 
 
 loginError.innerText =
-"Felaktigt användarnamn eller lösenord.";
+error.code
++
+": "
++
+error.message;
 
 }
 
@@ -2328,5 +2101,4 @@ loginError.innerText =
 </script>
 
 </body>
-
 </html>
