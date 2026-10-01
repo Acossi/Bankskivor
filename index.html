@@ -42,7 +42,9 @@ linear-gradient(
 );
 
 min-height:100vh;
+
 padding:20px;
+
 color:white;
 
 }
@@ -60,6 +62,7 @@ transform:
 translate(-50%,-50%);
 
 font-size:350px;
+
 font-weight:900;
 
 opacity:.03;
@@ -70,10 +73,17 @@ z-index:-1;
 
 }
 
+
+/* =========================
+   LOGIN
+========================= */
+
 .login-screen{
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
 height:100vh;
@@ -83,6 +93,7 @@ height:100vh;
 .login-box{
 
 background:white;
+
 color:black;
 
 width:420px;
@@ -99,7 +110,9 @@ box-shadow:
 .login-box h2{
 
 text-align:center;
+
 margin-bottom:20px;
+
 color:#005AA9;
 
 }
@@ -122,11 +135,13 @@ border:1px solid #ccc;
 .login-box button{
 
 width:100%;
+
 padding:12px;
 
 margin-top:15px;
 
 background:#005AA9;
+
 color:white;
 
 border:none;
@@ -138,6 +153,17 @@ font-weight:bold;
 cursor:pointer;
 
 }
+
+.login-box button:hover{
+
+background:#0078D4;
+
+}
+
+
+/* =========================
+   APP
+========================= */
 
 .container{
 
@@ -152,7 +178,9 @@ margin:auto;
 .header{
 
 display:flex;
+
 justify-content:space-between;
+
 align-items:center;
 
 padding:25px;
@@ -177,7 +205,9 @@ padding:15px 25px;
 border-radius:15px;
 
 display:flex;
+
 flex-direction:column;
+
 align-items:center;
 
 }
@@ -185,6 +215,7 @@ align-items:center;
 .logo-main{
 
 font-size:36px;
+
 font-weight:900;
 
 color:#005AA9;
@@ -298,6 +329,7 @@ overflow:hidden;
 .progress-bar{
 
 height:100%;
+
 width:0;
 
 background:
@@ -308,7 +340,9 @@ linear-gradient(
 );
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
 font-weight:bold;
@@ -326,6 +360,7 @@ margin-bottom:15px;
 table{
 
 width:100%;
+
 border-collapse:collapse;
 
 }
@@ -333,7 +368,9 @@ border-collapse:collapse;
 th{
 
 background:#005AA9;
+
 padding:12px;
+
 font-size:13px;
 
 }
@@ -356,9 +393,15 @@ background:#334155;
 
 }
 
+
+/* =========================
+   KOLUMNER
+========================= */
+
 .col-trapphus{
 
 width:70px;
+
 min-width:70px;
 
 }
@@ -366,6 +409,7 @@ min-width:70px;
 .col-lgh{
 
 width:130px;
+
 min-width:130px;
 
 }
@@ -373,6 +417,7 @@ min-width:130px;
 .col-date{
 
 width:140px;
+
 min-width:140px;
 
 }
@@ -380,9 +425,15 @@ min-width:140px;
 .col-material{
 
 width:120px;
+
 min-width:120px;
 
 }
+
+
+/* =========================
+   FÄRGSTATUS
+========================= */
 
 .rad-mattad td{
 
@@ -414,6 +465,11 @@ rgba(34,197,94,0.40) !important;
 
 }
 
+
+/* =========================
+   KNAPPAR
+========================= */
+
 button{
 
 padding:12px 18px;
@@ -431,37 +487,71 @@ margin:3px;
 }
 
 .add-btn{
+
 background:#16a34a;
+
 color:white;
+
+}
+
+.add-btn:hover{
+
+background:#22c55e;
+
 }
 
 .pdf-btn{
+
 background:#0078d4;
+
 color:white;
+
+}
+
+.pdf-btn:hover{
+
+background:#0088ef;
+
+}
+
+.clear-btn{
+
+background:#d97706;
+
+color:white;
+
 }
 
 .delete-btn{
+
 background:#dc2626;
+
 color:white;
+
+padding:8px 12px;
+
 }
 
-.save-info-btn{
-background:#16a34a;
-color:white;
+.delete-btn:hover{
+
+background:#ef4444;
+
 }
 
-.logout-btn{
+.delete-disabled{
+
 background:#64748b;
-color:white;
-}
 
-#projectMessage{
+cursor:not-allowed;
 
-margin-top:10px;
-color:#22c55e;
-font-weight:bold;
+opacity:.5;
 
 }
+
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
 
@@ -473,16 +563,24 @@ opacity:.7;
 
 }
 
+
+/* =========================
+   PRINT
+========================= */
+
 @media print{
 
 button,
 #search{
+
 display:none !important;
+
 }
 
 body{
 
 background:white;
+
 color:black;
 
 }
@@ -490,6 +588,7 @@ color:black;
 .card{
 
 background:white;
+
 border:1px solid #ccc;
 
 }
@@ -497,6 +596,42 @@ border:1px solid #ccc;
 td{
 
 color:black;
+
+}
+
+}
+
+
+/* =========================
+   MOBIL
+========================= */
+
+@media(max-width:900px){
+
+body{
+
+padding:10px;
+
+}
+
+.header{
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+table{
+
+font-size:12px;
+
+}
+
+th,
+td{
+
+padding:6px;
 
 }
 
@@ -552,12 +687,15 @@ type="password"
 placeholder="Lösenord">
 
 <button onclick="firebaseLogin()">
+
 Logga in
+
 </button>
 
 <p
 id="loginError"
 style="color:red;margin-top:10px;">
+
 </p>
 
 </div>
@@ -578,7 +716,9 @@ id="app">
 
 <div>
 
-<h1>Bänkskivor Sångvägen</h1>
+<h1>
+Bänkskivor Sångvägen
+</h1>
 
 <p id="loggedUser">
 Inloggad som:
@@ -608,90 +748,74 @@ Bänkskivor
 
 <div class="card">
 
-<h3>Projektinformation</h3>
-
-<br>
-
 <div class="row">
 
 <div>
 
-<label>Projekt</label>
+<label>
+Projekt
+</label>
 
-<input
-type="text"
-id="projectName">
-
-</div>
-
-
-<div>
-
-<label>Projektnummer</label>
-
-<input
-type="text"
-id="projectNumber">
+<input type="text">
 
 </div>
 
 
 <div>
 
-<label>Adress</label>
+<label>
+Projektnummer
+</label>
 
-<input
-type="text"
-id="projectAddress">
-
-</div>
-
-
-<div>
-
-<label>Kontaktperson</label>
-
-<input
-type="text"
-id="projectContact">
+<input type="text">
 
 </div>
 
 
 <div>
 
-<label>Måttansvarig</label>
+<label>
+Adress
+</label>
 
-<input
-type="text"
-id="projectResponsible">
+<input type="text">
 
 </div>
 
 
 <div>
 
-<label>Datum</label>
+<label>
+Kontaktperson
+</label>
 
-<input
-type="date"
-id="projectDate">
-
-</div>
+<input type="text">
 
 </div>
 
 
-<button
-class="save-info-btn"
-onclick="saveProjectInfo()">
+<div>
 
-💾 Spara projektinformation
+<label>
+Måttansvarig
+</label>
 
-</button>
+<input type="text">
+
+</div>
 
 
-<p id="projectMessage"></p>
+<div>
+
+<label>
+Datum
+</label>
+
+<input type="date">
+
+</div>
+
+</div>
 
 </div>
 
@@ -753,8 +877,6 @@ Projekt klart
 Projektstatus
 </h3>
 
-<br>
-
 <div class="progress">
 
 <div
@@ -776,12 +898,12 @@ id="progressBar">
 
 <div class="card">
 
-
 <input
 type="text"
 id="search"
 placeholder="🔎 Sök trapphus eller lägenhet..."
-onkeyup="searchTable()">
+onkeyup="searchTable()"
+>
 
 
 <table>
@@ -848,6 +970,7 @@ Ta bort
 
 
 <tbody id="tbody">
+
 </tbody>
 
 </table>
@@ -880,7 +1003,7 @@ onclick="window.print()">
 <footer>
 
 NCC Bänkskivor V2 |
-Komposit & Laminat |
+Komposit & Ek |
 Köksbänkar & Fönsterbänkar
 
 </footer>
@@ -890,129 +1013,47 @@ Köksbänkar & Fönsterbänkar
 
 
 <!-- =========================
-     FIREBASE
+     JAVASCRIPT
 ========================= -->
 
-<script type="module">
+<script>
 
+let currentUser = "";
 
-import {
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+let currentUserUid = "";
 
+let loadingData = false;
 
-import {
-getAuth,
-signInWithEmailAndPassword
-}
-from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
-
-
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-doc,
-updateDoc,
-deleteDoc,
-setDoc,
-onSnapshot
-}
-from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+let unsubscribeFirestore = null;
 
 
 /* =========================
-   FIREBASE CONFIG
-========================= */
-
-const firebaseConfig = {
-
-apiKey:
-"AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
-
-authDomain:
-"bankskivor-status.firebaseapp.com",
-
-projectId:
-"bankskivor-status",
-
-storageBucket:
-"bankskivor-status.firebasestorage.app",
-
-messagingSenderId:
-"424686541436",
-
-appId:
-"1:424686541436:web:a495bd7d2ab1586a11c7f9",
-
-measurementId:
-"G-NTLCQJM6H6"
-
-};
-
-
-const app =
-initializeApp(firebaseConfig);
-
-
-const auth =
-getAuth(app);
-
-
-const db =
-getFirestore(app);
-
-
-/* =========================
-   GLOBAL FIREBASE
-========================= */
-
-window.firestoreDb =
-db;
-
-window.firestoreCollection =
-collection;
-
-window.firestoreAddDoc =
-addDoc;
-
-window.firestoreDoc =
-doc;
-
-window.firestoreUpdateDoc =
-updateDoc;
-
-window.firestoreDeleteDoc =
-deleteDoc;
-
-window.firestoreSetDoc =
-setDoc;
-
-
-/* =========================
-   ANVÄNDARE
+   ANVÄNDARNAMN
 ========================= */
 
 const userNames = {
-  "adrian@google.se": "Adrian",
-  "stefan@google.se": "Stefan",
-  "alexander@google.se": "Alexander",
-  "rebecka@google.se": "Rebecka",
-  "övrig@google.se": "Övrig"
+
+"adrian@google.se":
+"Adrian",
+
+"stefan@google.se":
+"Stefan",
+
+"alexander@google.se":
+"Alexander",
+
+"rebecka@google.se":
+"Rebecka",
+
+"övrig@google.se":
+"Övrig"
+
 };
 
-const email = user.email.toLowerCase();
 
-currentUser =
-  userNames[email] || "Övrig";
-
-};
-
+/* =========================
+   ADMIN / DELETE-ANVÄNDARE
+========================= */
 
 const deleteUsers = [
 
@@ -1023,15 +1064,13 @@ const deleteUsers = [
 ];
 
 
-let currentUser = "";
+function canDelete(){
 
-let currentUserUid = "";
+return deleteUsers.includes(
+currentUserUid
+);
 
-let loadingData = false;
-
-let unsubscribeFirestore = null;
-
-let unsubscribeProject = null;
+}
 
 
 /* =========================
@@ -1041,48 +1080,19 @@ let unsubscribeProject = null;
 function timestamp(){
 
 return new Date()
-.toLocaleString(
-"sv-SE"
-);
+.toLocaleString("sv-SE");
 
 }
 
 
 /* =========================
-   VISNINGSNAMN
-========================= */
-
-function getDisplayName(email){
-
-return userNames[email]
-|| "Övrig";
-
-}
-
-
-/* =========================
-   RADERINGSTILLSTÅND
-========================= */
-
-function canDelete(){
-
-return deleteUsers
-.includes(
-currentUserUid
-);
-
-}
-
-
-/* =========================
-   NY LÄGENHET
+   LÄGG TILL NY LÄGENHET
 ========================= */
 
 async function addNewApartment(){
 
 const db =
 window.firestoreDb;
-
 
 if(!db){
 
@@ -1095,30 +1105,24 @@ return;
 }
 
 
-try{
-
-const newDoc =
-await addDoc(
-
-collection(
-db,
-"bankskivor"
-),
-
-{
+const rowData = {
 
 trapphus:"",
+
 lgh:"",
 
 fargKok:"",
+
 fargFonster:"",
 
 material:"Komposit",
 
 datumMattningKok:"",
+
 datumMattningFonster:"",
 
 datumMontageKok:"",
+
 datumMontageFonster:"",
 
 editedBy:
@@ -1129,14 +1133,24 @@ timestamp(),
 
 kommentar:""
 
-}
+};
+
+
+try{
+
+await window.firestoreAddDoc(
+
+window.firestoreCollection(
+db,
+"bankskivor"
+),
+
+rowData
 
 );
 
-
 console.log(
-"Ny lägenhet skapad:",
-newDoc.id
+"Ny lägenhet skapad."
 );
 
 
@@ -1153,7 +1167,7 @@ error
 
 
 /* =========================
-   SKAPA RAD
+   SKAPA TABELLRAD
 ========================= */
 
 function addRow(data = {}){
@@ -1214,21 +1228,18 @@ value="${escapeHtml(data.fargFonster || "")}">
 
 <option
 value="Komposit"
-${data.material === "Komposit"
-? "selected"
-: ""}>
+${data.material === "Komposit" ? "selected" : ""}>
 
 Komposit
 
 </option>
 
-<option
-value="Laminat"
-${data.material === "Laminat"
-? "selected"
-: ""}>
 
-Laminat
+<option
+value="Ek"
+${data.material === "Ek" ? "selected" : ""}>
+
+Ek
 
 </option>
 
@@ -1299,8 +1310,7 @@ value="${escapeHtml(data.kommentar || "")}">
 <td>
 
 <button
-class="delete-btn"
-type="button">
+class="delete-btn">
 
 X
 
@@ -1315,6 +1325,35 @@ document
 .getElementById("tbody")
 .appendChild(row);
 
+
+/* =========================
+   DELETE-KNAPP
+========================= */
+
+const deleteButton =
+row.querySelector(
+".delete-btn"
+);
+
+
+if(!canDelete()){
+
+deleteButton.disabled =
+true;
+
+deleteButton.classList.add(
+"delete-disabled"
+);
+
+deleteButton.title =
+"Endast Adrian och Stefan kan ta bort lägenheter.";
+
+}
+
+
+/* =========================
+   FÄRG
+========================= */
 
 updateRowColor(row);
 
@@ -1332,7 +1371,15 @@ input.addEventListener(
 "change",
 async () => {
 
-row.cells[9].innerText = currentUser;
+if(loadingData){
+
+return;
+
+}
+
+
+row.cells[9].innerText =
+currentUser;
 
 row.cells[10].innerText =
 timestamp();
@@ -1354,22 +1401,8 @@ await saveRow(row);
 
 
 /* =========================
-   RADERA
+   DELETE
 ========================= */
-
-const deleteButton =
-row.querySelector(
-".delete-btn"
-);
-
-
-if(!canDelete()){
-
-deleteButton.style.display =
-"none";
-
-}
-
 
 deleteButton.addEventListener(
 "click",
@@ -1378,7 +1411,7 @@ async () => {
 if(!canDelete()){
 
 alert(
-"Du har inte behörighet att ta bort lägenheter."
+"Endast Adrian och Stefan kan ta bort lägenheter."
 );
 
 return;
@@ -1414,12 +1447,16 @@ return;
 
 try{
 
-await deleteDoc(
+await window.firestoreDeleteDoc(
 
-doc(
-db,
+window.firestoreDoc(
+
+window.firestoreDb,
+
 "bankskivor",
+
 firebaseId
+
 )
 
 );
@@ -1448,7 +1485,9 @@ alert(
 );
 
 
-sortRows();
+/* =========================
+   UPPDATERA
+========================= */
 
 updateStats();
 
@@ -1456,43 +1495,7 @@ updateStats();
 
 
 /* =========================
-   HTML-SÄKERHET
-========================= */
-
-function escapeHtml(value){
-
-return String(value)
-
-.replaceAll(
-"&",
-"&amp;"
-)
-
-.replaceAll(
-"<",
-"&lt;"
-)
-
-.replaceAll(
-">",
-"&gt;"
-)
-
-.replaceAll(
-'"',
-"&quot;"
-)
-
-.replaceAll(
-"'",
-"&#039;"
-);
-
-}
-
-
-/* =========================
-   RADFÄRG
+   FÄRG PÅ RAD
 ========================= */
 
 function updateRowColor(row){
@@ -1527,11 +1530,11 @@ row.classList.remove(
 );
 
 
+/* Färdigmonterad */
+
 if(
 
-datumMontageKok !== ""
-
-&&
+datumMontageKok !== "" &&
 
 datumMontageFonster !== ""
 
@@ -1546,11 +1549,11 @@ return;
 }
 
 
+/* Måttad */
+
 if(
 
-datumMattningKok !== ""
-
-||
+datumMattningKok !== "" ||
 
 datumMattningFonster !== ""
 
@@ -1566,7 +1569,7 @@ row.classList.add(
 
 
 /* =========================
-   SPARA RAD
+   SPARA EN RAD
 ========================= */
 
 async function saveRow(row){
@@ -1582,10 +1585,6 @@ const db =
 window.firestoreDb;
 
 
-const firebaseId =
-row.dataset.firebaseId;
-
-
 if(!db){
 
 console.error(
@@ -1597,15 +1596,8 @@ return;
 }
 
 
-if(!firebaseId){
-
-console.error(
-"Raden saknar Firebase-ID."
-);
-
-return;
-
-}
+const firebaseId =
+row.dataset.firebaseId;
 
 
 const rowData = {
@@ -1671,12 +1663,21 @@ row.cells[11]
 
 try{
 
-await updateDoc(
 
-doc(
+/* Befintlig rad */
+
+if(firebaseId){
+
+await window.firestoreUpdateDoc(
+
+window.firestoreDoc(
+
 db,
+
 "bankskivor",
+
 firebaseId
+
 ),
 
 rowData
@@ -1685,9 +1686,40 @@ rowData
 
 
 console.log(
-"Rad uppdaterad:",
+"Lägenhet uppdaterad:",
 firebaseId
 );
+
+}
+
+
+/* Ny rad */
+
+else{
+
+const newDoc =
+await window.firestoreAddDoc(
+
+window.firestoreCollection(
+db,
+"bankskivor"
+),
+
+rowData
+
+);
+
+
+row.dataset.firebaseId =
+newDoc.id;
+
+
+console.log(
+"Ny lägenhet skapad:",
+newDoc.id
+);
+
+}
 
 
 }catch(error){
@@ -1698,6 +1730,102 @@ error
 );
 
 }
+
+}
+
+
+/* =========================
+   STATISTIK
+========================= */
+
+function updateStats(){
+
+const rows =
+document.querySelectorAll(
+"#tbody tr"
+);
+
+
+const total =
+rows.length;
+
+
+let klara = 0;
+
+
+rows.forEach(row => {
+
+const montageKok =
+row.cells[7]
+.querySelector("input")
+.value;
+
+
+const montageFonster =
+row.cells[8]
+.querySelector("input")
+.value;
+
+
+if(
+
+montageKok !== "" &&
+
+montageFonster !== ""
+
+){
+
+klara++;
+
+}
+
+});
+
+
+const kvar =
+total - klara;
+
+
+const procent =
+total === 0
+
+? 0
+
+: Math.round(
+(klara / total) * 100
+);
+
+
+document
+.getElementById("klara")
+.innerText =
+klara;
+
+
+document
+.getElementById("ejklara")
+.innerText =
+kvar;
+
+
+document
+.getElementById("procent")
+.innerText =
+procent + "%";
+
+
+const bar =
+document.getElementById(
+"progressBar"
+);
+
+
+bar.style.width =
+procent + "%";
+
+
+bar.innerText =
+procent + "%";
 
 }
 
@@ -1720,8 +1848,7 @@ tbody.querySelectorAll("tr")
 );
 
 
-rows.sort(
-(a,b) => {
+rows.sort((a,b) => {
 
 const trA =
 a.cells[0]
@@ -1782,107 +1909,10 @@ tbody.appendChild(row);
 
 
 /* =========================
-   STATISTIK
-========================= */
-
-function updateStats(){
-
-const rows =
-document.querySelectorAll(
-"#tbody tr"
-);
-
-
-const total =
-rows.length;
-
-
-let klara = 0;
-
-
-rows.forEach(row => {
-
-const montageKok =
-row.cells[7]
-.querySelector("input")
-.value;
-
-
-const montageFonster =
-row.cells[8]
-.querySelector("input")
-.value;
-
-
-if(
-
-montageKok !== ""
-
-&&
-
-montageFonster !== ""
-
-){
-
-klara++;
-
-}
-
-});
-
-
-const kvar =
-total - klara;
-
-
-const procent =
-total === 0
-? 0
-: Math.round(
-(klara / total) * 100
-);
-
-
-document
-.getElementById("klara")
-.innerText =
-klara;
-
-
-document
-.getElementById("ejklara")
-.innerText =
-kvar;
-
-
-document
-.getElementById("procent")
-.innerText =
-procent + "%";
-
-
-const bar =
-document.getElementById(
-"progressBar"
-);
-
-
-bar.style.width =
-procent + "%";
-
-
-bar.innerText =
-procent + "%";
-
-}
-
-
-/* =========================
    SÖK
 ========================= */
 
-window.searchTable =
-function(){
+function searchTable(){
 
 const search =
 document
@@ -1915,9 +1945,7 @@ row.cells[1]
 
 if(
 
-trapphus.includes(search)
-
-||
+trapphus.includes(search) ||
 
 lgh.includes(search)
 
@@ -1927,232 +1955,165 @@ row.style.display = "";
 
 }else{
 
-row.style.display =
-"none";
+row.style.display = "none";
 
 }
 
 });
 
-};
-
-
-/* =========================
-   PROJEKTINFO
-========================= */
-
-function getProjectData(){
-
-return {
-
-projekt:
-document
-.getElementById("projectName")
-.value,
-
-projektnummer:
-document
-.getElementById("projectNumber")
-.value,
-
-adress:
-document
-.getElementById("projectAddress")
-.value,
-
-kontaktperson:
-document
-.getElementById("projectContact")
-.value,
-
-mattansvarig:
-document
-.getElementById("projectResponsible")
-.value,
-
-datum:
-document
-.getElementById("projectDate")
-.value,
-
-editedBy:
-currentUser,
-
-editedDate:
-timestamp()
-
-};
-
 }
 
 
 /* =========================
-   SPARA PROJEKTINFO
+   HTML-SÄKERHET
 ========================= */
 
-window.saveProjectInfo =
-async function(){
+function escapeHtml(value){
+
+return String(value)
+
+.replaceAll("&","&amp;")
+
+.replaceAll("<","&lt;")
+
+.replaceAll(">","&gt;")
+
+.replaceAll('"',"&quot;")
+
+.replaceAll("'","&#039;");
+
+}
+
+</script>
+
+
+<!-- =========================
+     FIREBASE
+========================= -->
+
+<script type="module">
+
+import {
+initializeApp
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+
+import {
+
+getAuth,
+
+signInWithEmailAndPassword
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+
+import {
+
+getFirestore,
+
+collection,
+
+addDoc,
+
+getDocs,
+
+doc,
+
+updateDoc,
+
+deleteDoc,
+
+onSnapshot
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+apiKey:
+"AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
+
+authDomain:
+"bankskivor-status.firebaseapp.com",
+
+projectId:
+"bankskivor-status",
+
+storageBucket:
+"bankskivor-status.firebasestorage.app",
+
+messagingSenderId:
+"424686541436",
+
+appId:
+"1:424686541436:web:a495bd7d2ab1586a11c7f9",
+
+measurementId:
+"G-NTLCQJM6H6"
+
+};
+
+
+/* =========================
+   STARTA FIREBASE
+========================= */
+
+const app =
+initializeApp(
+firebaseConfig
+);
+
+
+const auth =
+getAuth(app);
+
 
 const db =
-window.firestoreDb;
-
-
-if(!db){
-
-return;
-
-}
-
-
-try{
-
-await setDoc(
-
-doc(
-db,
-"projekt",
-"info"
-),
-
-getProjectData(),
-
-{
-merge:true
-}
-
-);
-
-
-const message =
-document.getElementById(
-"projectMessage"
-);
-
-
-message.innerText =
-"✓ Projektinformationen sparade";
-
-
-setTimeout(
-() => {
-
-message.innerText = "";
-
-},
-2500
-);
-
-
-}catch(error){
-
-console.error(
-"Kunde inte spara projektinfo:",
-error
-);
-
-alert(
-"Kunde inte spara projektinformationen."
-);
-
-}
-
-};
+getFirestore(app);
 
 
 /* =========================
-   LADDA PROJEKTINFO
+   GÖR FIREBASE
+   TILLGÄNGLIG
 ========================= */
 
-function startProjectListener(){
+window.firestoreDb =
+db;
 
-if(unsubscribeProject){
+window.firestoreCollection =
+collection;
 
-unsubscribeProject();
+window.firestoreAddDoc =
+addDoc;
 
-}
+window.firestoreGetDocs =
+getDocs;
 
+window.firestoreDoc =
+doc;
 
-unsubscribeProject =
-onSnapshot(
+window.firestoreUpdateDoc =
+updateDoc;
 
-doc(
-db,
-"projekt",
-"info"
-),
-
-snapshot => {
-
-if(!snapshot.exists()){
-
-return;
-
-}
-
-
-const data =
-snapshot.data();
-
-
-loadingData = true;
-
-
-document
-.getElementById("projectName")
-.value =
-data.projekt || "";
-
-
-document
-.getElementById("projectNumber")
-.value =
-data.projektnummer || "";
-
-
-document
-.getElementById("projectAddress")
-.value =
-data.adress || "";
-
-
-document
-.getElementById("projectContact")
-.value =
-data.kontaktperson || "";
-
-
-document
-.getElementById("projectResponsible")
-.value =
-data.mattansvarig || "";
-
-
-document
-.getElementById("projectDate")
-.value =
-data.datum || "";
-
-
-loadingData = false;
-
-},
-
-error => {
-
-console.error(
-"Projektinfo-fel:",
-error
-);
-
-}
-
-);
-
-}
+window.firestoreDeleteDoc =
+deleteDoc;
 
 
 /* =========================
-   REALTIDSLYSSNARE
+   REALTIDSSYNKNING
 ========================= */
 
 function startRealtime(){
@@ -2160,6 +2121,9 @@ function startRealtime(){
 if(unsubscribeFirestore){
 
 unsubscribeFirestore();
+
+unsubscribeFirestore =
+null;
 
 }
 
@@ -2177,6 +2141,7 @@ collection(
 db,
 "bankskivor"
 ),
+
 
 snapshot => {
 
@@ -2211,12 +2176,13 @@ loadingData = false;
 
 
 console.log(
-"Firestore uppdaterad:",
+"Firestore synkad:",
 snapshot.size,
 "rader"
 );
 
 },
+
 
 error => {
 
@@ -2244,13 +2210,17 @@ async function(){
 
 const email =
 document
-.getElementById("username")
+.getElementById(
+"username"
+)
 .value;
 
 
 const password =
 document
-.getElementById("password")
+.getElementById(
+"password"
+)
 .value;
 
 
@@ -2265,11 +2235,16 @@ loginError.innerText = "";
 
 try{
 
+
+/* Firebase-login */
+
 const result =
 await signInWithEmailAndPassword(
 
 auth,
+
 email,
+
 password
 
 );
@@ -2279,15 +2254,31 @@ const user =
 result.user;
 
 
+/* =========================
+   SPARA UID
+========================= */
+
 currentUserUid =
 user.uid;
 
 
-currentUser =
-getDisplayName(
-user.email
-);
+/* =========================
+   ÖVERSÄTT E-POST
+   TILL NAMN
+========================= */
 
+const userEmail =
+user.email.toLowerCase();
+
+
+currentUser =
+userNames[userEmail]
+|| "Övrig";
+
+
+/* =========================
+   VISA APP
+========================= */
 
 document
 .getElementById(
@@ -2315,11 +2306,11 @@ document
 currentUser;
 
 
-/* Starta synkning */
+/* =========================
+   STARTA FIRESTORE
+========================= */
 
 startRealtime();
-
-startProjectListener();
 
 
 }catch(error){
@@ -2328,23 +2319,11 @@ console.error(error);
 
 
 loginError.innerText =
-error.code
-+
-": "
-+
-error.message;
+"Felaktigt användarnamn eller lösenord.";
 
 }
 
 };
-
-
-/* =========================
-   GÖR FUNKTIONER TILLGÄNGLIGA
-========================= */
-
-window.addNewApartment =
-addNewApartment;
 
 </script>
 
