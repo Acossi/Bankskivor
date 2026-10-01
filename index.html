@@ -1358,7 +1358,6 @@ async function loadData(){
 
   </script>
   
-```html
 <script type="module">
 
 import { initializeApp }
@@ -1412,14 +1411,7 @@ getAuth(app);
 
 const db =
 getFirestore(app);
-  
-  window.firestoreDb = db;
-window.firestoreCollection = collection;
-window.firestoreAddDoc = addDoc;
-window.firestoreGetDocs = getDocs;
-window.firestoreDeleteDoc = deleteDoc;
-window.firestoreDoc = doc;
-window.firestoreUpdateDoc = updateDoc;
+
 
 async function migrateLocalDataToFirestore() {
 
@@ -1431,13 +1423,7 @@ async function migrateLocalDataToFirestore() {
 
 
   if (oldData.length === 0) {
-
-    console.log(
-      "Ingen gammal data hittades."
-    );
-
     return;
-
   }
 
 
@@ -1452,9 +1438,6 @@ async function migrateLocalDataToFirestore() {
       );
 
 
-    /* Om Firestore redan har data
-       migrerar vi inte igen */
-
     if (!snapshot.empty) {
 
       console.log(
@@ -1464,13 +1447,6 @@ async function migrateLocalDataToFirestore() {
       return;
 
     }
-
-
-    console.log(
-      "Migrerar "
-      + oldData.length
-      + " rader till Firestore..."
-    );
 
 
     for (const row of oldData) {
@@ -1487,15 +1463,8 @@ async function migrateLocalDataToFirestore() {
 
 
     console.log(
-      "KLART! "
-      + oldData.length
-      + " rader har sparats i Firestore."
-    );
-
-
-    alert(
-      oldData.length
-      + " rader har flyttats till Firebase."
+      oldData.length +
+      " rader har flyttats till Firebase."
     );
 
 
@@ -1506,19 +1475,10 @@ async function migrateLocalDataToFirestore() {
       error
     );
 
-    alert(
-      "Fel vid migrering till Firebase. "
-      + error.message
-    );
-
   }
 
 }
 
-
-/* =========================================
-   LOGIN
-   ========================================= */
 
 window.firebaseLogin =
 async function(){
@@ -1567,19 +1527,8 @@ async function(){
       + user.email;
 
 
-    /*
-      Första gången en användare
-      loggar in flyttar vi den gamla
-      localStorage-datan till Firestore.
-    */
-
     await migrateLocalDataToFirestore();
 
-
-    /*
-      Laddar sedan sidan som vanligt.
-      Vi ändrar INTE loadData ännu.
-    */
 
     loadData();
 
@@ -1600,7 +1549,6 @@ async function(){
 };
 
 </script>
-```
 
 <footer>
 
