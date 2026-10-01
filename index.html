@@ -752,6 +752,8 @@ onclick="if(confirm('Rensa allt?')){localStorage.clear();location.reload();}">
 
 let currentUser="";
 
+let loadingData = false;
+
 function timestamp(){
 
 return new Date()
@@ -984,6 +986,17 @@ row.classList.add(
 
 async function saveData(){
 
+  if (loadingData) {
+    return;
+  }
+
+  const db = window.firestoreDb;
+
+  if (!db) {
+    console.error("Firestore är inte redo.");
+    return;
+  }
+
   const rows = [];
 
   document
@@ -1046,14 +1059,23 @@ async function saveData(){
   try {
 
     const snapshot =
-      await getDocs(
-        collection(db, "bankskivor")
+      await window.firestoreGetDocs(
+        window.firestoreCollection(
+          db,
+          "bankskivor"
+        )
       );
 
-    for (const documentSnapshot of snapshot.docs) {
 
-      await deleteDoc(
-        doc(
+    /* Ta bort gamla Firestore-rader */
+
+    for (
+      const documentSnapshot
+      of snapshot.docs
+    ) {
+
+      await window.firestoreDeleteDoc(
+        window.firestoreDoc(
           db,
           "bankskivor",
           documentSnapshot.id
@@ -1063,21 +1085,32 @@ async function saveData(){
     }
 
 
+    /* Skriv aktuell tabell */
+
     for (const row of rows) {
 
-      await addDoc(
-        collection(db, "bankskivor"),
+      await window.firestoreAddDoc(
+        window.firestoreCollection(
+          db,
+          "bankskivor"
+        ),
         row
       );
 
     }
 
-    console.log("Data sparad i Firestore");
+
+    console.log(
+      "Data sparad i Firestore:",
+      rows.length,
+      "rader"
+    );
+
 
   } catch(error) {
 
     console.error(
-      "Kunde inte spara:",
+      "Kunde inte spara till Firestore:",
       error
     );
 
@@ -1236,84 +1269,90 @@ tbody.appendChild(row);
 });
 
 }
-function loadData(){
+async function loadData(){
 
-let data =
+  const db = window.firestoreDb;
 
-JSON.parse(
+  if (!db) {
 
-localStorage.getItem(
-"NCC_Bankskivor_Data"
-)
+    console.error(
+      "Firestore är inte redo."
+    );
 
-|| "[]"
+    return;
 
-);
+  }
 
-if(data.length===0){
 
-addRow();
+  loadingData = true;
 
-}else{
 
-data.forEach(item=>{
+  try {
 
-addRow(item);
+    const snapshot =
+      await window.firestoreGetDocs(
+        window.firestoreCollection(
+          db,
+          "bankskivor"
+        )
+      );
 
-});
 
-}
+    document
+      .getElementById("tbody")
+      .innerHTML = "";
 
-sortRows();
 
-updateStats();
+    if (snapshot.empty) {
 
-}
+      console.log(
+        "Firestore är tom."
+      );
 
-function searchTable(){
+      loadingData = false;
 
-let filter =
+      addRow();
 
-document
-.getElementById("search")
-.value
-.toUpperCase();
+      return;
 
-let rows =
+    }
 
-document.querySelectorAll(
-"#tbody tr"
-);
 
-rows.forEach(row=>{
+    snapshot.forEach(
+      documentSnapshot => {
 
-let trapphus =
+        const data =
+          documentSnapshot.data();
 
-row.cells[0]
-.querySelector("input")
-.value
-.toUpperCase();
+        addRow(data);
 
-let lgh =
+      }
+    );
 
-row.cells[1]
-.querySelector("input")
-.value
-.toUpperCase();
 
-row.style.display =
+    sortRows();
 
-(
-trapphus.includes(filter)
-||
-lgh.includes(filter)
-)
+    updateStats();
 
-? ""
 
-: "none";
+    console.log(
+      "Firestore laddad:",
+      snapshot.size,
+      "rader"
+    );
 
-});
+
+  } catch(error) {
+
+    console.error(
+      "Kunde inte läsa Firestore:",
+      error
+    );
+
+  }
+
+
+  loadingData = false;
 
 }
 
@@ -1373,11 +1412,14 @@ getAuth(app);
 
 const db =
 getFirestore(app);
-
-
-/* =========================================
-   MIGRERA GAMMAL LOCALSTORAGE-DATA
-   ========================================= */
+  
+  window.firestoreDb = db;
+window.firestoreCollection = collection;
+window.firestoreAddDoc = addDoc;
+window.firestoreGetDocs = getDocs;
+window.firestoreDeleteDoc = deleteDoc;
+window.firestoreDoc = doc;
+window.firestoreUpdateDoc = updateDoc;
 
 async function migrateLocalDataToFirestore() {
 
