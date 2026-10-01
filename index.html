@@ -1183,36 +1183,47 @@ row.querySelectorAll(
 )
 .forEach(input => {
 
+javascript
 input.addEventListener(
-  "change",
-  async () => {
+"change",
+async () => {
 
-    if(loadingData){
-      return;
-    }
+if(loadingData){
+return;
+}
 
-    // Spara var användaren befinner sig på sidan
-    const scrollPosition = window.scrollY;
 
-    row.cells[9].innerText =
-      currentUser;
+/* Spara aktuell scrollposition */
+const scrollPosition =
+window.scrollY;
 
-    row.cells[10].innerText =
-      timestamp();
 
-    updateRowColor(row);
+row.cells[9].innerText =
+currentUser;
 
-    sortRows();
+row.cells[10].innerText =
+timestamp();
 
-    updateStats();
 
-    await saveRow(row);
+updateRowColor(row);
 
-    // Gå tillbaka till exakt samma position
-    window.scrollTo(0, scrollPosition);
+sortRows();
 
-  }
+updateStats();
+
+await saveRow(row);
+
+
+/* Gå tillbaka till samma position */
+window.scrollTo(
+0,
+scrollPosition
 );
+
+});
+
+});
+
 
 /* =========================
    TA BORT
