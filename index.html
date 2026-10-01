@@ -722,7 +722,7 @@ Ta bort
 
 <button
 class="add-btn"
-onclick="addRow()">
+onclick="addNewApartment()"
 
 ➕ Lägg till lägenhet
 
@@ -761,34 +761,45 @@ return new Date()
 
 }
 
-function addRow(data={}){
+```javascript
+function addRow(data = {}){
 
-let row =
-document.createElement("tr");
+  const firebaseId =
+    data.firebaseId || null;
 
-row.innerHTML = `
+
+  let row =
+    document.createElement("tr");
+
+
+  row.dataset.firebaseId =
+    firebaseId || "";
+
+
+  row.innerHTML = `
+
 <td class="col-trapphus">
 <input
 type="text"
-value="${data.trapphus||''}">
+value="${data.trapphus || ''}">
 </td>
 
 <td class="col-lgh">
 <input
 type="text"
-value="${data.lgh||''}">
+value="${data.lgh || ''}">
 </td>
 
 <td>
 <input
 type="text"
-value="${data.fargKok||''}">
+value="${data.fargKok || ''}">
 </td>
 
 <td>
 <input
 type="text"
-value="${data.fargFonster||''}">
+value="${data.fargFonster || ''}">
 </td>
 
 <td class="col-material">
@@ -797,18 +808,14 @@ value="${data.fargFonster||''}">
 
 <option
 value="Komposit"
-${data.material==='Komposit' ? 'selected' : ''}>
-
+${data.material === 'Komposit' ? 'selected' : ''}>
 Komposit
-
 </option>
 
 <option
 value="Ek"
-${data.material==='Ek' ? 'selected' : ''}>
-
+${data.material === 'Ek' ? 'selected' : ''}>
 Ek
-
 </option>
 
 </select>
@@ -818,39 +825,39 @@ Ek
 <td class="col-date">
 <input
 type="date"
-value="${data.datumMattningKok||''}">
+value="${data.datumMattningKok || ''}">
 </td>
 
 <td class="col-date">
 <input
 type="date"
-value="${data.datumMattningFonster||''}">
+value="${data.datumMattningFonster || ''}">
 </td>
 
 <td class="col-date">
 <input
 type="date"
-value="${data.datumMontageKok||''}">
+value="${data.datumMontageKok || ''}">
 </td>
 
 <td class="col-date">
 <input
 type="date"
-value="${data.datumMontageFonster||''}">
+value="${data.datumMontageFonster || ''}">
 </td>
 
 <td>
-${data.editedBy||''}
+${data.editedBy || ''}
 </td>
 
 <td class="col-date">
-${data.editedDate||''}
+${data.editedDate || ''}
 </td>
 
 <td>
 <input
 type="text"
-value="${data.kommentar||''}">
+value="${data.kommentar || ''}">
 </td>
 
 <td>
@@ -861,262 +868,338 @@ X
 
 `;
 
-document
-.getElementById("tbody")
-.appendChild(row);
 
-/* Färgkontroll vid laddning */
+  document
+    .getElementById("tbody")
+    .appendChild(row);
 
-updateRowColor(row);
 
-row.querySelectorAll(
-"input, select"
-)
-.forEach(input=>{
+  updateRowColor(row);
 
-input.addEventListener("change",()=>{
 
-row.cells[9].innerText =
-currentUser;
+  row.querySelectorAll(
+    "input, select"
+  )
+  .forEach(input => {
 
-row.cells[10].innerText =
-timestamp();
+    input.addEventListener(
+      "change",
+      async () => {
 
-updateRowColor(row);
+        row.cells[9].innerText =
+          currentUser;
 
-sortRows();
+        row.cells[10].innerText =
+          timestamp();
 
-saveData();
 
-updateStats();
+        updateRowColor(row);
 
-});
+        sortRows();
 
-});
+        updateStats();
 
-row.querySelector(".delete-btn")
-.addEventListener("click",()=>{
 
-row.remove();
+        await saveRow(row);
 
-saveData();
+      }
+    );
 
-updateStats();
+  });
 
-});
 
-sortRows();
+  row.querySelector(
+    ".delete-btn"
+  )
+  .addEventListener(
+    "click",
+    async () => {
 
-saveData();
+      const firebaseId =
+        row.dataset.firebaseId;
 
-updateStats();
+
+      if(!firebaseId){
+
+        row.remove();
+
+        updateStats();
+
+        return;
+
+      }
+
+
+      if(
+        !confirm(
+          "Vill du verkligen ta bort lägenheten?"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      try{
+
+        await window.firestoreDeleteDoc(
+
+          window.firestoreDoc(
+            window.firestoreDb,
+            "bankskivor",
+            firebaseId
+          )
+
+        );
+
+
+        console.log(
+          "Lägenhet borttagen:",
+          firebaseId
+        );
+
+
+      }catch(error){
+
+        console.error(
+          "Kunde inte ta bort lägenheten:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+
+  sortRows();
+
+  updateStats();
 
 }
+
 
 function updateRowColor(row){
 
-const datumMattningKok =
+  const datumMattningKok =
+    row.cells[5]
+      .querySelector("input")
+      .value;
 
-row.cells[5]
-.querySelector("input")
-.value;
 
-const datumMattningFonster =
+  const datumMattningFonster =
+    row.cells[6]
+      .querySelector("input")
+      .value;
 
-row.cells[6]
-.querySelector("input")
-.value;
 
-const datumMontageKok =
+  const datumMontageKok =
+    row.cells[7]
+      .querySelector("input")
+      .value;
 
-row.cells[7]
-.querySelector("input")
-.value;
 
-const datumMontageFonster =
+  const datumMontageFonster =
+    row.cells[8]
+      .querySelector("input")
+      .value;
 
-row.cells[8]
-.querySelector("input")
-.value;
 
-row.classList.remove(
-"rad-mattad",
-"rad-monterad"
-);
+  row.classList.remove(
+    "rad-mattad",
+    "rad-monterad"
+  );
 
-/* Färdigmonterad */
 
-if(
+  /* Färdigmonterad */
 
-datumMontageKok !== ""
+  if(
+    datumMontageKok !== "" &&
+    datumMontageFonster !== ""
+  ){
 
-&&
+    row.classList.add(
+      "rad-monterad"
+    );
 
-datumMontageFonster !== ""
+    return;
 
-){
+  }
 
-row.classList.add(
-"rad-monterad"
-);
 
-return;
+  /* Måttad */
 
-}
+  if(
+    datumMattningKok !== "" ||
+    datumMattningFonster !== ""
+  ){
 
-/* Måttad */
+    row.classList.add(
+      "rad-mattad"
+    );
 
-if(
-
-datumMattningKok !== ""
-
-||
-
-datumMattningFonster !== ""
-
-){
-
-row.classList.add(
-"rad-mattad"
-);
+  }
 
 }
 
-}
 
-async function saveData(){
+async function saveRow(row){
 
-  if (loadingData) {
+  if(loadingData){
     return;
   }
 
-  const db = window.firestoreDb;
 
-  if (!db) {
-    console.error("Firestore är inte redo.");
+  const db =
+    window.firestoreDb;
+
+
+  const firebaseId =
+    row.dataset.firebaseId;
+
+
+  if(!db){
+
+    console.error(
+      "Firestore är inte redo."
+    );
+
     return;
+
   }
 
-  const rows = [];
 
-  document
-    .querySelectorAll("#tbody tr")
-    .forEach(row => {
+  const rowData = {
 
-      rows.push({
+    trapphus:
+      row.cells[0]
+        .querySelector("input")
+        .value,
 
-        trapphus:
-          row.cells[0]
-            .querySelector("input").value,
+    lgh:
+      row.cells[1]
+        .querySelector("input")
+        .value,
 
-        lgh:
-          row.cells[1]
-            .querySelector("input").value,
+    fargKok:
+      row.cells[2]
+        .querySelector("input")
+        .value,
 
-        fargKok:
-          row.cells[2]
-            .querySelector("input").value,
+    fargFonster:
+      row.cells[3]
+        .querySelector("input")
+        .value,
 
-        fargFonster:
-          row.cells[3]
-            .querySelector("input").value,
+    material:
+      row.cells[4]
+        .querySelector("select")
+        .value,
 
-        material:
-          row.cells[4]
-            .querySelector("select").value,
+    datumMattningKok:
+      row.cells[5]
+        .querySelector("input")
+        .value,
 
-        datumMattningKok:
-          row.cells[5]
-            .querySelector("input").value,
+    datumMattningFonster:
+      row.cells[6]
+        .querySelector("input")
+        .value,
 
-        datumMattningFonster:
-          row.cells[6]
-            .querySelector("input").value,
+    datumMontageKok:
+      row.cells[7]
+        .querySelector("input")
+        .value,
 
-        datumMontageKok:
-          row.cells[7]
-            .querySelector("input").value,
+    datumMontageFonster:
+      row.cells[8]
+        .querySelector("input")
+        .value,
 
-        datumMontageFonster:
-          row.cells[8]
-            .querySelector("input").value,
+    editedBy:
+      row.cells[9].innerText,
 
-        editedBy:
-          row.cells[9].innerText,
+    editedDate:
+      row.cells[10].innerText,
 
-        editedDate:
-          row.cells[10].innerText,
+    kommentar:
+      row.cells[11]
+        .querySelector("input")
+        .value
 
-        kommentar:
-          row.cells[11]
-            .querySelector("input").value
-
-      });
-
-    });
-
-
-  try {
-
-    const snapshot =
-      await window.firestoreGetDocs(
-        window.firestoreCollection(
-          db,
-          "bankskivor"
-        )
-      );
+  };
 
 
-    /* Ta bort gamla Firestore-rader */
+  try{
 
-    for (
-      const documentSnapshot
-      of snapshot.docs
-    ) {
 
-      await window.firestoreDeleteDoc(
+    /* Befintlig lägenhet */
+
+    if(firebaseId){
+
+      await window.firestoreUpdateDoc(
+
         window.firestoreDoc(
           db,
           "bankskivor",
-          documentSnapshot.id
-        )
-      );
-
-    }
-
-
-    /* Skriv aktuell tabell */
-
-    for (const row of rows) {
-
-      await window.firestoreAddDoc(
-        window.firestoreCollection(
-          db,
-          "bankskivor"
+          firebaseId
         ),
-        row
+
+        rowData
+
+      );
+
+
+      console.log(
+        "Lägenhet uppdaterad:",
+        firebaseId
       );
 
     }
 
 
-    console.log(
-      "Data sparad i Firestore:",
-      rows.length,
-      "rader"
-    );
+    /* Ny lägenhet */
+
+    else{
+
+      const newDoc =
+        await window.firestoreAddDoc(
+
+          window.firestoreCollection(
+            db,
+            "bankskivor"
+          ),
+
+          rowData
+
+        );
 
 
-  } catch(error) {
+      row.dataset.firebaseId =
+        newDoc.id;
+
+
+      console.log(
+        "Ny lägenhet skapad:",
+        newDoc.id
+      );
+
+    }
+
+
+  }catch(error){
 
     console.error(
-      "Kunde inte spara till Firestore:",
+      "Kunde inte spara raden:",
       error
     );
 
   }
 
 }
+```
+
 
 function updateStats(){
 
@@ -1284,6 +1367,8 @@ async function loadData(){
     document
       .getElementById("tbody")
       .innerHTML = "";
+    row.dataset.firebaseId =
+  firebaseId || "";
 
 
     if (snapshot.empty) {
@@ -1354,61 +1439,89 @@ import {
   getFirestore,
   collection,
   addDoc,
-  getDocs
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  onSnapshot
 }
 from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
+
+/* =========================
+   FIREBASE
+========================= */
 
 const firebaseConfig = {
 
   apiKey: "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
 
   authDomain:
-  "bankskivor-status.firebaseapp.com",
+    "bankskivor-status.firebaseapp.com",
 
   projectId:
-  "bankskivor-status",
+    "bankskivor-status",
 
   storageBucket:
-  "bankskivor-status.firebasestorage.app",
+    "bankskivor-status.firebasestorage.app",
 
   messagingSenderId:
-  "424686541436",
+    "424686541436",
 
   appId:
-  "1:424686541436:web:a495bd7d2ab1586a11c7f9",
+    "1:424686541436:web:a495bd7d2ab1586a11c7f9",
 
   measurementId:
-  "G-NTLCQJM6H6"
+    "G-NTLCQJM6H6"
 
 };
 
 
 const app =
-initializeApp(firebaseConfig);
+  initializeApp(firebaseConfig);
 
 const auth =
-getAuth(app);
+  getAuth(app);
 
 const db =
-getFirestore(app);
+  getFirestore(app);
 
 
-async function migrateLocalDataToFirestore() {
+/* =========================
+   GÖR FIREBASE TILLGÄNGLIG
+   FÖR RESTEN AV SIDAN
+========================= */
 
-  const oldData = JSON.parse(
-    localStorage.getItem(
-      "NCC_Bankskivor_Data"
-    ) || "[]"
-  );
+window.firestoreDb = db;
+window.firestoreCollection = collection;
+window.firestoreAddDoc = addDoc;
+window.firestoreGetDocs = getDocs;
+window.firestoreDoc = doc;
+window.firestoreUpdateDoc = updateDoc;
+window.firestoreDeleteDoc = deleteDoc;
 
 
-  if (oldData.length === 0) {
+/* =========================
+   MIGRERING AV GAMMAL
+   LOCALSTORAGE-DATA
+========================= */
+
+async function migrateLocalDataToFirestore(){
+
+  const oldData =
+    JSON.parse(
+      localStorage.getItem(
+        "NCC_Bankskivor_Data"
+      ) || "[]"
+    );
+
+
+  if(oldData.length === 0){
     return;
   }
 
 
-  try {
+  try{
 
     const snapshot =
       await getDocs(
@@ -1419,7 +1532,12 @@ async function migrateLocalDataToFirestore() {
       );
 
 
-    if (!snapshot.empty) {
+    /*
+      Om Firebase redan innehåller data
+      migrerar vi inte igen.
+    */
+
+    if(!snapshot.empty){
 
       console.log(
         "Firestore innehåller redan data."
@@ -1430,7 +1548,7 @@ async function migrateLocalDataToFirestore() {
     }
 
 
-    for (const row of oldData) {
+    for(const row of oldData){
 
       await addDoc(
         collection(
@@ -1443,13 +1561,23 @@ async function migrateLocalDataToFirestore() {
     }
 
 
-    console.log(
-      oldData.length +
-      " rader har flyttats till Firebase."
+    /*
+      Radera gamla localStorage-data
+      efter lyckad migrering.
+    */
+
+    localStorage.removeItem(
+      "NCC_Bankskivor_Data"
     );
 
 
-  } catch(error) {
+    console.log(
+      oldData.length +
+      " rader flyttades till Firebase."
+    );
+
+
+  }catch(error){
 
     console.error(
       "Migrering misslyckades:",
@@ -1461,21 +1589,139 @@ async function migrateLocalDataToFirestore() {
 }
 
 
+/* =========================
+   REALTIDS-LYSSNARE
+========================= */
+
+let unsubscribeFirestore = null;
+
+
+function startRealtime(){
+
+  /*
+    Om en lyssnare redan finns,
+    stäng den först.
+  */
+
+  if(unsubscribeFirestore){
+
+    unsubscribeFirestore();
+
+    unsubscribeFirestore = null;
+
+  }
+
+
+  const tbody =
+    document.getElementById(
+      "tbody"
+    );
+
+
+  unsubscribeFirestore =
+    onSnapshot(
+
+      collection(
+        db,
+        "bankskivor"
+      ),
+
+      snapshot => {
+
+        loadingData = true;
+
+
+        tbody.innerHTML = "";
+
+
+        snapshot.forEach(
+          documentSnapshot => {
+
+            const data =
+              documentSnapshot.data();
+
+
+            /*
+              Spara Firestore-ID:t
+              på själva raden.
+            */
+
+            data.firebaseId =
+              documentSnapshot.id;
+
+
+            addRow(data);
+
+          }
+        );
+
+
+        sortRows();
+
+        updateStats();
+
+
+        loadingData = false;
+
+
+        console.log(
+          "Firestore uppdaterad:",
+          snapshot.size,
+          "rader"
+        );
+
+      },
+
+      error => {
+
+        loadingData = false;
+
+
+        console.error(
+          "Realtime Firestore-fel:",
+          error
+        );
+
+      }
+
+    );
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
 window.firebaseLogin =
 async function(){
 
   const email =
     document
-      .getElementById("username")
+      .getElementById(
+        "username"
+      )
       .value;
+
 
   const password =
     document
-      .getElementById("password")
+      .getElementById(
+        "password"
+      )
       .value;
 
 
-  try {
+  const loginError =
+    document.getElementById(
+      "loginError"
+    );
+
+
+  loginError.innerText = "";
+
+
+  try{
 
     const result =
       await signInWithEmailAndPassword(
@@ -1489,38 +1735,56 @@ async function(){
       result.user;
 
 
+    currentUser =
+      user.email;
+
+
     document
-      .getElementById("loginScreen")
+      .getElementById(
+        "loginScreen"
+      )
       .style.display =
-      "none";
+        "none";
 
 
     document
-      .getElementById("app")
+      .getElementById(
+        "app"
+      )
       .style.display =
-      "block";
+        "block";
 
 
     document
-      .getElementById("loggedUser")
+      .getElementById(
+        "loggedUser"
+      )
       .innerText =
-      "Inloggad som: "
-      + user.email;
+        "Inloggad som: "
+        + user.email;
 
+
+    /*
+      Flytta eventuell gammal
+      localStorage-data till Firebase.
+    */
 
     await migrateLocalDataToFirestore();
 
 
-    loadData();
+    /*
+      Starta realtidssynkning.
+    */
+
+    startRealtime();
 
 
-  } catch(error){
+  }catch(error){
 
     console.error(error);
 
-    document
-      .getElementById("loginError")
-      .innerText =
+
+    loginError.innerText =
       error.code
       + ": "
       + error.message;
