@@ -4,457 +4,721 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>NCC Bänkskivor V2</title>
 
+
 <style>
 
+/* =====================================================
+   GRUND
+===================================================== */
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
 
 body{
-font-family:'Segoe UI',sans-serif;
 
-background:
-radial-gradient(
-circle at top right,
-rgba(0,120,212,0.20),
-transparent 30%
-),
+    font-family:'Segoe UI',sans-serif;
 
-radial-gradient(
-circle at bottom left,
-rgba(34,197,94,0.12),
-transparent 40%
-),
+    background:
 
-linear-gradient(
-135deg,
-#020617 0%,
-#0f172a 50%,
-#1e293b 100%
-);
+    radial-gradient(
+        circle at top right,
+        rgba(0,120,212,0.20),
+        transparent 30%
+    ),
 
-min-height:100vh;
-padding:20px;
-color:white;
+    radial-gradient(
+        circle at bottom left,
+        rgba(34,197,94,0.12),
+        transparent 40%
+    ),
+
+    linear-gradient(
+        135deg,
+        #020617 0%,
+        #0f172a 50%,
+        #1e293b 100%
+    );
+
+    min-height:100vh;
+
+    padding:20px;
+
+    color:white;
+
 }
+
 
 body::before{
-content:"NCC";
 
-position:fixed;
+    content:"NCC";
 
-top:50%;
-left:50%;
+    position:fixed;
 
-transform:
-translate(-50%,-50%);
+    top:50%;
+    left:50%;
 
-font-size:350px;
-font-weight:900;
+    transform:
+        translate(-50%,-50%);
 
-opacity:.03;
+    font-size:350px;
 
-pointer-events:none;
+    font-weight:900;
 
-z-index:-1;
+    opacity:.03;
+
+    pointer-events:none;
+
+    z-index:-1;
+
 }
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
 
 .login-screen{
-display:flex;
-justify-content:center;
-align-items:center;
 
-height:100vh;
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+
 }
+
 
 .login-box{
-background:white;
-color:black;
 
-width:420px;
+    background:white;
 
-padding:40px;
+    color:black;
 
-border-radius:20px;
+    width:420px;
 
-box-shadow:
-0 20px 50px rgba(0,0,0,.35);
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.35);
+
 }
+
 
 .login-box h2{
-text-align:center;
 
-margin-bottom:20px;
+    text-align:center;
 
-color:#005AA9;
+    margin-bottom:20px;
+
+    color:#005AA9;
+
 }
+
 
 .login-box select,
 .login-box input{
-width:100%;
 
-padding:12px;
+    width:100%;
 
-margin-top:10px;
+    padding:12px;
 
-border-radius:8px;
+    margin-top:10px;
 
-border:1px solid #ccc;
+    border-radius:8px;
+
+    border:1px solid #ccc;
+
 }
+
 
 .login-box button{
-width:100%;
 
-padding:12px;
+    width:100%;
 
-margin-top:15px;
+    padding:12px;
 
-background:#005AA9;
+    margin-top:15px;
 
-color:white;
+    background:#005AA9;
 
-border:none;
+    color:white;
 
-border-radius:8px;
+    border:none;
 
-font-weight:bold;
+    border-radius:8px;
 
-cursor:pointer;
+    font-weight:bold;
+
+    cursor:pointer;
+
 }
+
+
+/* =====================================================
+   APP
+===================================================== */
 
 .container{
-display:none;
 
-max-width:1900px;
+    display:none;
 
-margin:auto;
+    max-width:1900px;
+
+    margin:auto;
+
 }
+
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 .header{
-display:flex;
 
-justify-content:space-between;
+    display:flex;
 
-align-items:center;
+    justify-content:space-between;
 
-padding:25px;
+    align-items:center;
 
-margin-bottom:20px;
+    padding:25px;
 
-border-radius:20px;
+    margin-bottom:20px;
 
-background:
-rgba(255,255,255,.05);
+    border-radius:20px;
 
-backdrop-filter:blur(15px);
+    background:
+        rgba(255,255,255,.05);
+
+    backdrop-filter:blur(15px);
+
 }
+
 
 .logo-box{
-background:white;
 
-padding:15px 25px;
+    background:white;
 
-border-radius:15px;
+    padding:15px 25px;
 
-display:flex;
+    border-radius:15px;
 
-flex-direction:column;
+    display:flex;
 
-align-items:center;
+    flex-direction:column;
+
+    align-items:center;
+
 }
+
 
 .logo-main{
-font-size:36px;
 
-font-weight:900;
+    font-size:36px;
 
-color:#005AA9;
+    font-weight:900;
 
-line-height:1;
+    color:#005AA9;
+
+    line-height:1;
+
 }
+
 
 .logo-sub{
-font-size:12px;
 
-font-weight:bold;
+    font-size:12px;
 
-color:#444;
+    font-weight:bold;
 
-text-transform:uppercase;
+    color:#444;
+
+    text-transform:uppercase;
+
 }
+
+
+/* =====================================================
+   KORT
+===================================================== */
 
 .card{
-background:
-rgba(255,255,255,.06);
 
-backdrop-filter:blur(15px);
+    background:
+        rgba(255,255,255,.06);
 
-padding:20px;
+    backdrop-filter:blur(15px);
 
-border-radius:20px;
+    padding:20px;
 
-margin-bottom:20px;
+    border-radius:20px;
+
+    margin-bottom:20px;
+
 }
+
 
 .row{
-display:grid;
 
-grid-template-columns:
-repeat(auto-fit,minmax(220px,1fr));
+    display:grid;
 
-gap:15px;
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+
 }
+
 
 input[type=text],
 input[type=date],
 select{
-width:100%;
 
-padding:10px;
+    width:100%;
 
-border:none;
+    padding:10px;
 
-border-radius:10px;
+    border:none;
 
-margin-top:5px;
+    border-radius:10px;
+
+    margin-top:5px;
+
 }
+
+
+/* =====================================================
+   STATISTIK
+===================================================== */
 
 .stats{
-display:grid;
 
-grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
+    display:grid;
 
-gap:15px;
+    grid-template-columns:
+        repeat(auto-fit,minmax(250px,1fr));
 
-margin-bottom:20px;
+    gap:15px;
+
+    margin-bottom:20px;
+
 }
+
 
 .stat{
-background:
-linear-gradient(
-135deg,
-#005AA9,
-#0078D4
-);
 
-padding:20px;
+    background:
+        linear-gradient(
+            135deg,
+            #005AA9,
+            #0078D4
+        );
 
-border-radius:20px;
+    padding:20px;
 
-text-align:center;
+    border-radius:20px;
+
+    text-align:center;
+
 }
+
 
 .stat h2{
-font-size:36px;
+
+    font-size:36px;
+
 }
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
 
 .progress{
-height:35px;
 
-background:#1e293b;
+    height:35px;
 
-border-radius:20px;
+    background:#1e293b;
 
-overflow:hidden;
+    border-radius:20px;
+
+    overflow:hidden;
+
 }
+
 
 .progress-bar{
-height:100%;
 
-width:0;
+    height:100%;
 
-background:
-linear-gradient(
-90deg,
-#22c55e,
-#16a34a
-);
+    width:0;
 
-display:flex;
+    background:
+        linear-gradient(
+            90deg,
+            #22c55e,
+            #16a34a
+        );
 
-justify-content:center;
+    display:flex;
 
-align-items:center;
+    justify-content:center;
 
-font-weight:bold;
+    align-items:center;
+
+    font-weight:bold;
+
 }
+
+
+/* =====================================================
+   SÖK
+===================================================== */
 
 #search{
-width:100%;
 
-margin-bottom:15px;
+    width:100%;
+
+    margin-bottom:15px;
+
 }
+
+
+/* =====================================================
+   TABELL
+===================================================== */
 
 table{
-width:100%;
 
-border-collapse:collapse;
+    width:100%;
+
+    border-collapse:collapse;
+
 }
+
 
 th{
-background:#005AA9;
 
-padding:12px;
+    background:#005AA9;
 
-font-size:13px;
+    padding:12px;
+
+    font-size:13px;
+
 }
+
 
 td{
-background:
-rgba(255,255,255,.05);
 
-padding:8px;
+    background:
+        rgba(255,255,255,.05);
 
-border-bottom:
-1px solid rgba(255,255,255,.08);
+    padding:8px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
 }
+
 
 tr:hover td{
-background:#334155;
+
+    background:#334155;
+
 }
+
+
+/* =====================================================
+   KOLUMNBREDDER
+===================================================== */
 
 .col-trapphus{
-width:70px;
-min-width:70px;
+
+    width:70px;
+
+    min-width:70px;
+
 }
+
 
 .col-lgh{
-width:130px;
-min-width:130px;
+
+    width:180px;
+
+    min-width:180px;
+
 }
+
 
 .col-date{
-width:140px;
-min-width:140px;
+
+    width:140px;
+
+    min-width:140px;
+
 }
+
 
 .col-material{
-width:120px;
-min-width:120px;
+
+    width:120px;
+
+    min-width:120px;
+
 }
 
-.rad-mattad td{
-background:
-rgba(34,197,94,0.10) !important;
+
+.col-klar{
+
+    width:90px;
+
+    min-width:90px;
+
+    text-align:center;
+
 }
+
+
+.col-kommentar{
+
+    width:350px;
+
+    min-width:350px;
+
+}
+
+
+.col-kommentar input{
+
+    width:100%;
+
+    min-width:330px;
+
+}
+
+
+/* =====================================================
+   KLAR CHECKBOX
+===================================================== */
+
+.klar-checkbox{
+
+    width:22px;
+
+    height:22px;
+
+    cursor:pointer;
+
+}
+
+
+/* =====================================================
+   RADFÄRGER
+===================================================== */
+
+/*
+   GUL:
+   Något av köksbänkens datum är ifyllt
+*/
+
+.rad-pagar td{
+
+    background:
+        rgba(234,179,8,0.18) !important;
+
+}
+
+
+.rad-pagar:hover td{
+
+    background:
+        rgba(234,179,8,0.28) !important;
+
+}
+
+
+/*
+   GRÖN:
+   Alla fyra datum är ifyllda
+*/
 
 .rad-monterad td{
-background:
-rgba(34,197,94,0.28) !important;
 
-font-weight:600;
+    background:
+        rgba(34,197,94,0.28) !important;
+
+    font-weight:600;
+
 }
 
-.rad-mattad:hover td{
-background:
-rgba(34,197,94,0.18) !important;
-}
 
 .rad-monterad:hover td{
-background:
-rgba(34,197,94,0.40) !important;
+
+    background:
+        rgba(34,197,94,0.40) !important;
+
 }
+
+
+/* =====================================================
+   KNAPPAR
+===================================================== */
 
 button{
-padding:12px 18px;
 
-border:none;
+    padding:12px 18px;
 
-border-radius:8px;
+    border:none;
 
-font-weight:bold;
+    border-radius:8px;
 
-cursor:pointer;
+    font-weight:bold;
 
-margin:3px;
+    cursor:pointer;
+
+    margin:3px;
+
 }
+
 
 .add-btn{
-background:#16a34a;
 
-color:white;
+    background:#16a34a;
+
+    color:white;
+
 }
+
 
 .pdf-btn{
-background:#0078d4;
 
-color:white;
+    background:#0078d4;
+
+    color:white;
+
 }
+
 
 .delete-btn{
-background:#dc2626;
 
-color:white;
+    background:#dc2626;
+
+    color:white;
+
 }
+
 
 .save-info-btn{
-background:#16a34a;
 
-color:white;
+    background:#16a34a;
+
+    color:white;
+
 }
+
 
 .save-info-btn:disabled{
-background:#64748b;
 
-cursor:not-allowed;
+    background:#64748b;
+
+    cursor:not-allowed;
+
 }
+
 
 .save-message{
-display:inline-block;
 
-margin-left:10px;
+    display:inline-block;
 
-color:#22c55e;
+    margin-left:10px;
 
-font-weight:bold;
+    color:#22c55e;
 
-opacity:0;
+    font-weight:bold;
 
-transition:.2s;
+    opacity:0;
+
+    transition:.2s;
+
 }
+
 
 .save-message.show{
-opacity:1;
+
+    opacity:1;
+
 }
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
 
 footer{
-margin-top:20px;
 
-text-align:center;
+    margin-top:20px;
 
-opacity:.7;
+    text-align:center;
+
+    opacity:.7;
+
 }
+
+
+/* =====================================================
+   PRINT
+===================================================== */
 
 @media print{
 
-button,
-#search,
-.save-message{
-display:none !important;
-}
+    button,
+    #search,
+    .save-message{
 
-body{
-background:white;
+        display:none !important;
 
-color:black;
-}
+    }
 
-.card{
-background:white;
 
-border:1px solid #ccc;
-}
+    body{
 
-td{
-color:black;
-}
+        background:white;
+
+        color:black;
+
+    }
+
+
+    .card{
+
+        background:white;
+
+        border:1px solid #ccc;
+
+    }
+
+
+    td{
+
+        color:black;
+
+    }
 
 }
 
@@ -462,414 +726,464 @@ color:black;
 
 </head>
 
+
 <body>
 
 
-<!-- =========================
+<!-- =====================================================
      LOGIN
-========================= -->
+===================================================== -->
 
 <div
-class="login-screen"
-id="loginScreen">
+    class="login-screen"
+    id="loginScreen"
+>
 
-<div class="login-box">
+    <div class="login-box">
 
-<h2>
-Bänkskivor Sångvägen
-</h2>
+        <h2>
+            Bänkskivor Sångvägen
+        </h2>
 
-<select id="username">
 
-<option value="adrian@google.se">
-Adrian
-</option>
+        <select id="username">
 
-<option value="stefan@google.se">
-Stefan
-</option>
+            <option value="adrian@google.se">
+                Adrian
+            </option>
 
-<option value="alexander@google.se">
-Alexander
-</option>
+            <option value="stefan@google.se">
+                Stefan
+            </option>
 
-<option value="rebecka@google.se">
-Rebecka
-</option>
+            <option value="alexander@google.se">
+                Alexander
+            </option>
 
-<option value="övrig@google.se">
-Övrig
-</option>
+            <option value="rebecka@google.se">
+                Rebecka
+            </option>
 
-</select>
+            <option value="övrig@google.se">
+                Övrig
+            </option>
 
-<input
-id="password"
-type="password"
-placeholder="Lösenord">
+        </select>
 
-<button
-onclick="firebaseLogin()">
 
-Logga in
+        <input
+            id="password"
+            type="password"
+            placeholder="Lösenord"
+        >
 
-</button>
 
-<p
-id="loginError"
-style="color:red;margin-top:10px;">
-</p>
+        <button
+            onclick="firebaseLogin()"
+        >
+
+            Logga in
+
+        </button>
+
+
+        <p
+            id="loginError"
+            style="color:red;margin-top:10px;"
+        >
+        </p>
+
+    </div>
 
 </div>
 
-</div>
 
-
-<!-- =========================
+<!-- =====================================================
      APP
-========================= -->
+===================================================== -->
 
 <div
-class="container"
-id="app">
+    class="container"
+    id="app"
+>
 
 
-<!-- HEADER -->
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
 <div class="header">
 
-<div>
+    <div>
 
-<h1>
-Bänkskivor Sångvägen
-</h1>
+        <h1>
+            Bänkskivor Sångvägen
+        </h1>
 
-<p id="loggedUser">
-Inloggad som:
-</p>
+        <p id="loggedUser">
+            Inloggad som:
+        </p>
+
+    </div>
+
+
+    <div class="logo-box">
+
+        <div class="logo-main">
+            Tidplan
+        </div>
+
+        <div class="logo-sub">
+            Bänkskivor
+        </div>
+
+    </div>
 
 </div>
 
-<div class="logo-box">
 
-<div class="logo-main">
-Tidplan
-</div>
-
-<div class="logo-sub">
-Bänkskivor
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================
+<!-- =====================================================
      PROJEKTINFO
-========================= -->
+===================================================== -->
 
 <div class="card">
 
-<h3>
-Projektinformation
-</h3>
+    <h3>
+        Projektinformation
+    </h3>
 
-<br>
-
-<div class="row">
+    <br>
 
 
-<div>
+    <div class="row">
 
-<label>
-Projekt
-</label>
 
-<input
-type="text"
-id="projekt"
-placeholder="Projekt">
+        <div>
+
+            <label>
+                Projekt
+            </label>
+
+            <input
+                type="text"
+                id="projekt"
+                placeholder="Projekt"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Projektnummer
+            </label>
+
+            <input
+                type="text"
+                id="projektnummer"
+                placeholder="Projektnummer"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Adress
+            </label>
+
+            <input
+                type="text"
+                id="adress"
+                placeholder="Adress"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Kontaktperson
+            </label>
+
+            <input
+                type="text"
+                id="kontaktperson"
+                placeholder="Kontaktperson"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Måttansvarig
+            </label>
+
+            <input
+                type="text"
+                id="mattansvarig"
+                placeholder="Måttansvarig"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Datum
+            </label>
+
+            <input
+                type="date"
+                id="projektdatum"
+            >
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <button
+        class="save-info-btn"
+        id="saveProjectButton"
+        onclick="saveProjectInfo()"
+    >
+
+        💾 Spara projektinformation
+
+    </button>
+
+
+    <span
+        id="projectSaveMessage"
+        class="save-message"
+    >
+
+        ✓ Sparat
+
+    </span>
 
 </div>
 
 
-<div>
-
-<label>
-Projektnummer
-</label>
-
-<input
-type="text"
-id="projektnummer"
-placeholder="Projektnummer">
-
-</div>
-
-
-<div>
-
-<label>
-Adress
-</label>
-
-<input
-type="text"
-id="adress"
-placeholder="Adress">
-
-</div>
-
-
-<div>
-
-<label>
-Kontaktperson
-</label>
-
-<input
-type="text"
-id="kontaktperson"
-placeholder="Kontaktperson">
-
-</div>
-
-
-<div>
-
-<label>
-Måttansvarig
-</label>
-
-<input
-type="text"
-id="mattansvarig"
-placeholder="Måttansvarig">
-
-</div>
-
-
-<div>
-
-<label>
-Datum
-</label>
-
-<input
-type="date"
-id="projektdatum">
-
-</div>
-
-</div>
-
-<br>
-
-<button
-class="save-info-btn"
-id="saveProjectButton"
-onclick="saveProjectInfo()">
-
-💾 Spara projektinformation
-
-</button>
-
-<span
-id="projectSaveMessage"
-class="save-message">
-
-✓ Sparat
-
-</span>
-
-</div>
-
-
-<!-- =========================
+<!-- =====================================================
      STATISTIK
-========================= -->
+===================================================== -->
 
 <div class="stats">
 
-<div class="stat">
 
-<h2 id="klara">
-0
-</h2>
+    <div class="stat">
 
-<p>
-Färdigmonterade
-</p>
+        <h2 id="klara">
+            0
+        </h2>
+
+        <p>
+            Färdigmonterade
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2 id="ejklara">
+            0
+        </h2>
+
+        <p>
+            Kvar
+        </p>
+
+    </div>
+
+
+    <div class="stat">
+
+        <h2 id="procent">
+            0%
+        </h2>
+
+        <p>
+            Projekt klart
+        </p>
+
+    </div>
 
 </div>
 
 
-<div class="stat">
-
-<h2 id="ejklara">
-0
-</h2>
-
-<p>
-Kvar
-</p>
-
-</div>
-
-
-<div class="stat">
-
-<h2 id="procent">
-0%
-</h2>
-
-<p>
-Projekt klart
-</p>
-
-</div>
-
-</div>
-
-
-<!-- =========================
+<!-- =====================================================
      STATUS
-========================= -->
+===================================================== -->
 
 <div class="card">
 
-<h3>
-Projektstatus
-</h3>
+    <h3>
+        Projektstatus
+    </h3>
 
-<br>
+    <br>
 
-<div class="progress">
 
-<div
-class="progress-bar"
-id="progressBar">
+    <div class="progress">
 
-0%
+        <div
+            class="progress-bar"
+            id="progressBar"
+        >
+
+            0%
+
+        </div>
+
+    </div>
 
 </div>
 
-</div>
 
-</div>
-
-
-<!-- =========================
+<!-- =====================================================
      TABELL
-========================= -->
+===================================================== -->
 
 <div class="card">
 
-<input
-type="text"
-id="search"
-placeholder="🔎 Sök trapphus eller lägenhet..."
-onkeyup="searchTable()">
+
+    <input
+        type="text"
+        id="search"
+        placeholder="🔎 Sök trapphus eller lägenhet..."
+        onkeyup="searchTable()"
+    >
 
 
-<table>
-
-<thead>
-
-<tr>
-
-<th class="col-trapphus">
-Trapphus
-</th>
-
-<th class="col-lgh">
-Lgh
-</th>
-
-<th>
-Färg Köksbänkskiva
-</th>
-
-<th>
-Färg Fönsterbänk
-</th>
-
-<th class="col-material">
-Material kök
-</th>
-
-<th class="col-date">
-Datum måttning köksbänk
-</th>
-
-<th class="col-date">
-Datum måttning fönsterbänk
-</th>
-
-<th class="col-date">
-Datum montage köksbänk
-</th>
-
-<th class="col-date">
-Datum montage fönsterbänk
-</th>
-
-<th>
-Senast ändrad av
-</th>
-
-<th class="col-date">
-Ändrad datum
-</th>
-
-<th>
-Kommentar
-</th>
-
-<th>
-Ta bort
-</th>
-
-</tr>
-
-</thead>
-
-<tbody id="tbody">
-</tbody>
-
-</table>
-
-<br>
+    <table>
 
 
-<button
-class="add-btn"
-onclick="addNewApartment()">
+        <thead>
 
-➕ Lägg till lägenhet
+            <tr>
 
-</button>
+                <th class="col-trapphus">
+                    Trapphus
+                </th>
 
 
-<button
-class="pdf-btn"
-onclick="window.print()">
+                <th class="col-lgh">
+                    Lgh
+                </th>
 
-📄 Exportera PDF
 
-</button>
+                <th>
+                    Färg Köksbänkskiva
+                </th>
+
+
+                <th class="col-material">
+                    Material kök
+                </th>
+
+
+                <th class="col-date">
+                    Datum måttning köksbänk
+                </th>
+
+
+                <th class="col-date">
+                    Datum måttning fönsterbänk
+                </th>
+
+
+                <th class="col-date">
+                    Datum montage köksbänk
+                </th>
+
+
+                <th class="col-date">
+                    Datum montage fönsterbänk
+                </th>
+
+
+                <th>
+                    Senast ändrad av
+                </th>
+
+
+                <th class="col-date">
+                    Ändrad datum
+                </th>
+
+
+                <th class="col-klar">
+                    Klar
+                </th>
+
+
+                <th class="col-kommentar">
+                    Kommentar
+                </th>
+
+
+                <th>
+                    Ta bort
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="tbody">
+        </tbody>
+
+
+    </table>
+
+
+    <br>
+
+
+    <button
+        class="add-btn"
+        onclick="addNewApartment()"
+    >
+
+        ➕ Lägg till lägenhet
+
+    </button>
+
+
+    <button
+        class="pdf-btn"
+        onclick="window.print()"
+    >
+
+        📄 Exportera PDF
+
+    </button>
+
 
 </div>
 
 
 <footer>
 
-NCC Bänkskivor V2 |
-Komposit & Laminat |
-Köksbänkar & Fönsterbänkar
+    NCC Bänkskivor V2 |
+    Komposit & Laminat |
+    Köksbänkar & Fönsterbänkar
 
 </footer>
+
 
 </div>
 
@@ -879,6 +1193,7 @@ Köksbänkar & Fönsterbänkar
 ===================================================== -->
 
 <script>
+
 
 let currentUser = "";
 
@@ -893,625 +1208,704 @@ let unsubscribeProjectInfo = null;
 let savingProjectInfo = false;
 
 
-/* =========================
+/* =====================================================
    ANVÄNDARNAMN
-========================= */
+===================================================== */
 
 const userNames = {
 
-"adrian@google.se":
-"Adrian",
+    "adrian@google.se":
+        "Adrian",
 
-"stefan@google.se":
-"Stefan",
+    "stefan@google.se":
+        "Stefan",
 
-"alexander@google.se":
-"Alexander",
+    "alexander@google.se":
+        "Alexander",
 
-"rebecka@google.se":
-"Rebecka",
+    "rebecka@google.se":
+        "Rebecka",
 
-"övrig@google.se":
-"Övrig"
+    "övrig@google.se":
+        "Övrig"
 
 };
 
 
-/* =========================
+/* =====================================================
    ADMIN
-========================= */
+===================================================== */
 
 const deleteUsers = [
 
-"dP5mINSphUNnJbkld4dZysZ4umK2",
+    "dP5mINSphUNnJbkld4dZysZ4umK2",
 
-"DbsidbqWniV1ucawSw8f8EnBz4k1"
+    "DbsidbqWniV1ucawSw8f8EnBz4k1"
 
 ];
 
 
-/* =========================
+/* =====================================================
    TID
-========================= */
+===================================================== */
 
 function timestamp(){
 
-return new Date()
-.toLocaleString("sv-SE");
+    return new Date()
+        .toLocaleString("sv-SE");
 
 }
 
 
-/* =========================
+/* =====================================================
    NY LÄGENHET
-========================= */
+===================================================== */
 
 async function addNewApartment(){
 
-const db =
-window.firestoreDb;
+    const db =
+        window.firestoreDb;
 
-if(!db){
 
-alert(
-"Firebase är inte redo ännu."
-);
+    if(!db){
 
-return;
+        alert(
+            "Firebase är inte redo ännu."
+        );
+
+        return;
+
+    }
+
+
+    const rowData = {
+
+        trapphus:"",
+        lgh:"",
+
+        fargKok:"",
+
+        material:"Komposit",
+
+        datumMattningKok:"",
+        datumMattningFonster:"",
+
+        datumMontageKok:"",
+        datumMontageFonster:"",
+
+        klar:false,
+
+        editedBy:
+            currentUser,
+
+        editedDate:
+            timestamp(),
+
+        kommentar:""
+
+    };
+
+
+    try{
+
+        const newDoc =
+            await window.firestoreAddDoc(
+
+                window.firestoreCollection(
+                    db,
+                    "bankskivor"
+                ),
+
+                rowData
+
+            );
+
+
+        console.log(
+            "Ny lägenhet skapad:",
+            newDoc.id
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Kunde inte skapa lägenhet:",
+            error
+        );
+
+
+        alert(
+            "Kunde inte lägga till lägenheten."
+        );
+
+    }
 
 }
 
 
-const rowData = {
-
-trapphus:"",
-lgh:"",
-
-fargKok:"",
-fargFonster:"",
-
-material:"Komposit",
-
-datumMattningKok:"",
-datumMattningFonster:"",
-
-datumMontageKok:"",
-datumMontageFonster:"",
-
-editedBy:
-currentUser,
-
-editedDate:
-timestamp(),
-
-kommentar:""
-
-};
-
-
-try{
-
-const newDoc =
-await window.firestoreAddDoc(
-
-window.firestoreCollection(
-db,
-"bankskivor"
-),
-
-rowData
-
-);
-
-console.log(
-"Ny lägenhet skapad:",
-newDoc.id
-);
-
-
-}catch(error){
-
-console.error(
-"Kunde inte skapa lägenhet:",
-error
-);
-
-alert(
-"Kunde inte lägga till lägenheten."
-);
-
-}
-
-}
-
-
-/* =========================
+/* =====================================================
    VISA LÄGENHET
-========================= */
+===================================================== */
 
 function addRow(data = {}){
 
-const firebaseId =
-data.firebaseId || "";
 
-const row =
-document.createElement("tr");
+    const firebaseId =
+        data.firebaseId || "";
 
 
-row.dataset.firebaseId =
-firebaseId;
+    const row =
+        document.createElement("tr");
 
 
-row.innerHTML = `
-
-<td class="col-trapphus">
-
-<input
-type="text"
-value="${data.trapphus || ''}">
-
-</td>
-
-<td class="col-lgh">
-
-<input
-type="text"
-value="${data.lgh || ''}">
-
-</td>
-
-<td>
-
-<input
-type="text"
-value="${data.fargKok || ''}">
-
-</td>
-
-<td>
-
-<input
-type="text"
-value="${data.fargFonster || ''}">
-
-</td>
-
-<td class="col-material">
-
-<select>
-
-<option
-value="Komposit"
-${data.material === "Komposit" ? "selected" : ""}>
-
-Komposit
-
-</option>
-
-<option
-value="Laminat"
-${data.material === "Laminat" ? "selected" : ""}>
-
-Laminat
-
-</option>
-
-</select>
-
-</td>
-
-<td class="col-date">
-
-<input
-type="date"
-value="${data.datumMattningKok || ''}">
-
-</td>
-
-<td class="col-date">
-
-<input
-type="date"
-value="${data.datumMattningFonster || ''}">
-
-</td>
-
-<td class="col-date">
-
-<input
-type="date"
-value="${data.datumMontageKok || ''}">
-
-</td>
-
-<td class="col-date">
-
-<input
-type="date"
-value="${data.datumMontageFonster || ''}">
-
-</td>
-
-<td>
-
-${data.editedBy || ''}
-
-</td>
-
-<td class="col-date">
-
-${data.editedDate || ''}
-
-</td>
-
-<td>
-
-<input
-type="text"
-value="${data.kommentar || ''}">
-
-</td>
-
-<td>
-
-<button
-class="delete-btn">
-
-X
-
-</button>
-
-</td>
-
-`;
+    row.dataset.firebaseId =
+        firebaseId;
 
 
-document
-.getElementById("tbody")
-.appendChild(row);
+    row.innerHTML = `
+
+        <td class="col-trapphus">
+
+            <input
+                type="text"
+                value="${data.trapphus || ''}"
+            >
+
+        </td>
 
 
-updateRowColor(row);
+        <td class="col-lgh">
+
+            <input
+                type="text"
+                value="${data.lgh || ''}"
+            >
+
+        </td>
 
 
-/* =========================
-   ÄNDRING
-========================= */
+        <td>
 
-row.querySelectorAll(
-"input, select"
-)
-.forEach(input => {
+            <input
+                type="text"
+                value="${data.fargKok || ''}"
+            >
 
-input.addEventListener(
-"change",
-async () => {
+        </td>
 
-if(loadingData){
-return;
+
+        <td class="col-material">
+
+            <select>
+
+                <option
+                    value="Komposit"
+                    ${data.material === "Komposit" ? "selected" : ""}
+                >
+
+                    Komposit
+
+                </option>
+
+
+                <option
+                    value="Laminat"
+                    ${data.material === "Laminat" ? "selected" : ""}
+                >
+
+                    Laminat
+
+                </option>
+
+            </select>
+
+        </td>
+
+
+        <td class="col-date">
+
+            <input
+                type="date"
+                value="${data.datumMattningKok || ''}"
+            >
+
+        </td>
+
+
+        <td class="col-date">
+
+            <input
+                type="date"
+                value="${data.datumMattningFonster || ''}"
+            >
+
+        </td>
+
+
+        <td class="col-date">
+
+            <input
+                type="date"
+                value="${data.datumMontageKok || ''}"
+            >
+
+        </td>
+
+
+        <td class="col-date">
+
+            <input
+                type="date"
+                value="${data.datumMontageFonster || ''}"
+            >
+
+        </td>
+
+
+        <td>
+
+            ${data.editedBy || ''}
+
+        </td>
+
+
+        <td class="col-date">
+
+            ${data.editedDate || ''}
+
+        </td>
+
+
+        <td class="col-klar">
+
+            <input
+                type="checkbox"
+                class="klar-checkbox"
+                ${data.klar === true ? "checked" : ""}
+            >
+
+        </td>
+
+
+        <td class="col-kommentar">
+
+            <input
+                type="text"
+                value="${data.kommentar || ''}"
+            >
+
+        </td>
+
+
+        <td>
+
+            <button
+                class="delete-btn"
+            >
+
+                X
+
+            </button>
+
+        </td>
+
+    `;
+
+
+    document
+        .getElementById("tbody")
+        .appendChild(row);
+
+
+    updateRowColor(row);
+
+
+    /* =================================================
+       ÄNDRING
+    ================================================= */
+
+    row.querySelectorAll(
+        "input, select"
+    )
+    .forEach(input => {
+
+        input.addEventListener(
+            "change",
+            async () => {
+
+
+                if(loadingData){
+
+                    return;
+
+                }
+
+
+                const scrollPosition =
+                    window.scrollY;
+
+
+                row.cells[9].innerText =
+                    currentUser;
+
+
+                row.cells[10].innerText =
+                    timestamp();
+
+
+                updateRowColor(row);
+
+                sortRows();
+
+                updateStats();
+
+
+                await saveRow(row);
+
+
+                updateHiddenRows();
+
+
+                window.scrollTo(
+                    0,
+                    scrollPosition
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =================================================
+       TA BORT
+    ================================================= */
+
+    row.querySelector(
+        ".delete-btn"
+    )
+    .addEventListener(
+        "click",
+        async () => {
+
+
+            if(
+                !deleteUsers.includes(
+                    currentUserUid
+                )
+            ){
+
+                alert(
+                    "Du har inte behörighet att ta bort lägenheter."
+                );
+
+                return;
+
+            }
+
+
+            const firebaseId =
+                row.dataset.firebaseId;
+
+
+            if(!firebaseId){
+
+                row.remove();
+
+                updateStats();
+
+                return;
+
+            }
+
+
+            if(
+                !confirm(
+                    "Vill du verkligen ta bort lägenheten?"
+                )
+            ){
+
+                return;
+
+            }
+
+
+            try{
+
+                await window.firestoreDeleteDoc(
+
+                    window.firestoreDoc(
+
+                        window.firestoreDb,
+
+                        "bankskivor",
+
+                        firebaseId
+
+                    )
+
+                );
+
+
+            }catch(error){
+
+                console.error(
+                    "Kunde inte ta bort lägenheten:",
+                    error
+                );
+
+
+                alert(
+                    "Kunde inte ta bort lägenheten."
+                );
+
+            }
+
+        }
+    );
+
 }
 
 
-/* Spara aktuell scrollposition */
-const scrollPosition =
-window.scrollY;
-
-
-row.cells[9].innerText =
-currentUser;
-
-row.cells[10].innerText =
-timestamp();
-
-
-updateRowColor(row);
-
-sortRows();
-
-updateStats();
-
-await saveRow(row);
-
-
-/* Gå tillbaka till samma position */
-window.scrollTo(
-0,
-scrollPosition
-);
-
-});
-
-});
-
-
-/* =========================
-   TA BORT
-========================= */
-
-row.querySelector(
-".delete-btn"
-)
-.addEventListener(
-"click",
-async () => {
-
-
-if(
-!deleteUsers.includes(
-currentUserUid
-)
-){
-
-alert(
-"Du har inte behörighet att ta bort lägenheter."
-);
-
-return;
-
-}
-
-
-const firebaseId =
-row.dataset.firebaseId;
-
-
-if(!firebaseId){
-
-row.remove();
-
-updateStats();
-
-return;
-
-}
-
-
-if(
-!confirm(
-"Vill du verkligen ta bort lägenheten?"
-)
-){
-
-return;
-
-}
-
-
-try{
-
-await window.firestoreDeleteDoc(
-
-window.firestoreDoc(
-
-window.firestoreDb,
-
-"bankskivor",
-
-firebaseId
-
-)
-
-);
-
-}catch(error){
-
-console.error(
-"Kunde inte ta bort lägenheten:",
-error
-);
-
-alert(
-"Kunde inte ta bort lägenheten."
-);
-
-}
-
-});
-
-}
-
-
-/* =========================
+/* =====================================================
    FÄRG PÅ RAD
-========================= */
+===================================================== */
 
 function updateRowColor(row){
 
-const datumMattningKok =
-row.cells[5]
-.querySelector("input")
-.value;
 
-const datumMattningFonster =
-row.cells[6]
-.querySelector("input")
-.value;
-
-const datumMontageKok =
-row.cells[7]
-.querySelector("input")
-.value;
-
-const datumMontageFonster =
-row.cells[8]
-.querySelector("input")
-.value;
+    const datumMattningKok =
+        row.cells[4]
+        .querySelector("input")
+        .value;
 
 
-row.classList.remove(
-"rad-mattad",
-"rad-monterad"
-);
+    const datumMattningFonster =
+        row.cells[5]
+        .querySelector("input")
+        .value;
 
 
-if(
+    const datumMontageKok =
+        row.cells[6]
+        .querySelector("input")
+        .value;
 
-datumMontageKok !== "" &&
 
-datumMontageFonster !== ""
+    const datumMontageFonster =
+        row.cells[7]
+        .querySelector("input")
+        .value;
 
-){
 
-row.classList.add(
-"rad-monterad"
-);
+    row.classList.remove(
+        "rad-pagar",
+        "rad-monterad"
+    );
 
-return;
+
+    /* ================================================
+       ALLA FYRA DATUM
+    ================================================ */
+
+    const allaDatumIfyllda =
+
+        datumMattningKok !== "" &&
+
+        datumMattningFonster !== "" &&
+
+        datumMontageKok !== "" &&
+
+        datumMontageFonster !== "";
+
+
+    if(allaDatumIfyllda){
+
+        row.classList.add(
+            "rad-monterad"
+        );
+
+        return;
+
+    }
+
+
+    /* ================================================
+       KÖKSBÄNK PÅGÅR
+    ================================================ */
+
+    const kokPagar =
+
+        datumMattningKok !== "" ||
+
+        datumMontageKok !== "";
+
+
+    if(kokPagar){
+
+        row.classList.add(
+            "rad-pagar"
+        );
+
+    }
 
 }
 
 
-if(
-
-datumMattningKok !== "" ||
-
-datumMattningFonster !== ""
-
-){
-
-row.classList.add(
-"rad-mattad"
-);
-
-}
-
-}
-
-
-/* =========================
+/* =====================================================
    SPARA RAD
-========================= */
+===================================================== */
 
 async function saveRow(row){
 
-if(loadingData){
-return;
-}
+
+    if(loadingData){
+
+        return;
+
+    }
 
 
-const db =
-window.firestoreDb;
+    const db =
+        window.firestoreDb;
 
 
-const firebaseId =
-row.dataset.firebaseId;
+    const firebaseId =
+        row.dataset.firebaseId;
 
 
-if(!db){
+    if(!db){
 
-console.error(
-"Firestore är inte redo."
-);
+        console.error(
+            "Firestore är inte redo."
+        );
 
-return;
+        return;
 
-}
-
-
-const rowData = {
-
-trapphus:
-row.cells[0]
-.querySelector("input")
-.value,
-
-lgh:
-row.cells[1]
-.querySelector("input")
-.value,
-
-fargKok:
-row.cells[2]
-.querySelector("input")
-.value,
-
-fargFonster:
-row.cells[3]
-.querySelector("input")
-.value,
-
-material:
-row.cells[4]
-.querySelector("select")
-.value,
-
-datumMattningKok:
-row.cells[5]
-.querySelector("input")
-.value,
-
-datumMattningFonster:
-row.cells[6]
-.querySelector("input")
-.value,
-
-datumMontageKok:
-row.cells[7]
-.querySelector("input")
-.value,
-
-datumMontageFonster:
-row.cells[8]
-.querySelector("input")
-.value,
-
-editedBy:
-row.cells[9].innerText,
-
-editedDate:
-row.cells[10].innerText,
-
-kommentar:
-row.cells[11]
-.querySelector("input")
-.value
-
-};
+    }
 
 
-try{
+    const rowData = {
 
-if(firebaseId){
+        trapphus:
+            row.cells[0]
+            .querySelector("input")
+            .value,
 
-await window.firestoreUpdateDoc(
 
-window.firestoreDoc(
-db,
-"bankskivor",
-firebaseId
-),
+        lgh:
+            row.cells[1]
+            .querySelector("input")
+            .value,
 
-rowData
 
-);
+        fargKok:
+            row.cells[2]
+            .querySelector("input")
+            .value,
 
-}else{
 
-const newDoc =
-await window.firestoreAddDoc(
+        material:
+            row.cells[3]
+            .querySelector("select")
+            .value,
 
-window.firestoreCollection(
-db,
-"bankskivor"
-),
 
-rowData
+        datumMattningKok:
+            row.cells[4]
+            .querySelector("input")
+            .value,
 
-);
 
-row.dataset.firebaseId =
-newDoc.id;
+        datumMattningFonster:
+            row.cells[5]
+            .querySelector("input")
+            .value,
 
-}
 
-}catch(error){
+        datumMontageKok:
+            row.cells[6]
+            .querySelector("input")
+            .value,
 
-console.error(
-"Kunde inte spara raden:",
-error
-);
 
-}
+        datumMontageFonster:
+            row.cells[7]
+            .querySelector("input")
+            .value,
+
+
+        editedBy:
+            row.cells[8].innerText,
+
+
+        editedDate:
+            row.cells[9].innerText,
+
+
+        klar:
+            row.cells[10]
+            .querySelector("input")
+            .checked,
+
+
+        kommentar:
+            row.cells[11]
+            .querySelector("input")
+            .value
+
+    };
+
+
+    try{
+
+
+        if(firebaseId){
+
+            await window.firestoreUpdateDoc(
+
+                window.firestoreDoc(
+                    db,
+                    "bankskivor",
+                    firebaseId
+                ),
+
+                rowData
+
+            );
+
+
+        }else{
+
+
+            const newDoc =
+                await window.firestoreAddDoc(
+
+                    window.firestoreCollection(
+                        db,
+                        "bankskivor"
+                    ),
+
+                    rowData
+
+                );
+
+
+            row.dataset.firebaseId =
+                newDoc.id;
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "Kunde inte spara raden:",
+            error
+        );
+
+    }
 
 }
 
@@ -1522,171 +1916,176 @@ error
 
 async function saveProjectInfo(){
 
-if(savingProjectInfo){
-return;
-}
+
+    if(savingProjectInfo){
+
+        return;
+
+    }
 
 
-const db =
-window.firestoreDb;
+    const db =
+        window.firestoreDb;
 
 
-if(!db){
+    if(!db){
 
-alert(
-"Firebase är inte redo ännu. Försök igen."
-);
+        alert(
+            "Firebase är inte redo ännu. Försök igen."
+        );
 
-return;
+        return;
 
-}
-
-
-const saveButton =
-document.getElementById(
-"saveProjectButton"
-);
+    }
 
 
-const saveMessage =
-document.getElementById(
-"projectSaveMessage"
-);
+    const saveButton =
+        document.getElementById(
+            "saveProjectButton"
+        );
 
 
-savingProjectInfo = true;
-
-saveButton.disabled = true;
-
-saveButton.innerText =
-"💾 Sparar...";
+    const saveMessage =
+        document.getElementById(
+            "projectSaveMessage"
+        );
 
 
-const projectData = {
-
-projekt:
-document
-.getElementById("projekt")
-.value
-.trim(),
-
-projektnummer:
-document
-.getElementById("projektnummer")
-.value
-.trim(),
-
-adress:
-document
-.getElementById("adress")
-.value
-.trim(),
-
-kontaktperson:
-document
-.getElementById("kontaktperson")
-.value
-.trim(),
-
-mattansvarig:
-document
-.getElementById("mattansvarig")
-.value
-.trim(),
-
-datum:
-document
-.getElementById("projektdatum")
-.value,
-
-editedBy:
-currentUser,
-
-editedDate:
-timestamp()
-
-};
+    savingProjectInfo = true;
 
 
-try{
+    saveButton.disabled = true;
 
 
-/*
-  Projektinformationen ligger alltid
-  i samma dokument:
-
-  projektinfo / projekt
-*/
-
-await window.firestoreSetDoc(
-
-window.firestoreDoc(
-db,
-"projektinfo",
-"projekt"
-),
-
-projectData,
-
-{
-merge:true
-}
-
-);
+    saveButton.innerText =
+        "💾 Sparar...";
 
 
-/*
-  Visa bekräftelse
-*/
-
-saveMessage.classList.add(
-"show"
-);
+    const projectData = {
 
 
-setTimeout(
-() => {
-
-saveMessage.classList.remove(
-"show"
-);
-
-},
-2500
-);
+        projekt:
+            document
+            .getElementById("projekt")
+            .value
+            .trim(),
 
 
-console.log(
-"Projektinformation sparad:",
-projectData
-);
+        projektnummer:
+            document
+            .getElementById("projektnummer")
+            .value
+            .trim(),
 
 
-}catch(error){
-
-console.error(
-"Kunde inte spara projektinformationen:",
-error
-);
-
-
-alert(
-"Kunde inte spara projektinformationen.\n\n"
-+
-error.message
-);
+        adress:
+            document
+            .getElementById("adress")
+            .value
+            .trim(),
 
 
-}finally{
+        kontaktperson:
+            document
+            .getElementById("kontaktperson")
+            .value
+            .trim(),
 
-savingProjectInfo = false;
 
-saveButton.disabled = false;
+        mattansvarig:
+            document
+            .getElementById("mattansvarig")
+            .value
+            .trim(),
 
-saveButton.innerText =
-"💾 Spara projektinformation";
 
-}
+        datum:
+            document
+            .getElementById("projektdatum")
+            .value,
+
+
+        editedBy:
+            currentUser,
+
+
+        editedDate:
+            timestamp()
+
+    };
+
+
+    try{
+
+
+        await window.firestoreSetDoc(
+
+            window.firestoreDoc(
+                db,
+                "projektinfo",
+                "projekt"
+            ),
+
+            projectData,
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        saveMessage.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            () => {
+
+                saveMessage.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+
+        console.log(
+            "Projektinformation sparad:",
+            projectData
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Kunde inte spara projektinformationen:",
+            error
+        );
+
+
+        alert(
+            "Kunde inte spara projektinformationen.\n\n"
+            +
+            error.message
+        );
+
+
+    }finally{
+
+
+        savingProjectInfo = false;
+
+
+        saveButton.disabled = false;
+
+
+        saveButton.innerText =
+            "💾 Spara projektinformation";
+
+    }
 
 }
 
@@ -1697,430 +2096,650 @@ saveButton.innerText =
 
 function startProjectInfoRealtime(){
 
-if(unsubscribeProjectInfo){
 
-unsubscribeProjectInfo();
+    if(unsubscribeProjectInfo){
 
-unsubscribeProjectInfo =
-null;
+        unsubscribeProjectInfo();
+
+        unsubscribeProjectInfo =
+            null;
+
+    }
+
+
+    const projectRef =
+        window.firestoreDoc(
+
+            window.firestoreDb,
+
+            "projektinfo",
+
+            "projekt"
+
+        );
+
+
+    unsubscribeProjectInfo =
+        window.firestoreOnSnapshot(
+
+            projectRef,
+
+
+            snapshot => {
+
+
+                if(!snapshot.exists()){
+
+                    console.log(
+                        "Ingen projektinformation sparad ännu."
+                    );
+
+                    return;
+
+                }
+
+
+                const data =
+                    snapshot.data();
+
+
+                document
+                    .getElementById("projekt")
+                    .value =
+                    data.projekt || "";
+
+
+                document
+                    .getElementById("projektnummer")
+                    .value =
+                    data.projektnummer || "";
+
+
+                document
+                    .getElementById("adress")
+                    .value =
+                    data.adress || "";
+
+
+                document
+                    .getElementById("kontaktperson")
+                    .value =
+                    data.kontaktperson || "";
+
+
+                document
+                    .getElementById("mattansvarig")
+                    .value =
+                    data.mattansvarig || "";
+
+
+                document
+                    .getElementById("projektdatum")
+                    .value =
+                    data.datum || "";
+
+
+                console.log(
+                    "Projektinformation synkad."
+                );
+
+            },
+
+
+            error => {
+
+                console.error(
+                    "Projektinfo-fel:",
+                    error
+                );
+
+            }
+
+        );
 
 }
 
 
-const projectRef =
-window.firestoreDoc(
-
-window.firestoreDb,
-
-"projektinfo",
-
-"projekt"
-
-);
-
-
-unsubscribeProjectInfo =
-window.firestoreOnSnapshot(
-
-projectRef,
-
-snapshot => {
-
-
-if(!snapshot.exists()){
-
-console.log(
-"Ingen projektinformation sparad ännu."
-);
-
-return;
-
-}
-
-
-const data =
-snapshot.data();
-
-
-/*
-  Uppdatera fälten från Firebase.
-*/
-
-document
-.getElementById("projekt")
-.value =
-data.projekt || "";
-
-
-document
-.getElementById("projektnummer")
-.value =
-data.projektnummer || "";
-
-
-document
-.getElementById("adress")
-.value =
-data.adress || "";
-
-
-document
-.getElementById("kontaktperson")
-.value =
-data.kontaktperson || "";
-
-
-document
-.getElementById("mattansvarig")
-.value =
-data.mattansvarig || "";
-
-
-document
-.getElementById("projektdatum")
-.value =
-data.datum || "";
-
-
-console.log(
-"Projektinformation synkad."
-);
-
-},
-
-error => {
-
-console.error(
-"Projektinfo-fel:",
-error
-);
-
-}
-
-);
-
-}
-
-
-/* =========================
+/* =====================================================
    REALTID LÄGENHETER
-========================= */
+===================================================== */
 
 function startRealtime(){
 
-if(unsubscribeFirestore){
 
-unsubscribeFirestore();
+    if(unsubscribeFirestore){
 
-unsubscribeFirestore =
-null;
+        unsubscribeFirestore();
+
+        unsubscribeFirestore =
+            null;
+
+    }
+
+
+    unsubscribeFirestore =
+        window.firestoreOnSnapshot(
+
+            window.firestoreCollection(
+                window.firestoreDb,
+                "bankskivor"
+            ),
+
+
+            snapshot => {
+
+
+                loadingData = true;
+
+
+                const tbody =
+                    document.getElementById(
+                        "tbody"
+                    );
+
+
+                tbody.innerHTML = "";
+
+
+                snapshot.forEach(
+                    documentSnapshot => {
+
+
+                        const data =
+                            documentSnapshot.data();
+
+
+                        data.firebaseId =
+                            documentSnapshot.id;
+
+
+                        addRow(data);
+
+                    }
+                );
+
+
+                sortRows();
+
+
+                updateStats();
+
+
+                loadingData = false;
+
+
+                /*
+                Viktigt:
+                kontrollera direkt vilka
+                färdiga lägenheter som ska döljas.
+                */
+
+                updateHiddenRows();
+
+
+                console.log(
+                    "Firestore synkad:",
+                    snapshot.size,
+                    "rader"
+                );
+
+            },
+
+
+            error => {
+
+                loadingData = false;
+
+
+                console.error(
+                    "Firestore-fel:",
+                    error
+                );
+
+            }
+
+        );
 
 }
 
 
-unsubscribeFirestore =
-window.firestoreOnSnapshot(
-
-window.firestoreCollection(
-window.firestoreDb,
-"bankskivor"
-),
-
-snapshot => {
-
-
-loadingData = true;
-
-
-const tbody =
-document.getElementById(
-"tbody"
-);
-
-
-tbody.innerHTML = "";
-
-
-snapshot.forEach(
-documentSnapshot => {
-
-
-const data =
-documentSnapshot.data();
-
-
-data.firebaseId =
-documentSnapshot.id;
-
-
-addRow(data);
-
-});
-
-
-sortRows();
-
-updateStats();
-
-
-loadingData = false;
-
-
-console.log(
-"Firestore synkad:",
-snapshot.size,
-"rader"
-);
-
-},
-
-error => {
-
-loadingData = false;
-
-console.error(
-"Firestore-fel:",
-error
-);
-
-}
-
-);
-
-}
-
-
-/* =========================
+/* =====================================================
    STATISTIK
-========================= */
+===================================================== */
 
 function updateStats(){
 
-const rows =
-document.querySelectorAll(
-"#tbody tr"
-);
+
+    const rows =
+        document.querySelectorAll(
+            "#tbody tr"
+        );
 
 
-const total =
-rows.length;
+    const total =
+        rows.length;
 
 
-let klara = 0;
+    let klara = 0;
 
 
-rows.forEach(row => {
+    rows.forEach(row => {
 
 
-const montageKok =
-row.cells[7]
-.querySelector("input")
-.value;
+        const montageKok =
+            row.cells[6]
+            .querySelector("input")
+            .value;
 
 
-const montageFonster =
-row.cells[8]
-.querySelector("input")
-.value;
+        const montageFonster =
+            row.cells[7]
+            .querySelector("input")
+            .value;
 
 
-if(
+        if(
 
-montageKok !== "" &&
+            montageKok !== "" &&
 
-montageFonster !== ""
+            montageFonster !== ""
 
-){
+        ){
 
-klara++;
+            klara++;
+
+        }
+
+    });
+
+
+    const kvar =
+        total - klara;
+
+
+    const procent =
+        total === 0
+
+        ? 0
+
+        :
+
+        Math.round(
+            (klara / total) * 100
+        );
+
+
+    document
+        .getElementById("klara")
+        .innerText =
+        klara;
+
+
+    document
+        .getElementById("ejklara")
+        .innerText =
+        kvar;
+
+
+    document
+        .getElementById("procent")
+        .innerText =
+        procent + "%";
+
+
+    const bar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    bar.style.width =
+        procent + "%";
+
+
+    bar.innerText =
+        procent + "%";
 
 }
 
-});
+
+/* =====================================================
+   DÖLJ FÄRDIGA LÄGENHETER
+===================================================== */
+
+function updateHiddenRows(){
 
 
-const kvar =
-total - klara;
+    const searchValue =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
 
 
-const procent =
-total === 0
-
-? 0
-
-: Math.round(
-(klara / total) * 100
-);
+    const rows =
+        document.querySelectorAll(
+            "#tbody tr"
+        );
 
 
-document
-.getElementById("klara")
-.innerText =
-klara;
+    rows.forEach(row => {
 
 
-document
-.getElementById("ejklara")
-.innerText =
-kvar;
+        const lgh =
+            row.cells[1]
+            .querySelector("input")
+            .value
+            .toLowerCase();
 
 
-document
-.getElementById("procent")
-.innerText =
-procent + "%";
+        const datumMattningKok =
+            row.cells[4]
+            .querySelector("input")
+            .value;
 
 
-const bar =
-document.getElementById(
-"progressBar"
-);
+        const datumMattningFonster =
+            row.cells[5]
+            .querySelector("input")
+            .value;
 
 
-bar.style.width =
-procent + "%";
+        const datumMontageKok =
+            row.cells[6]
+            .querySelector("input")
+            .value;
 
 
-bar.innerText =
-procent + "%";
+        const datumMontageFonster =
+            row.cells[7]
+            .querySelector("input")
+            .value;
+
+
+        const klar =
+            row.cells[10]
+            .querySelector("input")
+            .checked;
+
+
+        const allaDatumIfyllda =
+
+            datumMattningKok !== "" &&
+
+            datumMattningFonster !== "" &&
+
+            datumMontageKok !== "" &&
+
+            datumMontageFonster !== "";
+
+
+        const skaDoljAs =
+
+            allaDatumIfyllda &&
+
+            klar;
+
+
+        if(skaDoljAs){
+
+
+            /*
+            Visa endast om sökningen
+            matchar lägenhetsnumret.
+            */
+
+            if(
+
+                searchValue !== "" &&
+
+                lgh.includes(searchValue)
+
+            ){
+
+                row.style.display = "";
+
+            }else{
+
+                row.style.display = "none";
+
+            }
+
+        }
+
+    });
 
 }
 
 
-/* =========================
+/* =====================================================
    SORTERING
-========================= */
+===================================================== */
 
 function sortRows(){
 
-const tbody =
-document.getElementById(
-"tbody"
-);
+
+    const tbody =
+        document.getElementById(
+            "tbody"
+        );
 
 
-const rows =
-Array.from(
-tbody.querySelectorAll("tr")
-);
+    const rows =
+        Array.from(
+            tbody.querySelectorAll("tr")
+        );
 
 
-rows.sort((a,b) => {
+    rows.sort((a,b) => {
 
 
-const trA =
-a.cells[0]
-.querySelector("input")
-.value
-.trim();
+        const trA =
+            a.cells[0]
+            .querySelector("input")
+            .value
+            .trim();
 
 
-const trB =
-b.cells[0]
-.querySelector("input")
-.value
-.trim();
+        const trB =
+            b.cells[0]
+            .querySelector("input")
+            .value
+            .trim();
 
 
-if(trA !== trB){
+        if(trA !== trB){
 
-return trA.localeCompare(
-trB,
-"sv"
-);
+            return trA.localeCompare(
+                trB,
+                "sv"
+            );
+
+        }
+
+
+        const lghA =
+            a.cells[1]
+            .querySelector("input")
+            .value
+            .trim();
+
+
+        const lghB =
+            b.cells[1]
+            .querySelector("input")
+            .value
+            .trim();
+
+
+        return lghA.localeCompare(
+            lghB,
+            "sv",
+            {
+                numeric:true
+            }
+        );
+
+    });
+
+
+    rows.forEach(row => {
+
+        tbody.appendChild(row);
+
+    });
 
 }
 
 
-const lghA =
-a.cells[1]
-.querySelector("input")
-.value
-.trim();
-
-
-const lghB =
-b.cells[1]
-.querySelector("input")
-.value
-.trim();
-
-
-return lghA.localeCompare(
-lghB,
-"sv",
-{
-numeric:true
-}
-);
-
-});
-
-
-rows.forEach(row => {
-
-tbody.appendChild(row);
-
-});
-
-}
-
-
-/* =========================
+/* =====================================================
    SÖK
-========================= */
+===================================================== */
 
 function searchTable(){
 
-const search =
-document
-.getElementById("search")
-.value
-.toLowerCase();
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
 
 
-const rows =
-document.querySelectorAll(
-"#tbody tr"
-);
+    const rows =
+        document.querySelectorAll(
+            "#tbody tr"
+        );
 
 
-rows.forEach(row => {
+    rows.forEach(row => {
 
 
-const trapphus =
-row.cells[0]
-.querySelector("input")
-.value
-.toLowerCase();
+        const trapphus =
+            row.cells[0]
+            .querySelector("input")
+            .value
+            .toLowerCase();
 
 
-const lgh =
-row.cells[1]
-.querySelector("input")
-.value
-.toLowerCase();
+        const lgh =
+            row.cells[1]
+            .querySelector("input")
+            .value
+            .toLowerCase();
 
 
-if(
+        const datumMattningKok =
+            row.cells[4]
+            .querySelector("input")
+            .value;
 
-trapphus.includes(search)
 
-||
+        const datumMattningFonster =
+            row.cells[5]
+            .querySelector("input")
+            .value;
 
-lgh.includes(search)
 
-){
+        const datumMontageKok =
+            row.cells[6]
+            .querySelector("input")
+            .value;
 
-row.style.display = "";
 
-}else{
+        const datumMontageFonster =
+            row.cells[7]
+            .querySelector("input")
+            .value;
 
-row.style.display = "none";
 
-}
+        const klar =
+            row.cells[10]
+            .querySelector("input")
+            .checked;
 
-});
+
+        const allaDatumIfyllda =
+
+            datumMattningKok !== "" &&
+
+            datumMattningFonster !== "" &&
+
+            datumMontageKok !== "" &&
+
+            datumMontageFonster !== "";
+
+
+        const skaDoljAs =
+
+            allaDatumIfyllda &&
+
+            klar;
+
+
+        const matcharSokning =
+
+            trapphus.includes(search) ||
+
+            lgh.includes(search);
+
+
+        /*
+        ================================================
+        FÄRDIG + KLAR
+        ================================================
+        */
+
+        if(skaDoljAs){
+
+
+            /*
+            Färdig lägenhet visas
+            endast om man söker på
+            lägenhetsnumret.
+            */
+
+            if(
+
+                search !== "" &&
+
+                lgh.includes(search)
+
+            ){
+
+                row.style.display = "";
+
+            }else{
+
+                row.style.display = "none";
+
+            }
+
+
+            return;
+
+        }
+
+
+        /*
+        ================================================
+        VANLIG LÄGENHET
+        ================================================
+        */
+
+        if(matcharSokning){
+
+            row.style.display = "";
+
+        }else{
+
+            row.style.display = "none";
+
+        }
+
+    });
 
 }
 
@@ -2133,9 +2752,10 @@ row.style.display = "none";
 
 <script type="module">
 
+
 import {
 
-initializeApp
+    initializeApp
 
 }
 
@@ -2146,9 +2766,8 @@ from
 
 import {
 
-getAuth,
-
-signInWithEmailAndPassword
+    getAuth,
+    signInWithEmailAndPassword
 
 }
 
@@ -2159,21 +2778,14 @@ from
 
 import {
 
-getFirestore,
-
-collection,
-
-addDoc,
-
-doc,
-
-updateDoc,
-
-deleteDoc,
-
-setDoc,
-
-onSnapshot
+    getFirestore,
+    collection,
+    addDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    setDoc,
+    onSnapshot
 
 }
 
@@ -2182,212 +2794,228 @@ from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
-/* =========================
+/* =====================================================
    FIREBASE CONFIG
-========================= */
+===================================================== */
 
 const firebaseConfig = {
 
-apiKey:
-"AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
+    apiKey:
+        "AIzaSyDIqP7MziTwxOS58JOs2ElYnHVKY9P1h8Y",
 
-authDomain:
-"bankskivor-status.firebaseapp.com",
+    authDomain:
+        "bankskivor-status.firebaseapp.com",
 
-projectId:
-"bankskivor-status",
+    projectId:
+        "bankskivor-status",
 
-storageBucket:
-"bankskivor-status.firebasestorage.app",
+    storageBucket:
+        "bankskivor-status.firebasestorage.app",
 
-messagingSenderId:
-"424686541436",
+    messagingSenderId:
+        "424686541436",
 
-appId:
-"1:424686541436:web:a495bd7d2ab1586a11c7f9",
+    appId:
+        "1:424686541436:web:a495bd7d2ab1586a11c7f9",
 
-measurementId:
-"G-NTLCQJM6H6"
+    measurementId:
+        "G-NTLCQJM6H6"
 
 };
 
 
-/* =========================
+/* =====================================================
    STARTA FIREBASE
-========================= */
+===================================================== */
 
 const app =
-initializeApp(
-firebaseConfig
-);
+    initializeApp(
+        firebaseConfig
+    );
 
 
 const auth =
-getAuth(app);
+    getAuth(app);
 
 
 const db =
-getFirestore(app);
+    getFirestore(app);
 
 
-/* =========================
-   GÖR FIREBASE
-   TILLGÄNGLIGT
-========================= */
+/* =====================================================
+   GÖR FIREBASE TILLGÄNGLIGT
+===================================================== */
 
 window.firestoreDb =
-db;
+    db;
+
 
 window.firestoreCollection =
-collection;
+    collection;
+
 
 window.firestoreAddDoc =
-addDoc;
+    addDoc;
+
 
 window.firestoreDoc =
-doc;
+    doc;
+
 
 window.firestoreUpdateDoc =
-updateDoc;
+    updateDoc;
+
 
 window.firestoreDeleteDoc =
-deleteDoc;
+    deleteDoc;
+
 
 window.firestoreSetDoc =
-setDoc;
+    setDoc;
+
 
 window.firestoreOnSnapshot =
-onSnapshot;
+    onSnapshot;
 
 
-/* =========================
+/* =====================================================
    LOGIN
-========================= */
+===================================================== */
 
 window.firebaseLogin =
 async function(){
 
 
-const email =
-document
-.getElementById("username")
-.value;
+    const email =
+        document
+        .getElementById("username")
+        .value;
 
 
-const password =
-document
-.getElementById("password")
-.value;
+    const password =
+        document
+        .getElementById("password")
+        .value;
 
 
-const loginError =
-document
-.getElementById("loginError");
+    const loginError =
+        document
+        .getElementById("loginError");
 
 
-loginError.innerText = "";
+    loginError.innerText = "";
 
 
-try{
+    try{
 
 
-const result =
-await signInWithEmailAndPassword(
+        const result =
+            await signInWithEmailAndPassword(
 
-auth,
+                auth,
 
-email,
+                email,
 
-password
+                password
 
-);
-
-
-const user =
-result.user;
+            );
 
 
-const normalizedEmail =
-user.email
-.toLowerCase();
+        const user =
+            result.user;
 
 
-/*
-  Visa namn istället
-  för e-postadress.
-*/
-
-currentUser =
-userNames[
-normalizedEmail
-]
-
-||
-
-"Övrig";
+        const normalizedEmail =
+            user.email
+            .toLowerCase();
 
 
-currentUserUid =
-user.uid;
+        /*
+        Visa namn istället
+        för e-postadress.
+        */
+
+        currentUser =
+
+            userNames[
+                normalizedEmail
+            ]
+
+            ||
+
+            "Övrig";
 
 
-/* =========================
-   VISA APP
-========================= */
-
-document
-.getElementById(
-"loginScreen"
-)
-.style.display =
-"none";
+        currentUserUid =
+            user.uid;
 
 
-document
-.getElementById(
-"app"
-)
-.style.display =
-"block";
+        /* ============================================
+           VISA APP
+        ============================================ */
+
+        document
+            .getElementById(
+                "loginScreen"
+            )
+            .style.display =
+            "none";
 
 
-document
-.getElementById(
-"loggedUser"
-)
-.innerText =
-"Inloggad som: "
-+
-currentUser;
+        document
+            .getElementById(
+                "app"
+            )
+            .style.display =
+            "block";
 
 
-/* =========================
-   STARTA SYNKNING
-========================= */
+        document
+            .getElementById(
+                "loggedUser"
+            )
+            .innerText =
 
-startRealtime();
+            "Inloggad som: "
 
-startProjectInfoRealtime();
+            +
 
-
-}catch(error){
-
-
-console.error(error);
+            currentUser;
 
 
-loginError.innerText =
-error.code
-+
-": "
-+
-error.message;
+        /* ============================================
+           STARTA SYNKNING
+        ============================================ */
 
-}
+        startRealtime();
+
+        startProjectInfoRealtime();
+
+
+    }catch(error){
+
+
+        console.error(error);
+
+
+        loginError.innerText =
+
+            error.code
+
+            +
+
+            ": "
+
+            +
+
+            error.message;
+
+    }
 
 };
 
 </script>
+
 
 </body>
 
