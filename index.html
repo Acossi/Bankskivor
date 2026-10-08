@@ -257,89 +257,6 @@ body::before{
 
 
 /* =====================================================
-   FLIKAR
-===================================================== */
-
-.tabs{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-bottom:20px;
-
-    background:rgba(255,255,255,.05);
-
-    padding:8px;
-
-    border-radius:15px;
-
-    backdrop-filter:blur(15px);
-
-}
-
-
-.tab-btn{
-
-    flex:1;
-
-    padding:14px 20px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:transparent;
-
-    color:#cbd5e1;
-
-    font-size:16px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-    margin:0;
-
-}
-
-
-.tab-btn:hover{
-
-    background:rgba(255,255,255,.10);
-
-}
-
-
-.tab-btn.active{
-
-    background:#005AA9;
-
-    color:white;
-
-    box-shadow:
-        0 4px 12px rgba(0,90,169,.35);
-
-}
-
-
-.tab-content{
-
-    display:none;
-
-}
-
-
-.tab-content.active{
-
-    display:block;
-
-}
-
-
-/* =====================================================
    KORT
 ===================================================== */
 
@@ -405,13 +322,6 @@ select{
 }
 
 
-.readonly-checkbox{
-
-    cursor:not-allowed !important;
-
-}
-
-
 .readonly-notice{
 
     display:none;
@@ -429,6 +339,82 @@ select{
     margin-top:15px;
 
     font-weight:600;
+
+}
+
+
+/* =====================================================
+   FLIKAR
+===================================================== */
+
+.tabs{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.tab-button{
+
+    padding:14px 25px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#334155;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.tab-button:hover{
+
+    background:#475569;
+
+}
+
+
+.tab-button.active{
+
+    background:
+        linear-gradient(
+            135deg,
+            #005AA9,
+            #0078D4
+        );
+
+    box-shadow:
+        0 5px 20px rgba(0,120,212,.25);
+
+}
+
+
+.tab-content{
+
+    display:none;
+
+}
+
+
+.tab-content.active{
+
+    display:block;
 
 }
 
@@ -522,7 +508,7 @@ select{
 ===================================================== */
 
 #search,
-#tillvalSearch{
+#searchTillval{
 
     width:100%;
 
@@ -591,7 +577,7 @@ tr:hover td{
 
 
 /* =====================================================
-   BÄNKSKIVOR - KOLUMNBREDDER
+   BÄNKSKIVA KOLUMNBREDDER
 ===================================================== */
 
 .col-trapphus{
@@ -676,6 +662,75 @@ tr:hover td{
 
 
 /* =====================================================
+   TILLVAL KOLUMNBREDDER
+===================================================== */
+
+.tillval-lgh{
+
+    width:180px;
+
+    min-width:180px;
+
+}
+
+
+.tillval-farg{
+
+    width:190px;
+
+    min-width:190px;
+
+}
+
+
+.tillval-parkett{
+
+    width:300px;
+
+    min-width:300px;
+
+}
+
+
+.tillval-ja{
+
+    width:130px;
+
+    min-width:130px;
+
+    text-align:center;
+
+}
+
+
+.tillval-kommentar{
+
+    width:300px;
+
+    min-width:300px;
+
+}
+
+
+.tillval-edit{
+
+    width:130px;
+
+    min-width:130px;
+
+}
+
+
+.tillval-date{
+
+    width:160px;
+
+    min-width:160px;
+
+}
+
+
+/* =====================================================
    KLAR CHECKBOX
 ===================================================== */
 
@@ -724,6 +779,18 @@ tr:hover td{
 
     background:
         rgba(34,197,94,0.40) !important;
+
+}
+
+
+/* =====================================================
+   TILLVAL RADFÄRG
+===================================================== */
+
+.tillval-row td{
+
+    background:
+        rgba(255,255,255,.04);
 
 }
 
@@ -819,145 +886,39 @@ button{
 
 
 /* =====================================================
-   TILLVAL
+   SEKTIONSTITEL TILLVAL
 ===================================================== */
 
-.tillval-table{
-
-    min-width:1650px;
-
-}
-
-
-.tillval-table th{
-
-    background:#005AA9;
-
-    white-space:nowrap;
-
-}
-
-
-.tillval-table td{
-
-    vertical-align:middle;
-
-}
-
-
-.tillval-table input[type=text]{
-
-    margin:0;
-
-}
-
-
-.tillval-trapphus{
-
-    width:70px;
-
-    min-width:70px;
-
-}
-
-
-.tillval-lgh{
-
-    width:190px;
-
-    min-width:190px;
-
-}
-
-
-.tillval-color{
-
-    width:180px;
-
-    min-width:180px;
-
-}
-
-
-.tillval-parkett{
-
-    width:270px;
-
-    min-width:270px;
-
-}
-
-
-.tillval-ja{
-
-    width:100px;
-
-    min-width:100px;
-
-    text-align:center;
-
-}
-
-
-.tillval-tidigare{
-
-    width:180px;
-
-    min-width:180px;
-
-}
-
-
-.tillval-check{
-
-    width:21px !important;
-
-    height:21px;
-
-    cursor:pointer;
-
-    accent-color:#16a34a;
-
-    margin:0 !important;
-
-}
-
-
-.tillval-yes-cell{
-
-    text-align:center;
-
-}
-
-
-.tillval-yes-cell.checked{
+.section-title{
 
     background:
-        rgba(34,197,94,.28) !important;
+        linear-gradient(
+            135deg,
+            #005AA9,
+            #0078D4
+        );
+
+    padding:15px 20px;
+
+    border-radius:12px;
+
+    margin-bottom:15px;
 
 }
 
 
-.tillval-yes-cell.checked::after{
+.section-title h2{
 
-    content:"JA";
-
-    display:block;
-
-    color:#86efac;
-
-    font-size:11px;
-
-    font-weight:bold;
-
-    margin-top:2px;
+    font-size:22px;
 
 }
 
 
-.tillval-yes-cell:not(.checked)::after{
+.section-title p{
 
-    content:"";
+    opacity:.8;
+
+    margin-top:4px;
 
 }
 
@@ -1079,17 +1040,6 @@ footer{
     }
 
 
-    .save-message{
-
-        display:block;
-
-        margin:8px 0 0 0;
-
-        text-align:center;
-
-    }
-
-
     .tabs{
 
         flex-direction:column;
@@ -1097,9 +1047,20 @@ footer{
     }
 
 
-    .tab-btn{
+    .tab-button{
 
         width:100%;
+
+    }
+
+
+    .save-message{
+
+        display:block;
+
+        margin:8px 0 0 0;
+
+        text-align:center;
 
     }
 
@@ -1114,7 +1075,7 @@ footer{
 
     button,
     #search,
-    #tillvalSearch,
+    #searchTillval,
     .save-message,
     .readonly-notice,
     .tabs{
@@ -1150,13 +1111,6 @@ footer{
 
 
     .tab-content{
-
-        display:none !important;
-
-    }
-
-
-    .tab-content.active{
 
         display:block !important;
 
@@ -1291,7 +1245,7 @@ footer{
 <div class="tabs">
 
     <button
-        class="tab-btn active"
+        class="tab-button active"
         id="tabBankskivor"
         onclick="showTab('bankskivor')"
     >
@@ -1302,12 +1256,12 @@ footer{
 
 
     <button
-        class="tab-btn"
+        class="tab-button"
         id="tabTillval"
         onclick="showTab('tillval')"
     >
 
-        🔧 Tillval lägenheter
+        🛠️ Tillval lägenheter
 
     </button>
 
@@ -1315,17 +1269,7 @@ footer{
 
 
 <!-- =====================================================
-     BÄNKSKIVOR
-===================================================== -->
-
-<div
-    id="bankskivorView"
-    class="tab-content active"
->
-
-
-<!-- =====================================================
-     PROJEKTINFO
+     GEMENSAM PROJEKTINFO
 ===================================================== -->
 
 <div class="card">
@@ -1344,7 +1288,6 @@ footer{
         Du kan se informationen men inte ändra något.
 
     </div>
-
 
     <br>
 
@@ -1470,6 +1413,16 @@ footer{
 
 
 <!-- =====================================================
+     BÄNKSKIVOR FLIK
+===================================================== -->
+
+<div
+    class="tab-content active"
+    id="bankskivorTab"
+>
+
+
+<!-- =====================================================
      STATISTIK
 ===================================================== -->
 
@@ -1547,7 +1500,7 @@ footer{
 
 
 <!-- =====================================================
-     TABELL
+     BÄNKSKIVOR TABELL
 ===================================================== -->
 
 <div class="card">
@@ -1564,7 +1517,6 @@ footer{
     <div class="table-wrapper">
 
         <table>
-
 
             <thead>
 
@@ -1642,7 +1594,6 @@ footer{
             <tbody id="tbody">
             </tbody>
 
-
         </table>
 
     </div>
@@ -1671,91 +1622,64 @@ footer{
 
     </button>
 
-
 </div>
-
 
 </div>
 
 
 <!-- =====================================================
-     TILLVAL LÄGENHETER
+     TILLVAL FLIK
 ===================================================== -->
 
 <div
-    id="tillvalView"
     class="tab-content"
+    id="tillvalTab"
 >
+
+
+<div class="section-title">
+
+    <h2>
+        Tillval lägenheter
+    </h2>
+
+    <p>
+        Val och tillval för lägenheterna
+    </p>
+
+</div>
 
 
 <div class="card">
 
 
-    <h2>
-        🔧 Tillval lägenheter
-    </h2>
-
-
-    <p
-        style="
-            margin-top:8px;
-            color:#cbd5e1;
-        "
-    >
-
-        Val Sångvägen 12-20 / 58-62
-
-    </p>
-
-
-    <div
-        class="readonly-notice"
-        id="tillvalReadonlyNotice"
-    >
-
-        👁️ Du är inloggad i läsläge.
-        Du kan se informationen men inte ändra något.
-
-    </div>
-
-
-    <br>
-
-
     <input
         type="text"
-        id="tillvalSearch"
-        placeholder="🔎 Sök trapphus eller lägenhet..."
-        onkeyup="searchTillval()"
+        id="searchTillval"
+        placeholder="🔎 Sök lägenhet..."
+        onkeyup="searchTillvalTable()"
     >
 
 
     <div class="table-wrapper">
 
-
-        <table class="tillval-table">
-
+        <table>
 
             <thead>
 
                 <tr>
 
-                    <th class="tillval-trapphus">
-                        Trapphus
-                    </th>
-
-
                     <th class="tillval-lgh">
-                        Lgh
+                        Lägenhet
                     </th>
 
 
-                    <th class="tillval-color">
+                    <th class="tillval-farg">
                         Färg Luckor
                     </th>
 
 
-                    <th class="tillval-color">
+                    <th class="tillval-farg">
                         Färg Kompositbänk
                     </th>
 
@@ -1790,8 +1714,18 @@ footer{
                     </th>
 
 
-                    <th class="tillval-tidigare">
-                        Tidigare lokal
+                    <th class="tillval-kommentar">
+                        Kommentar
+                    </th>
+
+
+                    <th class="tillval-edit">
+                        Senast ändrad av
+                    </th>
+
+
+                    <th class="tillval-date">
+                        Ändrad datum
                     </th>
 
 
@@ -1807,7 +1741,6 @@ footer{
             <tbody id="tillvalTbody">
             </tbody>
 
-
         </table>
 
     </div>
@@ -1818,8 +1751,8 @@ footer{
 
     <button
         class="add-btn"
-        id="addTillvalButton"
-        onclick="addNewTillval()"
+        id="addTillvalApartmentButton"
+        onclick="addNewTillvalApartment()"
     >
 
         ➕ Lägg till lägenhet
@@ -1839,20 +1772,14 @@ footer{
 
 </div>
 
-
 </div>
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
 
 <footer>
 
     NCC Bänkskivor V2 |
     Komposit & Laminat |
-    Köksbänkar & Fönsterbänkar |
-    Tillval lägenheter
+    Köksbänkar & Fönsterbänkar
 
 </footer>
 
@@ -1861,11 +1788,15 @@ footer{
 
 
 <!-- =====================================================
-     VANLIG JAVASCRIPT
+     JAVASCRIPT
 ===================================================== -->
 
 <script>
 
+
+/* =====================================================
+   GLOBALA VARIABLER
+===================================================== */
 
 let currentUser = "";
 
@@ -1877,11 +1808,13 @@ let readOnlyMode = false;
 
 let loadingData = false;
 
+let loadingTillvalData = false;
+
 let unsubscribeFirestore = null;
 
-let unsubscribeProjectInfo = null;
+let unsubscribeTillvalFirestore = null;
 
-let unsubscribeTillval = null;
+let unsubscribeProjectInfo = null;
 
 let savingProjectInfo = false;
 
@@ -1936,30 +1869,30 @@ function timestamp(){
 
 
 /* =====================================================
-   FLIKAR
+   FLIKBYTE
 ===================================================== */
 
 function showTab(tab){
 
-    const bankskivorView =
+    const bankskivorTab =
         document.getElementById(
-            "bankskivorView"
+            "bankskivorTab"
         );
 
 
-    const tillvalView =
+    const tillvalTab =
         document.getElementById(
-            "tillvalView"
+            "tillvalTab"
         );
 
 
-    const tabBankskivor =
+    const bankskivorButton =
         document.getElementById(
             "tabBankskivor"
         );
 
 
-    const tabTillval =
+    const tillvalButton =
         document.getElementById(
             "tabTillval"
         );
@@ -1967,44 +1900,39 @@ function showTab(tab){
 
     if(tab === "bankskivor"){
 
-        bankskivorView.classList.add(
+        bankskivorTab.classList.add(
             "active"
         );
 
-        tillvalView.classList.remove(
+        tillvalTab.classList.remove(
             "active"
         );
 
-        tabBankskivor.classList.add(
+        bankskivorButton.classList.add(
             "active"
         );
 
-        tabTillval.classList.remove(
+        tillvalButton.classList.remove(
             "active"
         );
 
-    }
+    }else{
 
-
-    if(tab === "tillval"){
-
-        bankskivorView.classList.remove(
+        bankskivorTab.classList.remove(
             "active"
         );
 
-        tillvalView.classList.add(
+        tillvalTab.classList.add(
             "active"
         );
 
-        tabBankskivor.classList.remove(
+        bankskivorButton.classList.remove(
             "active"
         );
 
-        tabTillval.classList.add(
+        tillvalButton.classList.add(
             "active"
         );
-
-        updateTillvalReadOnly();
 
     }
 
@@ -2012,14 +1940,14 @@ function showTab(tab){
 
 
 /* =====================================================
-   SÄTT LÄSLÄGE
+   LÄSLÄGE
 ===================================================== */
 
 function applyReadOnlyMode(){
 
     const fields =
         document.querySelectorAll(
-            "#bankskivorView input:not(#search), #bankskivorView select"
+            "#app input:not(#search):not(#searchTillval), #app select"
         );
 
 
@@ -2058,9 +1986,15 @@ function applyReadOnlyMode(){
         );
 
 
+    const addTillvalButton =
+        document.getElementById(
+            "addTillvalApartmentButton"
+        );
+
+
     const deleteButtons =
         document.querySelectorAll(
-            "#bankskivorView .delete-btn"
+            ".delete-btn"
         );
 
 
@@ -2077,6 +2011,14 @@ function applyReadOnlyMode(){
         if(addButton){
 
             addButton.style.display =
+                "none";
+
+        }
+
+
+        if(addTillvalButton){
+
+            addTillvalButton.style.display =
                 "none";
 
         }
@@ -2121,6 +2063,14 @@ function applyReadOnlyMode(){
         }
 
 
+        if(addTillvalButton){
+
+            addTillvalButton.style.display =
+                "";
+
+        }
+
+
         deleteButtons.forEach(button => {
 
             button.style.display =
@@ -2144,14 +2094,32 @@ function applyReadOnlyMode(){
 
     }
 
+}
 
-    updateTillvalReadOnly();
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+    return String(value)
+
+        .replaceAll("&","&amp;")
+
+        .replaceAll("<","&lt;")
+
+        .replaceAll(">","&gt;")
+
+        .replaceAll('"',"&quot;")
+
+        .replaceAll("'","&#039;");
 
 }
 
 
 /* =====================================================
-   HJÄLPFUNKTIONER
+   BÄNKSKIVA - HÄMTA RADDATA
 ===================================================== */
 
 function getRowData(row){
@@ -2224,7 +2192,7 @@ function getRowData(row){
 
 
 /* =====================================================
-   NY LÄGENHET BÄNKSKIVA
+   NY BÄNKSKIVE-LÄGENHET
 ===================================================== */
 
 async function addNewApartment(){
@@ -2321,11 +2289,10 @@ async function addNewApartment(){
 
 
 /* =====================================================
-   NY RAD BÄNKSKIVA
+   BÄNKSKIVA - NY RAD
 ===================================================== */
 
 function addRow(data = {}){
-
 
     const firebaseId =
         data.firebaseId || "";
@@ -2510,7 +2477,6 @@ function addRow(data = {}){
             "change",
             async () => {
 
-
                 if(
                     loadingData ||
                     readOnlyMode
@@ -2567,7 +2533,6 @@ function addRow(data = {}){
     .addEventListener(
         "click",
         async () => {
-
 
             if(readOnlyMode){
 
@@ -2633,7 +2598,6 @@ function addRow(data = {}){
 
                 );
 
-
             }catch(error){
 
                 console.error(
@@ -2679,32 +2643,10 @@ function addRow(data = {}){
 
 
 /* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHtml(value){
-
-    return String(value)
-
-        .replaceAll("&","&amp;")
-
-        .replaceAll("<","&lt;")
-
-        .replaceAll(">","&gt;")
-
-        .replaceAll('"',"&quot;")
-
-        .replaceAll("'","&#039;");
-
-}
-
-
-/* =====================================================
-   FÄRG PÅ RAD
+   BÄNKSKIVA - RADFÄRG
 ===================================================== */
 
 function updateRowColor(row){
-
 
     const datumMattningKok =
         row.querySelector(
@@ -2777,11 +2719,10 @@ function updateRowColor(row){
 
 
 /* =====================================================
-   SPARA RAD BÄNKSKIVA
+   BÄNKSKIVA - SPARA RAD
 ===================================================== */
 
 async function saveRow(row){
-
 
     if(
         loadingData ||
@@ -2859,7 +2800,6 @@ async function saveRow(row){
 
     try{
 
-
         if(firebaseId){
 
             await window.firestoreUpdateDoc(
@@ -2874,9 +2814,7 @@ async function saveRow(row){
 
             );
 
-
         }else{
-
 
             const newDoc =
                 await window.firestoreAddDoc(
@@ -2896,7 +2834,6 @@ async function saveRow(row){
 
         }
 
-
     }catch(error){
 
         console.error(
@@ -2910,11 +2847,777 @@ async function saveRow(row){
 
 
 /* =====================================================
-   SPARA PROJEKTINFORMATION
+   TILLVAL - NY LÄGENHET
+===================================================== */
+
+async function addNewTillvalApartment(){
+
+    if(readOnlyMode){
+
+        return;
+
+    }
+
+
+    const db =
+        window.firestoreDb;
+
+
+    if(!db){
+
+        alert(
+            "Firebase är inte redo ännu."
+        );
+
+        return;
+
+    }
+
+
+    const rowData = {
+
+        lagenhet:"",
+
+        fargLuckor:"",
+
+        fargKompositbank:"",
+
+        parkett:"",
+
+        badrumsskap:"",
+
+        takdusch:"",
+
+        kommod:"",
+
+        spegelskapWC:"",
+
+        eluttagKapaWC:"",
+
+        kommentar:"",
+
+        editedBy:
+            currentUser,
+
+        editedDate:
+            timestamp()
+
+    };
+
+
+    try{
+
+        const newDoc =
+            await window.firestoreAddDoc(
+
+                window.firestoreCollection(
+                    db,
+                    "tillvalLagenheter"
+                ),
+
+                rowData
+
+            );
+
+
+        console.log(
+            "Ny tillvalslägenhet skapad:",
+            newDoc.id
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Kunde inte skapa tillvalslägenhet:",
+            error
+        );
+
+
+        alert(
+            "Kunde inte lägga till lägenheten."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   TILLVAL - HÄMTA RADDATA
+===================================================== */
+
+function getTillvalRowData(row){
+
+    return {
+
+        lagenhet:
+            row.querySelector(
+                ".tillval-lagenhet-input"
+            ).value,
+
+        fargLuckor:
+            row.querySelector(
+                ".tillval-farg-luckor"
+            ).value,
+
+        fargKompositbank:
+            row.querySelector(
+                ".tillval-farg-komposit"
+            ).value,
+
+        parkett:
+            row.querySelector(
+                ".tillval-parkett"
+            ).value,
+
+        badrumsskap:
+            row.querySelector(
+                ".tillval-badrumsskap"
+            ).value,
+
+        takdusch:
+            row.querySelector(
+                ".tillval-takdusch"
+            ).value,
+
+        kommod:
+            row.querySelector(
+                ".tillval-kommod"
+            ).value,
+
+        spegelskapWC:
+            row.querySelector(
+                ".tillval-spegelskap"
+            ).value,
+
+        eluttagKapaWC:
+            row.querySelector(
+                ".tillval-eluttag"
+            ).value,
+
+        kommentar:
+            row.querySelector(
+                ".tillval-kommentar-input"
+            ).value,
+
+        editedBy:
+            row.querySelector(
+                ".tillval-edited-by"
+            ).innerText,
+
+        editedDate:
+            row.querySelector(
+                ".tillval-edited-date"
+            ).innerText
+
+    };
+
+}
+
+
+/* =====================================================
+   TILLVAL - NY RAD
+===================================================== */
+
+function addTillvalRow(data = {}){
+
+    const firebaseId =
+        data.firebaseId || "";
+
+
+    const row =
+        document.createElement("tr");
+
+
+    row.classList.add(
+        "tillval-row"
+    );
+
+
+    row.dataset.firebaseId =
+        firebaseId;
+
+
+    row.innerHTML = `
+
+        <td class="tillval-lgh">
+
+            <input
+                type="text"
+                class="tillval-lagenhet-input"
+                placeholder="Lägenhet"
+                value="${escapeHtml(data.lagenhet || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-farg">
+
+            <input
+                type="text"
+                class="tillval-farg-luckor"
+                placeholder="Ex. Snövit (S-0500-N)"
+                value="${escapeHtml(data.fargLuckor || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-farg">
+
+            <input
+                type="text"
+                class="tillval-farg-komposit"
+                placeholder="Ex. Ljusgrå"
+                value="${escapeHtml(data.fargKompositbank || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-parkett">
+
+            <input
+                type="text"
+                class="tillval-parkett"
+                placeholder="Ex. Alla rum, ej kök & klädkammare"
+                value="${escapeHtml(data.parkett || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-ja">
+
+            <input
+                type="text"
+                class="tillval-badrumsskap"
+                placeholder="ja"
+                value="${escapeHtml(data.badrumsskap || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-ja">
+
+            <input
+                type="text"
+                class="tillval-takdusch"
+                placeholder="ja"
+                value="${escapeHtml(data.takdusch || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-ja">
+
+            <input
+                type="text"
+                class="tillval-kommod"
+                placeholder="ja"
+                value="${escapeHtml(data.kommod || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-ja">
+
+            <input
+                type="text"
+                class="tillval-spegelskap"
+                placeholder="ja"
+                value="${escapeHtml(data.spegelskapWC || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-ja">
+
+            <input
+                type="text"
+                class="tillval-eluttag"
+                placeholder="ja"
+                value="${escapeHtml(data.eluttagKapaWC || '')}"
+            >
+
+        </td>
+
+
+        <td class="tillval-kommentar">
+
+            <input
+                type="text"
+                class="tillval-kommentar-input"
+                placeholder="Kommentar"
+                value="${escapeHtml(data.kommentar || '')}"
+            >
+
+        </td>
+
+
+        <td
+            class="tillval-edit tillval-edited-by"
+        >
+
+            ${escapeHtml(data.editedBy || '')}
+
+        </td>
+
+
+        <td
+            class="tillval-date tillval-edited-date"
+        >
+
+            ${escapeHtml(data.editedDate || '')}
+
+        </td>
+
+
+        <td>
+
+            <button
+                class="delete-btn tillval-delete-btn"
+            >
+
+                X
+
+            </button>
+
+        </td>
+
+    `;
+
+
+    document
+        .getElementById(
+            "tillvalTbody"
+        )
+        .appendChild(row);
+
+
+    /* =================================================
+       ÄNDRING
+    ================================================= */
+
+    row.querySelectorAll(
+        "input"
+    )
+    .forEach(input => {
+
+        input.addEventListener(
+            "change",
+            async () => {
+
+                if(
+                    loadingTillvalData ||
+                    readOnlyMode
+                ){
+
+                    return;
+
+                }
+
+
+                const scrollPosition =
+                    window.scrollY;
+
+
+                row.querySelector(
+                    ".tillval-edited-by"
+                ).innerText =
+                    currentUser;
+
+
+                row.querySelector(
+                    ".tillval-edited-date"
+                ).innerText =
+                    timestamp();
+
+
+                sortTillvalRows();
+
+
+                await saveTillvalRow(
+                    row
+                );
+
+
+                window.scrollTo(
+                    0,
+                    scrollPosition
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =================================================
+       TA BORT TILLVAL
+    ================================================= */
+
+    row.querySelector(
+        ".tillval-delete-btn"
+    )
+    .addEventListener(
+        "click",
+        async () => {
+
+            if(readOnlyMode){
+
+                return;
+
+            }
+
+
+            if(
+                !deleteUsers.includes(
+                    currentUserUid
+                )
+            ){
+
+                alert(
+                    "Du har inte behörighet att ta bort lägenheter."
+                );
+
+                return;
+
+            }
+
+
+            const firebaseId =
+                row.dataset.firebaseId;
+
+
+            if(!firebaseId){
+
+                row.remove();
+
+                return;
+
+            }
+
+
+            if(
+                !confirm(
+                    "Vill du verkligen ta bort tillvalslägenheten?"
+                )
+            ){
+
+                return;
+
+            }
+
+
+            try{
+
+                await window.firestoreDeleteDoc(
+
+                    window.firestoreDoc(
+
+                        window.firestoreDb,
+
+                        "tillvalLagenheter",
+
+                        firebaseId
+
+                    )
+
+                );
+
+            }catch(error){
+
+                console.error(
+                    "Kunde inte ta bort tillvalslägenheten:",
+                    error
+                );
+
+
+                alert(
+                    "Kunde inte ta bort lägenheten."
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =================================================
+       LÄSLÄGE
+    ================================================= */
+
+    if(readOnlyMode){
+
+        row.querySelectorAll(
+            "input"
+        )
+        .forEach(input => {
+
+            input.disabled = true;
+
+            input.classList.add(
+                "readonly-field"
+            );
+
+        });
+
+
+        row.querySelector(
+            ".tillval-delete-btn"
+        ).style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   TILLVAL - SPARA RAD
+===================================================== */
+
+async function saveTillvalRow(row){
+
+    if(
+        loadingTillvalData ||
+        readOnlyMode
+    ){
+
+        return;
+
+    }
+
+
+    const db =
+        window.firestoreDb;
+
+
+    const firebaseId =
+        row.dataset.firebaseId;
+
+
+    if(!db){
+
+        console.error(
+            "Firestore är inte redo."
+        );
+
+        return;
+
+    }
+
+
+    const data =
+        getTillvalRowData(row);
+
+
+    const rowData = {
+
+        lagenhet:
+            data.lagenhet,
+
+        fargLuckor:
+            data.fargLuckor,
+
+        fargKompositbank:
+            data.fargKompositbank,
+
+        parkett:
+            data.parkett,
+
+        badrumsskap:
+            data.badrumsskap,
+
+        takdusch:
+            data.takdusch,
+
+        kommod:
+            data.kommod,
+
+        spegelskapWC:
+            data.spegelskapWC,
+
+        eluttagKapaWC:
+            data.eluttagKapaWC,
+
+        kommentar:
+            data.kommentar,
+
+        editedBy:
+            data.editedBy,
+
+        editedDate:
+            data.editedDate
+
+    };
+
+
+    try{
+
+        if(firebaseId){
+
+            await window.firestoreUpdateDoc(
+
+                window.firestoreDoc(
+                    db,
+                    "tillvalLagenheter",
+                    firebaseId
+                ),
+
+                rowData
+
+            );
+
+        }else{
+
+            const newDoc =
+                await window.firestoreAddDoc(
+
+                    window.firestoreCollection(
+                        db,
+                        "tillvalLagenheter"
+                    ),
+
+                    rowData
+
+                );
+
+
+            row.dataset.firebaseId =
+                newDoc.id;
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Kunde inte spara tillvalsraden:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   TILLVAL - SORTERING
+===================================================== */
+
+function sortTillvalRows(){
+
+    const tbody =
+        document.getElementById(
+            "tillvalTbody"
+        );
+
+
+    const rows =
+        Array.from(
+            tbody.querySelectorAll("tr")
+        );
+
+
+    rows.sort((a,b) => {
+
+        const aValue =
+            a.querySelector(
+                ".tillval-lagenhet-input"
+            )
+            .value
+            .trim();
+
+
+        const bValue =
+            b.querySelector(
+                ".tillval-lagenhet-input"
+            )
+            .value
+            .trim();
+
+
+        return aValue.localeCompare(
+            bValue,
+            "sv",
+            {
+                numeric:true
+            }
+        );
+
+    });
+
+
+    rows.forEach(row => {
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* =====================================================
+   TILLVAL - SÖKNING
+===================================================== */
+
+function searchTillvalTable(){
+
+    const search =
+        document
+        .getElementById(
+            "searchTillval"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const rows =
+        document.querySelectorAll(
+            "#tillvalTbody tr"
+        );
+
+
+    rows.forEach(row => {
+
+        const lagenhet =
+            row.querySelector(
+                ".tillval-lagenhet-input"
+            )
+            .value
+            .toLowerCase();
+
+
+        if(
+            lagenhet.includes(search)
+        ){
+
+            row.style.display = "";
+
+        }else{
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   PROJEKTINFO
 ===================================================== */
 
 async function saveProjectInfo(){
-
 
     if(readOnlyMode){
 
@@ -3015,7 +3718,6 @@ async function saveProjectInfo(){
 
     try{
 
-
         await window.firestoreSetDoc(
 
             window.firestoreDoc(
@@ -3067,7 +3769,6 @@ async function saveProjectInfo(){
 
     }finally{
 
-
         savingProjectInfo = false;
 
 
@@ -3087,7 +3788,6 @@ async function saveProjectInfo(){
 ===================================================== */
 
 function startProjectInfoRealtime(){
-
 
     if(unsubscribeProjectInfo){
 
@@ -3118,7 +3818,6 @@ function startProjectInfoRealtime(){
 
 
             snapshot => {
-
 
                 if(!snapshot.exists()){
 
@@ -3196,7 +3895,6 @@ function startProjectInfoRealtime(){
 
 function startRealtime(){
 
-
     if(unsubscribeFirestore){
 
         unsubscribeFirestore();
@@ -3218,7 +3916,6 @@ function startRealtime(){
 
             snapshot => {
 
-
                 loadingData = true;
 
 
@@ -3233,7 +3930,6 @@ function startRealtime(){
 
                 snapshot.forEach(
                     documentSnapshot => {
-
 
                         const data =
                             documentSnapshot.data();
@@ -3286,11 +3982,98 @@ function startRealtime(){
 
 
 /* =====================================================
+   REALTID TILLVAL
+===================================================== */
+
+function startTillvalRealtime(){
+
+    if(unsubscribeTillvalFirestore){
+
+        unsubscribeTillvalFirestore();
+
+        unsubscribeTillvalFirestore =
+            null;
+
+    }
+
+
+    unsubscribeTillvalFirestore =
+        window.firestoreOnSnapshot(
+
+            window.firestoreCollection(
+                window.firestoreDb,
+                "tillvalLagenheter"
+            ),
+
+
+            snapshot => {
+
+                loadingTillvalData = true;
+
+
+                const tbody =
+                    document.getElementById(
+                        "tillvalTbody"
+                    );
+
+
+                tbody.innerHTML = "";
+
+
+                snapshot.forEach(
+                    documentSnapshot => {
+
+                        const data =
+                            documentSnapshot.data();
+
+
+                        data.firebaseId =
+                            documentSnapshot.id;
+
+
+                        addTillvalRow(data);
+
+                    }
+                );
+
+
+                sortTillvalRows();
+
+                loadingTillvalData = false;
+
+                applyReadOnlyMode();
+
+
+                console.log(
+                    "Tillval Firestore synkad:",
+                    snapshot.size,
+                    "rader"
+                );
+
+            },
+
+
+            error => {
+
+                loadingTillvalData = false;
+
+                console.error(
+                    "Tillval Firestore-fel:",
+                    error
+                );
+
+            }
+
+        );
+
+}
+
+
+/* =====================================================
    STATISTIK
 ===================================================== */
 
 function updateStats(){
-
 
     const rows =
         document.querySelectorAll(
@@ -3306,7 +4089,6 @@ function updateStats(){
 
 
     rows.forEach(row => {
-
 
         const datumMontageKok =
             row.querySelector(
@@ -3386,11 +4168,10 @@ function updateStats(){
 
 
 /* =====================================================
-   KONTROLLERA OM RAD SKA DÖLJAS
+   KONTROLLERA FÄRDIG RAD
 ===================================================== */
 
 function isFinishedAndChecked(row){
-
 
     const datumMattningKok =
         row.querySelector(
@@ -3434,19 +4215,21 @@ function isFinishedAndChecked(row){
 
 
     return (
+
         allaDatumIfyllda &&
+
         klar
+
     );
 
 }
 
 
 /* =====================================================
-   DÖLJ FÄRDIGA LÄGENHETER
+   DÖLJ FÄRDIGA
 ===================================================== */
 
 function updateHiddenRows(){
-
 
     const searchValue =
         document
@@ -3463,7 +4246,6 @@ function updateHiddenRows(){
 
 
     rows.forEach(row => {
-
 
         const lgh =
             row.querySelector(
@@ -3514,7 +4296,6 @@ function updateHiddenRows(){
 
 function sortRows(){
 
-
     const tbody =
         document.getElementById(
             "tbody"
@@ -3528,7 +4309,6 @@ function sortRows(){
 
 
     rows.sort((a,b) => {
-
 
         const trA =
             a.querySelector(
@@ -3598,7 +4378,6 @@ function sortRows(){
 
 function searchTable(){
 
-
     const search =
         document
         .getElementById("search")
@@ -3614,7 +4393,6 @@ function searchTable(){
 
 
     rows.forEach(row => {
-
 
         const trapphus =
             row.querySelector(
@@ -3644,7 +4422,6 @@ function searchTable(){
 
 
         if(finished){
-
 
             if(
 
@@ -3683,968 +4460,7 @@ function searchTable(){
 
 
 /* =====================================================
-   TILLVAL
-===================================================== */
-
-function addTillvalRow(data = {}){
-
-
-    const firebaseId =
-        data.firebaseId || "";
-
-
-    const row =
-        document.createElement("tr");
-
-
-    row.dataset.firebaseId =
-        firebaseId;
-
-
-    row.innerHTML = `
-
-        <td class="tillval-trapphus">
-
-            <input
-                type="text"
-                class="tillval-trapphus-input"
-                value="${escapeHtml(data.trapphus || '')}"
-            >
-
-        </td>
-
-
-        <td class="tillval-lgh">
-
-            <input
-                type="text"
-                class="tillval-lgh-input"
-                value="${escapeHtml(data.lgh || '')}"
-            >
-
-        </td>
-
-
-        <td class="tillval-color">
-
-            <input
-                type="text"
-                class="tillval-luckor-input"
-                value="${escapeHtml(data.fargLuckor || '')}"
-            >
-
-        </td>
-
-
-        <td class="tillval-color">
-
-            <input
-                type="text"
-                class="tillval-komposit-input"
-                value="${escapeHtml(data.fargKomposit || '')}"
-            >
-
-        </td>
-
-
-        <td class="tillval-parkett">
-
-            <input
-                type="text"
-                class="tillval-parkett-input"
-                value="${escapeHtml(data.parkett || '')}"
-            >
-
-        </td>
-
-
-        <td class="tillval-ja tillval-yes-cell">
-
-            <input
-                type="checkbox"
-                class="tillval-check badrum-check"
-                ${data.badrumskap === true ? "checked" : ""}
-            >
-
-        </td>
-
-
-        <td class="tillval-ja tillval-yes-cell">
-
-            <input
-                type="checkbox"
-                class="tillval-check takdusch-check"
-                ${data.takdusch === true ? "checked" : ""}
-            >
-
-        </td>
-
-
-        <td class="tillval-ja tillval-yes-cell">
-
-            <input
-                type="checkbox"
-                class="tillval-check kommod-check"
-                ${data.kommod === true ? "checked" : ""}
-            >
-
-        </td>
-
-
-        <td class="tillval-ja tillval-yes-cell">
-
-            <input
-                type="checkbox"
-                class="tillval-check spegelskap-check"
-                ${data.spegelskapWC === true ? "checked" : ""}
-            >
-
-        </td>
-
-
-        <td class="tillval-ja tillval-yes-cell">
-
-            <input
-                type="checkbox"
-                class="tillval-check eluttag-check"
-                ${data.eluttagWC === true ? "checked" : ""}
-            >
-
-        </td>
-
-
-        <td class="tillval-tidigare">
-
-            <input
-                type="text"
-                class="tillval-tidigare-input"
-                value="${escapeHtml(data.tidigareLokal || '')}"
-            >
-
-        </td>
-
-
-        <td>
-
-            <button
-                class="delete-btn tillval-delete-btn"
-            >
-
-                X
-
-            </button>
-
-        </td>
-
-    `;
-
-
-    document
-        .getElementById("tillvalTbody")
-        .appendChild(row);
-
-
-    updateTillvalCheckboxVisuals(row);
-
-
-    row.querySelectorAll(
-        "input"
-    )
-    .forEach(input => {
-
-        input.addEventListener(
-            "change",
-            async () => {
-
-
-                if(
-                    loadingData ||
-                    readOnlyMode
-                ){
-
-                    return;
-
-                }
-
-
-                updateTillvalCheckboxVisuals(
-                    row
-                );
-
-
-                await saveTillvalRow(
-                    row
-                );
-
-
-                sortTillvalRows();
-
-            }
-        );
-
-    });
-
-
-    row.querySelector(
-        ".tillval-delete-btn"
-    )
-    .addEventListener(
-        "click",
-        async () => {
-
-
-            if(readOnlyMode){
-
-                return;
-
-            }
-
-
-            if(
-                !deleteUsers.includes(
-                    currentUserUid
-                )
-            ){
-
-                alert(
-                    "Du har inte behörighet att ta bort lägenheter."
-                );
-
-                return;
-
-            }
-
-
-            const firebaseId =
-                row.dataset.firebaseId;
-
-
-            if(!firebaseId){
-
-                row.remove();
-
-                return;
-
-            }
-
-
-            if(
-                !confirm(
-                    "Vill du verkligen ta bort lägenheten?"
-                )
-            ){
-
-                return;
-
-            }
-
-
-            try{
-
-                await window.firestoreDeleteDoc(
-
-                    window.firestoreDoc(
-
-                        window.firestoreDb,
-
-                        "tillvalLagenheter",
-
-                        firebaseId
-
-                    )
-
-                );
-
-            }catch(error){
-
-                console.error(
-                    "Kunde inte ta bort tillvalsraden:",
-                    error
-                );
-
-
-                alert(
-                    "Kunde inte ta bort lägenheten."
-                );
-
-            }
-
-        }
-    );
-
-
-    updateTillvalReadOnly();
-
-}
-
-
-/* =====================================================
-   TILLVAL CHECKBOX FÄRG
-===================================================== */
-
-function updateTillvalCheckboxVisuals(row){
-
-    const cells =
-        row.querySelectorAll(
-            ".tillval-yes-cell"
-        );
-
-
-    cells.forEach(cell => {
-
-        const checkbox =
-            cell.querySelector(
-                "input[type=checkbox]"
-            );
-
-
-        if(
-            checkbox &&
-            checkbox.checked
-        ){
-
-            cell.classList.add(
-                "checked"
-            );
-
-        }else{
-
-            cell.classList.remove(
-                "checked"
-            );
-
-        }
-
-    });
-
-}
-
-
-/* =====================================================
-   HÄMTA TILLVALSDATA
-===================================================== */
-
-function getTillvalRowData(row){
-
-    return {
-
-        trapphus:
-            row.querySelector(
-                ".tillval-trapphus-input"
-            ).value,
-
-        lgh:
-            row.querySelector(
-                ".tillval-lgh-input"
-            ).value,
-
-        fargLuckor:
-            row.querySelector(
-                ".tillval-luckor-input"
-            ).value,
-
-        fargKomposit:
-            row.querySelector(
-                ".tillval-komposit-input"
-            ).value,
-
-        parkett:
-            row.querySelector(
-                ".tillval-parkett-input"
-            ).value,
-
-        badrumskap:
-            row.querySelector(
-                ".badrum-check"
-            ).checked,
-
-        takdusch:
-            row.querySelector(
-                ".takdusch-check"
-            ).checked,
-
-        kommod:
-            row.querySelector(
-                ".kommod-check"
-            ).checked,
-
-        spegelskapWC:
-            row.querySelector(
-                ".spegelskap-check"
-            ).checked,
-
-        eluttagWC:
-            row.querySelector(
-                ".eluttag-check"
-            ).checked,
-
-        tidigareLokal:
-            row.querySelector(
-                ".tillval-tidigare-input"
-            ).value,
-
-        editedBy:
-            currentUser,
-
-        editedDate:
-            timestamp()
-
-    };
-
-}
-
-
-/* =====================================================
-   SPARA TILLVAL
-===================================================== */
-
-async function saveTillvalRow(row){
-
-    if(
-        loadingData ||
-        readOnlyMode
-    ){
-
-        return;
-
-    }
-
-
-    const db =
-        window.firestoreDb;
-
-
-    const firebaseId =
-        row.dataset.firebaseId;
-
-
-    if(!db){
-
-        console.error(
-            "Firestore är inte redo."
-        );
-
-        return;
-
-    }
-
-
-    const data =
-        getTillvalRowData(row);
-
-
-    try{
-
-
-        if(firebaseId){
-
-            await window.firestoreUpdateDoc(
-
-                window.firestoreDoc(
-                    db,
-                    "tillvalLagenheter",
-                    firebaseId
-                ),
-
-                data
-
-            );
-
-        }else{
-
-            const newDoc =
-                await window.firestoreAddDoc(
-
-                    window.firestoreCollection(
-                        db,
-                        "tillvalLagenheter"
-                    ),
-
-                    data
-
-                );
-
-
-            row.dataset.firebaseId =
-                newDoc.id;
-
-        }
-
-
-    }catch(error){
-
-        console.error(
-            "Kunde inte spara tillval:",
-            error
-        );
-
-
-        alert(
-            "Kunde inte spara tillvalsinformationen."
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   LÄGG TILL TILLVALSLÄGENHET
-===================================================== */
-
-async function addNewTillval(){
-
-    if(readOnlyMode){
-
-        return;
-
-    }
-
-
-    const db =
-        window.firestoreDb;
-
-
-    if(!db){
-
-        alert(
-            "Firebase är inte redo ännu."
-        );
-
-        return;
-
-    }
-
-
-    const rowData = {
-
-        trapphus:"",
-
-        lgh:"",
-
-        fargLuckor:"",
-
-        fargKomposit:"",
-
-        parkett:"",
-
-        badrumskap:false,
-
-        takdusch:false,
-
-        kommod:false,
-
-        spegelskapWC:false,
-
-        eluttagWC:false,
-
-        tidigareLokal:"",
-
-        editedBy:
-            currentUser,
-
-        editedDate:
-            timestamp()
-
-    };
-
-
-    try{
-
-        const newDoc =
-            await window.firestoreAddDoc(
-
-                window.firestoreCollection(
-                    db,
-                    "tillvalLagenheter"
-                ),
-
-                rowData
-
-            );
-
-
-        console.log(
-            "Ny tillvalslägenhet skapad:",
-            newDoc.id
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "Kunde inte skapa tillvalslägenhet:",
-            error
-        );
-
-
-        alert(
-            "Kunde inte lägga till lägenheten."
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   REALTID TILLVAL
-===================================================== */
-
-function startTillvalRealtime(){
-
-    if(unsubscribeTillval){
-
-        unsubscribeTillval();
-
-        unsubscribeTillval =
-            null;
-
-    }
-
-
-    unsubscribeTillval =
-        window.firestoreOnSnapshot(
-
-            window.firestoreCollection(
-                window.firestoreDb,
-                "tillvalLagenheter"
-            ),
-
-
-            snapshot => {
-
-
-                loadingData = true;
-
-
-                const tbody =
-                    document.getElementById(
-                        "tillvalTbody"
-                    );
-
-
-                tbody.innerHTML = "";
-
-
-                snapshot.forEach(
-                    documentSnapshot => {
-
-
-                        const data =
-                            documentSnapshot.data();
-
-
-                        data.firebaseId =
-                            documentSnapshot.id;
-
-
-                        addTillvalRow(data);
-
-                    }
-                );
-
-
-                sortTillvalRows();
-
-
-                loadingData = false;
-
-
-                updateTillvalReadOnly();
-
-
-                console.log(
-                    "Tillval synkade:",
-                    snapshot.size,
-                    "rader"
-                );
-
-            },
-
-
-            error => {
-
-                loadingData = false;
-
-                console.error(
-                    "Tillval Firebase-fel:",
-                    error
-                );
-
-            }
-
-        );
-
-}
-
-
-/* =====================================================
-   SORTERING TILLVAL
-===================================================== */
-
-function sortTillvalRows(){
-
-    const tbody =
-        document.getElementById(
-            "tillvalTbody"
-        );
-
-
-    const rows =
-        Array.from(
-            tbody.querySelectorAll("tr")
-        );
-
-
-    rows.sort((a,b) => {
-
-
-        const trA =
-            a.querySelector(
-                ".tillval-trapphus-input"
-            )
-            .value
-            .trim();
-
-
-        const trB =
-            b.querySelector(
-                ".tillval-trapphus-input"
-            )
-            .value
-            .trim();
-
-
-        if(trA !== trB){
-
-            return trA.localeCompare(
-                trB,
-                "sv",
-                {
-                    numeric:true
-                }
-            );
-
-        }
-
-
-        const lghA =
-            a.querySelector(
-                ".tillval-lgh-input"
-            )
-            .value
-            .trim();
-
-
-        const lghB =
-            b.querySelector(
-                ".tillval-lgh-input"
-            )
-            .value
-            .trim();
-
-
-        return lghA.localeCompare(
-            lghB,
-            "sv",
-            {
-                numeric:true
-            }
-        );
-
-    });
-
-
-    rows.forEach(row => {
-
-        tbody.appendChild(row);
-
-    });
-
-}
-
-
-/* =====================================================
-   SÖK TILLVAL
-===================================================== */
-
-function searchTillval(){
-
-    const search =
-        document
-        .getElementById(
-            "tillvalSearch"
-        )
-        .value
-        .toLowerCase()
-        .trim();
-
-
-    const rows =
-        document.querySelectorAll(
-            "#tillvalTbody tr"
-        );
-
-
-    rows.forEach(row => {
-
-
-        const trapphus =
-            row.querySelector(
-                ".tillval-trapphus-input"
-            )
-            .value
-            .toLowerCase();
-
-
-        const lgh =
-            row.querySelector(
-                ".tillval-lgh-input"
-            )
-            .value
-            .toLowerCase();
-
-
-        if(
-
-            trapphus.includes(search) ||
-
-            lgh.includes(search)
-
-        ){
-
-            row.style.display = "";
-
-        }else{
-
-            row.style.display = "none";
-
-        }
-
-    });
-
-}
-
-
-/* =====================================================
-   LÄSLÄGE TILLVAL
-===================================================== */
-
-function updateTillvalReadOnly(){
-
-    const view =
-        document.getElementById(
-            "tillvalView"
-        );
-
-
-    if(!view){
-
-        return;
-
-    }
-
-
-    const fields =
-        view.querySelectorAll(
-            "input"
-        );
-
-
-    fields.forEach(field => {
-
-        /*
-         * Sökfältet ska fortfarande fungera
-         * även i läsläge.
-         */
-
-        if(field.id === "tillvalSearch"){
-
-            field.disabled = false;
-
-            field.classList.remove(
-                "readonly-field"
-            );
-
-            return;
-
-        }
-
-
-        field.disabled =
-            readOnlyMode;
-
-
-        if(readOnlyMode){
-
-            field.classList.add(
-                "readonly-field"
-            );
-
-        }else{
-
-            field.classList.remove(
-                "readonly-field"
-            );
-
-        }
-
-    });
-
-
-    const addButton =
-        document.getElementById(
-            "addTillvalButton"
-        );
-
-
-    if(addButton){
-
-        addButton.style.display =
-            readOnlyMode
-            ? "none"
-            : "";
-
-    }
-
-
-    const deleteButtons =
-        view.querySelectorAll(
-            ".tillval-delete-btn"
-        );
-
-
-    deleteButtons.forEach(button => {
-
-        button.style.display =
-            readOnlyMode
-            ? "none"
-            : "";
-
-    });
-
-
-    const notice =
-        document.getElementById(
-            "tillvalReadonlyNotice"
-        );
-
-
-    if(notice){
-
-        notice.style.display =
-            readOnlyMode
-            ? "block"
-            : "none";
-
-    }
-
-}
-
-
-/* =====================================================
-   ENTER FÖR LOGIN
+   ENTER LOGIN
 ===================================================== */
 
 document
@@ -4806,7 +4622,6 @@ window.firestoreOnSnapshot =
 window.firebaseLogin =
 async function(){
 
-
     const email =
         document
         .getElementById("username")
@@ -4828,7 +4643,6 @@ async function(){
 
 
     try{
-
 
         const result =
             await signInWithEmailAndPassword(
@@ -4926,17 +4740,14 @@ async function(){
 
         startRealtime();
 
-        startProjectInfoRealtime();
-
         startTillvalRealtime();
+
+        startProjectInfoRealtime();
 
         applyReadOnlyMode();
 
-        updateTillvalReadOnly();
-
 
     }catch(error){
-
 
         console.error(error);
 
