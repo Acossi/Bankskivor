@@ -1118,17 +1118,17 @@ display:block !important;
 
 }
 
-    /* Färger för Ja/Nej under Tillval lägenheter */
+/* Färger för Ja/Nej under Tillval lägenheter */
 .tillval-ja input.ja-status {
-    background-color: #16a34a !important;
-    color: #ffffff !important;
-    font-weight: bold;
+background-color: #16a34a !important;
+color: #ffffff !important;
+font-weight: bold;
 }
 
 .tillval-ja input.nej-status {
-    background-color: #dc2626 !important;
-    color: #ffffff !important;
-    font-weight: bold;
+background-color: #dc2626 !important;
+color: #ffffff !important;
+font-weight: bold;
 }
 
 </style>
@@ -2212,6 +2212,77 @@ row.querySelector(
   NY BÄNKSKIVE-LÄGENHET
 ===================================================== */
 
+
+async function addNewTillvalApartment() {
+if (readOnlyMode) {
+alert("Du är inloggad i läsläge och kan inte lägga till lägenheter.");
+return;
+}
+
+const db = window.firestoreDb;
+const button = document.getElementById("addTillvalApartmentButton");
+
+if (!db || !window.firestoreAddDoc || !window.firestoreCollection) {
+alert("Firebase är inte redo ännu. Ladda om sidan och försök igen.");
+return;
+}
+
+if (button) {
+button.disabled = true;
+button.textContent = "Lägger till lägenhet...";
+}
+
+const rowData = {
+lagenhet: "",
+fargLuckor: "",
+fargKompositbank: "",
+parkett: "",
+badrumsskap: "",
+takdusch: "",
+kommod: "",
+spegelskapWC: "",
+eluttagKapaWC: "",
+kommentar: "",
+editedBy: currentUser,
+editedDate: timestamp()
+};
+
+try {
+const newDoc = await window.firestoreAddDoc(
+window.firestoreCollection(db, "tillvalLagenheter"),
+rowData
+);
+
+console.log("Tillvalslägenhet sparad:", newDoc.id);
+
+// Vänta på att Firestore-synkningen visar den nya raden.
+// Raden ska inte läggas till manuellt här, eftersom
+// onSnapshot redan skapar den när databasen uppdateras.
+
+} catch (error) {
+console.error("Fel vid tillägg av tillvalslägenhet:", error);
+
+let message = "Kunde inte lägga till lägenheten.";
+
+if (error.code === "permission-denied") {
+message += "\n\nFirebase nekar skrivåtkomst. Kontrollera Firestore Security Rules.";
+} else if (error.code === "unauthenticated") {
+message += "\n\nDu är inte längre inloggad. Logga in igen.";
+} else {
+message += "\n\nFel: " + (error.message || error.code || "Okänt fel");
+}
+
+alert(message);
+
+} finally {
+if (button) {
+button.disabled = false;
+button.textContent = "➕ Lägg till lägenhet";
+}
+}
+}
+
+
 /* =====================================================
   BÄNKSKIVA - NY RAD
 ===================================================== */
@@ -2639,6 +2710,9 @@ row.classList.add(
 
 }
 
+}
+
+
 /* =====================================================
   BÄNKSKIVA - SPARA RAD
 ===================================================== */
@@ -2764,6 +2838,9 @@ error
 
 }
 
+}
+
+
 /* =====================================================
   TILLVAL - NY LÄGENHET
 ===================================================== */
@@ -2854,6 +2931,7 @@ alert(
 );
 }
 
+}
 
 
 /* =====================================================
@@ -2937,201 +3015,177 @@ row.querySelector(
 /* =====================================================
   TILLVAL - NY RAD
 ===================================================== */
-
+  
+javascript
 function updateJaNejColor(input) {
-    input.classList.remove("ja-status", "nej-status");
+input.classList.remove("ja-status", "nej-status");
 
-    const value = input.value.trim().toLowerCase();
+const value = input.value.trim().toLowerCase();
 
-    if (value === "ja") {
-        input.classList.add("ja-status");
-    } else if (value === "nej") {
-        input.classList.add("nej-status");
-    }
+if (value === "ja") {
+input.classList.add("ja-status");
+} else if (value === "nej") {
+input.classList.add("nej-status");
 }
-    
-function addTillvalRow(data = {}){
-   
-const firebaseId =
-data.firebaseId || "";
+}
 
+function addTillvalRow(data = {}) {
+const firebaseId = data.firebaseId || "";
+const row = document.createElement("tr");
 
-const row =
-document.createElement("tr");
-
-
-row.classList.add(
-"tillval-row"
-);
-
-
-row.dataset.firebaseId =
-firebaseId;
-
+row.classList.add("tillval-row");
+row.dataset.firebaseId = firebaseId;
 
 row.innerHTML = `
-
-   
-<td style="width:120px; min-width:120px;">
-   <input
-       type="text"
-       class="tillval-trapphus-input"
-       placeholder="Trapphus"
-       value="${escapeHtml(data.trapphus || '')}"
-   >
-</td>
+       <td style="width:120px; min-width:120px;">
+           <input type="text" class="tillval-trapphus-input"
+               placeholder="Trapphus"
+               value="${escapeHtml(data.trapphus || '')}">
+       </td>
 
        <td class="tillval-lgh">
-
-           <input
-               type="text"
-               class="tillval-lagenhet-input"
+           <input type="text" class="tillval-lagenhet-input"
                placeholder="Lägenhet"
-               value="${escapeHtml(data.lagenhet || '')}"
-           >
-
+               value="${escapeHtml(data.lagenhet || '')}">
        </td>
 
-
        <td class="tillval-farg">
-
-           <input
-               type="text"
-               class="tillval-farg-luckor"
+           <input type="text" class="tillval-farg-luckor"
                placeholder="Ex. Snövit (S-0500-N)"
-               value="${escapeHtml(data.fargLuckor || '')}"
-           >
-
+               value="${escapeHtml(data.fargLuckor || '')}">
        </td>
-
 
        <td class="tillval-farg">
-
-           <input
-               type="text"
-               class="tillval-farg-komposit"
+           <input type="text" class="tillval-farg-komposit"
                placeholder="Ex. Ljusgrå"
-               value="${escapeHtml(data.fargKompositbank || '')}"
-           >
-
+               value="${escapeHtml(data.fargKompositbank || '')}">
        </td>
-
 
        <td class="tillval-parkett-cell">
-
-           <input
-               type="text"
-               class="tillval-parkett"
+           <input type="text" class="tillval-parkett"
                placeholder="Ex. Alla rum, ej kök & klädkammare"
-               value="${escapeHtml(data.parkett || '')}"
-           >
-
+               value="${escapeHtml(data.parkett || '')}">
        </td>
-
 
        <td class="tillval-ja">
-
-           <input
-               type="text"
-               class="tillval-badrumsskap"
-               placeholder="ja"
-               value="${escapeHtml(data.badrumsskap || '')}"
-           >
-
+           <input type="text" class="tillval-badrumsskap"
+               placeholder="Ja/Nej"
+               value="${escapeHtml(data.badrumsskap || '')}">
        </td>
-
 
        <td class="tillval-ja">
-
-           <input
-               type="text"
-               class="tillval-takdusch"
-               placeholder="ja"
-               value="${escapeHtml(data.takdusch || '')}"
-           >
-
+           <input type="text" class="tillval-takdusch"
+               placeholder="Ja/Nej"
+               value="${escapeHtml(data.takdusch || '')}">
        </td>
-
 
        <td class="tillval-ja">
-
-           <input
-               type="text"
-               class="tillval-kommod"
-               placeholder="ja"
-               value="${escapeHtml(data.kommod || '')}"
-           >
-
+           <input type="text" class="tillval-kommod"
+               placeholder="Ja/Nej"
+               value="${escapeHtml(data.kommod || '')}">
        </td>
-
 
        <td class="tillval-ja">
-
-           <input
-               type="text"
-               class="tillval-spegelskap"
-               placeholder="ja"
-               value="${escapeHtml(data.spegelskapWC || '')}"
-           >
-
+           <input type="text" class="tillval-spegelskap"
+               placeholder="Ja/Nej"
+               value="${escapeHtml(data.spegelskapWC || '')}">
        </td>
-
 
        <td class="tillval-ja">
-
-           <input
-               type="text"
-               class="tillval-eluttag"
-               placeholder="ja"
-               value="${escapeHtml(data.eluttagKapaWC || '')}"
-           >
-
+           <input type="text" class="tillval-eluttag"
+               placeholder="Ja/Nej"
+               value="${escapeHtml(data.eluttagKapaWC || '')}">
        </td>
-
 
        <td class="tillval-kommentar">
-
-           <input
-               type="text"
-               class="tillval-kommentar-input"
+           <input type="text" class="tillval-kommentar-input"
                placeholder="Kommentar"
-               value="${escapeHtml(data.kommentar || '')}"
-           >
-
+               value="${escapeHtml(data.kommentar || '')}">
        </td>
 
-
-       <td
-           class="tillval-edit tillval-edited-by"
-       >
-
+       <td class="tillval-edit tillval-edited-by">
            ${escapeHtml(data.editedBy || '')}
-
        </td>
 
-
-       <td
-           class="tillval-date tillval-edited-date"
-       >
-
+       <td class="tillval-date tillval-edited-date">
            ${escapeHtml(data.editedDate || '')}
-
        </td>
-
 
        <td>
-
-           <button
-               class="delete-btn tillval-delete-btn"
-           >
-
-               X
-
-           </button>
-
+           <button class="delete-btn tillval-delete-btn">X</button>
        </td>
-
    `;
+
+document.getElementById("tillvalTbody").appendChild(row);
+
+const statusInputs = row.querySelectorAll(
+".tillval-badrumsskap, .tillval-takdusch, " +
+".tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
+);
+
+statusInputs.forEach(input => {
+updateJaNejColor(input);
+input.addEventListener("input", () => updateJaNejColor(input));
+});
+
+row.querySelectorAll("input").forEach(input => {
+input.addEventListener("change", async () => {
+if (loadingTillvalData || readOnlyMode) return;
+
+const scrollPosition = window.scrollY;
+
+row.querySelector(".tillval-edited-by").innerText = currentUser;
+row.querySelector(".tillval-edited-date").innerText = timestamp();
+
+sortTillvalRows();
+await saveTillvalRow(row);
+
+window.scrollTo(0, scrollPosition);
+});
+});
+
+row.querySelector(".tillval-delete-btn").addEventListener("click", async () => {
+if (readOnlyMode) return;
+
+if (!deleteUsers.includes(currentUserUid)) {
+alert("Du har inte behörighet att ta bort lägenheter.");
+return;
+}
+
+const id = row.dataset.firebaseId;
+
+if (!id) {
+row.remove();
+return;
+}
+
+if (!confirm("Vill du verkligen ta bort tillvalslägenheten?")) return;
+
+try {
+await window.firestoreDeleteDoc(
+window.firestoreDoc(
+window.firestoreDb,
+"tillvalLagenheter",
+id
+)
+);
+} catch (error) {
+console.error("Kunde inte ta bort tillvalslägenheten:", error);
+alert("Kunde inte ta bort lägenheten.");
+}
+});
+
+if (readOnlyMode) {
+row.querySelectorAll("input").forEach(input => {
+input.disabled = true;
+input.classList.add("readonly-field");
+});
+
+row.querySelector(".tillval-delete-btn").style.display = "none";
+}
+}
+```
+
 
 
 document
@@ -3139,24 +3193,11 @@ document
 "tillvalTbody"
 )
 .appendChild(row);
-  
-/* JA / NEJ FÄRGER */
 
-row.querySelectorAll(
-".tillval-badrumsskap, .tillval-takdusch, .tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
-).forEach(input => {
-
-    updateJaNejColor(input);
-
-    input.addEventListener("input", () => {
-        updateJaNejColor(input);
-    });
-
-});
 
 /* =================================================
-      ÄNDRING
-   ================================================= */
+ÄNDRING
+================================================= */
 
 row.querySelectorAll(
 "input"
@@ -3213,8 +3254,8 @@ scrollPosition
 
 
 /* =================================================
-      TA BORT TILLVAL
-   ================================================= */
+TA BORT TILLVAL
+================================================= */
 
 row.querySelector(
 ".tillval-delete-btn"
@@ -3304,8 +3345,8 @@ alert(
 
 
 /* =================================================
-      LÄSLÄGE
-   ================================================= */
+LÄSLÄGE
+================================================= */
 
 if(readOnlyMode){
 
@@ -3334,7 +3375,7 @@ row.querySelector(
 
 
 /* =====================================================
-  TILLVAL - SPARA RAD
+TILLVAL - SPARA RAD
 ===================================================== */
 
 async function saveTillvalRow(row){
@@ -3465,53 +3506,43 @@ error
 
 
 /* =====================================================
-  TILLVAL - SORTERING
+TILLVAL - SORTERING
 ===================================================== */
 
 function sortTillvalRows(){
 
 const tbody =
-document.getElementById("tillvalTbody");
+document.getElementById(
+"tillvalTbody"
+);
+
 
 const rows =
-Array.from(tbody.querySelectorAll("tr"));
+Array.from(
+tbody.querySelectorAll("tr")
+);
+
 
 rows.sort((a,b) => {
 
-const trA =
-a.querySelector(".tillval-trapphus-input")
+const aValue =
+a.querySelector(
+".tillval-lagenhet-input"
+)
 .value
 .trim();
 
-const trB =
-b.querySelector(".tillval-trapphus-input")
+
+const bValue =
+b.querySelector(
+".tillval-lagenhet-input"
+)
 .value
 .trim();
 
-if(trA !== trB){
 
-return trA.localeCompare(
-trB,
-"sv",
-{
-numeric:true
-}
-);
-
-}
-
-const lghA =
-a.querySelector(".tillval-lagenhet-input")
-.value
-.trim();
-
-const lghB =
-b.querySelector(".tillval-lagenhet-input")
-.value
-.trim();
-
-return lghA.localeCompare(
-lghB,
+return aValue.localeCompare(
+bValue,
 "sv",
 {
 numeric:true
@@ -3519,12 +3550,6 @@ numeric:true
 );
 
 });
-
-rows.forEach(row => {
-tbody.appendChild(row);
-});
-
-}
 
 
 rows.forEach(row => {
@@ -3537,47 +3562,56 @@ tbody.appendChild(row);
 
 
 /* =====================================================
-  TILLVAL - SÖKNING
+TILLVAL - SÖKNING
 ===================================================== */
 
 function searchTillvalTable(){
 
 const search =
-document.getElementById("searchTillval")
+document
+.getElementById(
+"searchTillval"
+)
 .value
 .toLowerCase()
 .trim();
 
+
 const rows =
-document.querySelectorAll("#tillvalTbody tr");
+document.querySelectorAll(
+"#tillvalTbody tr"
+);
+
 
 rows.forEach(row => {
 
-const trapphus =
-row.querySelector(".tillval-trapphus-input")
+const lagenhet =
+row.querySelector(
+".tillval-lagenhet-input"
+)
 .value
 .toLowerCase();
 
-const lagenhet =
-row.querySelector(".tillval-lagenhet-input")
-.value
-.toLowerCase();
 
 if(
-trapphus.includes(search) ||
 lagenhet.includes(search)
 ){
+
 row.style.display = "";
+
 }else{
+
 row.style.display = "none";
+
 }
 
 });
 
 }
 
+
 /* =====================================================
-  PROJEKTINFO
+PROJEKTINFO
 ===================================================== */
 
 async function saveProjectInfo(){
