@@ -2212,77 +2212,6 @@ row.querySelector(
   NY BÄNKSKIVE-LÄGENHET
 ===================================================== */
 
-
-async function addNewTillvalApartment() {
-if (readOnlyMode) {
-alert("Du är inloggad i läsläge och kan inte lägga till lägenheter.");
-return;
-}
-
-const db = window.firestoreDb;
-const button = document.getElementById("addTillvalApartmentButton");
-
-if (!db || !window.firestoreAddDoc || !window.firestoreCollection) {
-alert("Firebase är inte redo ännu. Ladda om sidan och försök igen.");
-return;
-}
-
-if (button) {
-button.disabled = true;
-button.textContent = "Lägger till lägenhet...";
-}
-
-const rowData = {
-lagenhet: "",
-fargLuckor: "",
-fargKompositbank: "",
-parkett: "",
-badrumsskap: "",
-takdusch: "",
-kommod: "",
-spegelskapWC: "",
-eluttagKapaWC: "",
-kommentar: "",
-editedBy: currentUser,
-editedDate: timestamp()
-};
-
-try {
-const newDoc = await window.firestoreAddDoc(
-window.firestoreCollection(db, "tillvalLagenheter"),
-rowData
-);
-
-console.log("Tillvalslägenhet sparad:", newDoc.id);
-
-// Vänta på att Firestore-synkningen visar den nya raden.
-// Raden ska inte läggas till manuellt här, eftersom
-// onSnapshot redan skapar den när databasen uppdateras.
-
-} catch (error) {
-console.error("Fel vid tillägg av tillvalslägenhet:", error);
-
-let message = "Kunde inte lägga till lägenheten.";
-
-if (error.code === "permission-denied") {
-message += "\n\nFirebase nekar skrivåtkomst. Kontrollera Firestore Security Rules.";
-} else if (error.code === "unauthenticated") {
-message += "\n\nDu är inte längre inloggad. Logga in igen.";
-} else {
-message += "\n\nFel: " + (error.message || error.code || "Okänt fel");
-}
-
-alert(message);
-
-} finally {
-if (button) {
-button.disabled = false;
-button.textContent = "➕ Lägg till lägenhet";
-}
-}
-}
-
-
 /* =====================================================
   BÄNKSKIVA - NY RAD
 ===================================================== */
@@ -2840,6 +2769,100 @@ error
 
 }
 
+
+/* =====================================================
+  TILLVAL - NY LÄGENHET
+===================================================== */
+
+async function addNewTillvalApartment(){
+
+if(readOnlyMode){
+
+return;
+
+}
+
+
+const db =
+window.firestoreDb;
+
+
+if(!db){
+
+alert(
+"Firebase är inte redo ännu."
+);
+
+return;
+
+}
+
+
+const rowData = {
+
+lagenhet:"",
+
+fargLuckor:"",
+
+fargKompositbank:"",
+
+parkett:"",
+
+badrumsskap:"",
+
+takdusch:"",
+
+kommod:"",
+
+spegelskapWC:"",
+
+eluttagKapaWC:"",
+
+kommentar:"",
+
+editedBy:
+currentUser,
+
+editedDate:
+timestamp()
+
+};
+
+
+try{
+
+const newDoc =
+await window.firestoreAddDoc(
+
+window.firestoreCollection(
+db,
+"tillvalLagenheter"
+),
+
+rowData
+
+);
+
+
+console.log(
+"Ny tillvalslägenhet skapad:",
+newDoc.id
+);
+
+
+} catch (error) {
+console.error("Kunde inte skapa tillvalslägenhet:", error);
+
+alert(
+"Kunde inte lägga till lägenheten.\n\n" +
+"Feltyp: " + (error.code || "Okänd") + "\n" +
+"Meddelande: " + (error.message || "Inget felmeddelande")
+);
+}
+
+}
+
+
 /* =====================================================
   TILLVAL - HÄMTA RADDATA
 ===================================================== */
@@ -2935,23 +2958,7 @@ function updateJaNejColor(input) {
 }
     
 function addTillvalRow(data = {}){
-  const firebaseId = data.firebaseId || "";
-
-const row = document.createElement("tr");
-
-row.classList.add("tillval-row");
-row.dataset.firebaseId = firebaseId;
    
-row.querySelectorAll(
-    ".tillval-badrumsskap, .tillval-takdusch, .tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
-).forEach(input => {
-    updateJaNejColor(input);
-
-    input.addEventListener("input", () => {
-        updateJaNejColor(input);
-    });
-});
-
 const firebaseId =
 data.firebaseId || "";
 
@@ -2971,23 +2978,7 @@ firebaseId;
 
 row.innerHTML = `
 
-javascript
-row.querySelectorAll(
-    ".tillval-badrumsskap, " +
-    ".tillval-takdusch, " +
-    ".tillval-kommod, " +
-    ".tillval-spegelskap, " +
-    ".tillval-eluttag"
-).forEach(input => {
-
-    updateJaNejColor(input);
-
-    input.addEventListener("input", () => {
-        updateJaNejColor(input);
-    });
-
-});
-
+   
 <td style="width:120px; min-width:120px;">
    <input
        type="text"
@@ -3155,7 +3146,20 @@ document
 "tillvalTbody"
 )
 .appendChild(row);
+  
+/* JA / NEJ FÄRGER */
 
+row.querySelectorAll(
+".tillval-badrumsskap, .tillval-takdusch, .tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
+).forEach(input => {
+
+    updateJaNejColor(input);
+
+    input.addEventListener("input", () => {
+        updateJaNejColor(input);
+    });
+
+});
 
 /* =================================================
       ÄNDRING
@@ -3474,37 +3478,47 @@ error
 function sortTillvalRows(){
 
 const tbody =
-document.getElementById(
-"tillvalTbody"
-);
-
+document.getElementById("tillvalTbody");
 
 const rows =
-Array.from(
-tbody.querySelectorAll("tr")
-);
-
+Array.from(tbody.querySelectorAll("tr"));
 
 rows.sort((a,b) => {
 
-const aValue =
-a.querySelector(
-".tillval-lagenhet-input"
-)
+const trA =
+a.querySelector(".tillval-trapphus-input")
 .value
 .trim();
 
-
-const bValue =
-b.querySelector(
-".tillval-lagenhet-input"
-)
+const trB =
+b.querySelector(".tillval-trapphus-input")
 .value
 .trim();
 
+if(trA !== trB){
 
-return aValue.localeCompare(
-bValue,
+return trA.localeCompare(
+trB,
+"sv",
+{
+numeric:true
+}
+);
+
+}
+
+const lghA =
+a.querySelector(".tillval-lagenhet-input")
+.value
+.trim();
+
+const lghB =
+b.querySelector(".tillval-lagenhet-input")
+.value
+.trim();
+
+return lghA.localeCompare(
+lghB,
 "sv",
 {
 numeric:true
@@ -3512,6 +3526,12 @@ numeric:true
 );
 
 });
+
+rows.forEach(row => {
+tbody.appendChild(row);
+});
+
+}
 
 
 rows.forEach(row => {
@@ -3530,47 +3550,38 @@ tbody.appendChild(row);
 function searchTillvalTable(){
 
 const search =
-document
-.getElementById(
-"searchTillval"
-)
+document.getElementById("searchTillval")
 .value
 .toLowerCase()
 .trim();
 
-
 const rows =
-document.querySelectorAll(
-"#tillvalTbody tr"
-);
-
+document.querySelectorAll("#tillvalTbody tr");
 
 rows.forEach(row => {
 
-const lagenhet =
-row.querySelector(
-".tillval-lagenhet-input"
-)
+const trapphus =
+row.querySelector(".tillval-trapphus-input")
 .value
 .toLowerCase();
 
+const lagenhet =
+row.querySelector(".tillval-lagenhet-input")
+.value
+.toLowerCase();
 
 if(
+trapphus.includes(search) ||
 lagenhet.includes(search)
 ){
-
 row.style.display = "";
-
 }else{
-
 row.style.display = "none";
-
 }
 
 });
 
 }
-
 
 /* =====================================================
   PROJEKTINFO
