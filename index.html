@@ -1669,9 +1669,13 @@ footer{
 
                 <tr>
 
-                    <th class="tillval-lgh">
-                        Lägenhet
-                    </th>
+                   <th style="width:120px; min-width:120px;">
+    Trapphus
+</th>
+
+<th class="tillval-lgh">
+    Lägenhet
+</th>
 
 
                     <th class="tillval-farg">
@@ -2925,6 +2929,11 @@ function getTillvalRowData(row){
 
     return {
 
+trapphus:
+    row.querySelector(
+        ".tillval-trapphus-input"
+    ).value,
+        
         lagenhet:
             row.querySelector(
                 ".tillval-lagenhet-input"
@@ -3014,6 +3023,16 @@ function addTillvalRow(data = {}){
 
 
     row.innerHTML = `
+
+    
+<td style="width:120px; min-width:120px;">
+    <input
+        type="text"
+        class="tillval-trapphus-input"
+        placeholder="Trapphus"
+        value="${escapeHtml(data.trapphus || '')}"
+    >
+</td>
 
         <td class="tillval-lgh">
 
@@ -3394,6 +3413,9 @@ async function saveTillvalRow(row){
 
 
     const rowData = {
+
+        trapphus:
+    data.trapphus,
 
         lagenhet:
             data.lagenhet,
