@@ -2195,96 +2195,74 @@ function getRowData(row){
    NY BÄNKSKIVE-LÄGENHET
 ===================================================== */
 
-async function addNewApartment(){
 
-    if(readOnlyMode){
-
+async function addNewTillvalApartment() {
+    if (readOnlyMode) {
+        alert("Du är inloggad i läsläge och kan inte lägga till lägenheter.");
         return;
-
     }
 
+    const db = window.firestoreDb;
+    const button = document.getElementById("addTillvalApartmentButton");
 
-    const db =
-        window.firestoreDb;
-
-
-    if(!db){
-
-        alert(
-            "Firebase är inte redo ännu."
-        );
-
+    if (!db || !window.firestoreAddDoc || !window.firestoreCollection) {
+        alert("Firebase är inte redo ännu. Ladda om sidan och försök igen.");
         return;
-
     }
 
+    if (button) {
+        button.disabled = true;
+        button.textContent = "Lägger till lägenhet...";
+    }
 
     const rowData = {
-
-        trapphus:"",
-
-        lgh:"",
-
-        fargKok:"",
-
-        material:"Komposit",
-
-        datumMattningKok:"",
-
-        datumMattningFonster:"",
-
-        datumMontageKok:"",
-
-        datumMontageFonster:"",
-
-        klar:false,
-
-        editedBy:
-            currentUser,
-
-        editedDate:
-            timestamp(),
-
-        kommentar:""
-
+        lagenhet: "",
+        fargLuckor: "",
+        fargKompositbank: "",
+        parkett: "",
+        badrumsskap: "",
+        takdusch: "",
+        kommod: "",
+        spegelskapWC: "",
+        eluttagKapaWC: "",
+        kommentar: "",
+        editedBy: currentUser,
+        editedDate: timestamp()
     };
 
-
-    try{
-
-        const newDoc =
-            await window.firestoreAddDoc(
-
-                window.firestoreCollection(
-                    db,
-                    "bankskivor"
-                ),
-
-                rowData
-
-            );
-
-
-        console.log(
-            "Ny lägenhet skapad:",
-            newDoc.id
+    try {
+        const newDoc = await window.firestoreAddDoc(
+            window.firestoreCollection(db, "tillvalLagenheter"),
+            rowData
         );
 
+        console.log("Tillvalslägenhet sparad:", newDoc.id);
 
-    }catch(error){
+        // Vänta på att Firestore-synkningen visar den nya raden.
+        // Raden ska inte läggas till manuellt här, eftersom
+        // onSnapshot redan skapar den när databasen uppdateras.
 
-        console.error(
-            "Kunde inte skapa lägenhet:",
-            error
-        );
+    } catch (error) {
+        console.error("Fel vid tillägg av tillvalslägenhet:", error);
 
+        let message = "Kunde inte lägga till lägenheten.";
 
-        alert(
-            "Kunde inte lägga till lägenheten."
-        );
+        if (error.code === "permission-denied") {
+            message += "\n\nFirebase nekar skrivåtkomst. Kontrollera Firestore Security Rules.";
+        } else if (error.code === "unauthenticated") {
+            message += "\n\nDu är inte längre inloggad. Logga in igen.";
+        } else {
+            message += "\n\nFel: " + (error.message || error.code || "Okänt fel");
+        }
 
+        alert(message);
+
+    } finally {
+        if (button) {
+            button.disabled = false;
+            button.textContent = "➕ Lägg till lägenhet";
+        }
     }
-
 }
 
 
@@ -3077,7 +3055,7 @@ function addTillvalRow(data = {}){
         </td>
 
 
-        <td class="tillval-parkett">
+        <td class="tillval-parkett-cell">
 
             <input
                 type="text"
