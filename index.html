@@ -2840,100 +2840,6 @@ error
 
 }
 
-
-/* =====================================================
-  TILLVAL - NY LÄGENHET
-===================================================== */
-
-async function addNewTillvalApartment(){
-
-if(readOnlyMode){
-
-return;
-
-}
-
-
-const db =
-window.firestoreDb;
-
-
-if(!db){
-
-alert(
-"Firebase är inte redo ännu."
-);
-
-return;
-
-}
-
-
-const rowData = {
-
-lagenhet:"",
-
-fargLuckor:"",
-
-fargKompositbank:"",
-
-parkett:"",
-
-badrumsskap:"",
-
-takdusch:"",
-
-kommod:"",
-
-spegelskapWC:"",
-
-eluttagKapaWC:"",
-
-kommentar:"",
-
-editedBy:
-currentUser,
-
-editedDate:
-timestamp()
-
-};
-
-
-try{
-
-const newDoc =
-await window.firestoreAddDoc(
-
-window.firestoreCollection(
-db,
-"tillvalLagenheter"
-),
-
-rowData
-
-);
-
-
-console.log(
-"Ny tillvalslägenhet skapad:",
-newDoc.id
-);
-
-
-} catch (error) {
-console.error("Kunde inte skapa tillvalslägenhet:", error);
-
-alert(
-"Kunde inte lägga till lägenheten.\n\n" +
-"Feltyp: " + (error.code || "Okänd") + "\n" +
-"Meddelande: " + (error.message || "Inget felmeddelande")
-);
-}
-
-}
-
-
 /* =====================================================
   TILLVAL - HÄMTA RADDATA
 ===================================================== */
@@ -3029,6 +2935,12 @@ function updateJaNejColor(input) {
 }
     
 function addTillvalRow(data = {}){
+  const firebaseId = data.firebaseId || "";
+
+const row = document.createElement("tr");
+
+row.classList.add("tillval-row");
+row.dataset.firebaseId = firebaseId;
    
 row.querySelectorAll(
     ".tillval-badrumsskap, .tillval-takdusch, .tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
@@ -3059,7 +2971,23 @@ firebaseId;
 
 row.innerHTML = `
 
-   
+javascript
+row.querySelectorAll(
+    ".tillval-badrumsskap, " +
+    ".tillval-takdusch, " +
+    ".tillval-kommod, " +
+    ".tillval-spegelskap, " +
+    ".tillval-eluttag"
+).forEach(input => {
+
+    updateJaNejColor(input);
+
+    input.addEventListener("input", () => {
+        updateJaNejColor(input);
+    });
+
+});
+
 <td style="width:120px; min-width:120px;">
    <input
        type="text"
