@@ -2904,19 +2904,15 @@ async function addNewTillvalApartment(){
         );
 
 
-    }catch(error){
+  } catch (error) {
+    console.error("Kunde inte skapa tillvalslägenhet:", error);
 
-        console.error(
-            "Kunde inte skapa tillvalslägenhet:",
-            error
-        );
-
-
-        alert(
-            "Kunde inte lägga till lägenheten."
-        );
-
-    }
+    alert(
+        "Kunde inte lägga till lägenheten.\n\n" +
+        "Feltyp: " + (error.code || "Okänd") + "\n" +
+        "Meddelande: " + (error.message || "Inget felmeddelande")
+    );
+}
 
 }
 
