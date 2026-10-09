@@ -3362,9 +3362,7 @@ function sortTillvalRows() {
 
     rows.forEach(row => tbody.appendChild(row));
 }
-
-  }
-
+  
 /* =====================================================
 TILLVAL - SÖKNING
 ===================================================== */
@@ -4095,7 +4093,6 @@ row.style.display = "";
   SORTERING BÄNKSKIVOR
 ===================================================== */
 
-
 function sortRows() {
     const tbody = document.getElementById("tbody");
     if (!tbody) return;
@@ -4130,45 +4127,6 @@ function sortRows() {
 
     rows.forEach(row => tbody.appendChild(row));
 }
-
-
-const lghA =
-a.querySelector(
-".lgh-input"
-)
-.value
-.trim();
-
-
-const lghB =
-b.querySelector(
-".lgh-input"
-)
-.value
-.trim();
-
-
-return lghA.localeCompare(
-lghB,
-"sv",
-{
-numeric:true
-}
-);
-
-});
-
-
-rows.forEach(row => {
-
-tbody.appendChild(row);
-
-});
-
-}
-
-  }
-
 
 /* =====================================================
   SÖK BÄNKSKIVOR
