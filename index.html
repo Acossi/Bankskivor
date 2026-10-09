@@ -3016,6 +3016,7 @@ trapphus:
    TILLVAL - NY RAD
 ===================================================== */
 
+```javascript
 function updateJaNejColor(input) {
     input.classList.remove("ja-status", "nej-status");
 
@@ -3027,199 +3028,164 @@ function updateJaNejColor(input) {
         input.classList.add("nej-status");
     }
 }
-    
-function addTillvalRow(data = {}){
-   
-row.querySelectorAll(
-    ".tillval-badrumsskap, .tillval-takdusch, .tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
-).forEach(input => {
-    updateJaNejColor(input);
 
-    input.addEventListener("input", () => {
-        updateJaNejColor(input);
-    });
-});
+function addTillvalRow(data = {}) {
+    const firebaseId = data.firebaseId || "";
+    const row = document.createElement("tr");
 
-    const firebaseId =
-        data.firebaseId || "";
-
-
-    const row =
-        document.createElement("tr");
-
-
-    row.classList.add(
-        "tillval-row"
-    );
-
-
-    row.dataset.firebaseId =
-        firebaseId;
-
+    row.classList.add("tillval-row");
+    row.dataset.firebaseId = firebaseId;
 
     row.innerHTML = `
-
-    
-<td style="width:120px; min-width:120px;">
-    <input
-        type="text"
-        class="tillval-trapphus-input"
-        placeholder="Trapphus"
-        value="${escapeHtml(data.trapphus || '')}"
-    >
-</td>
+        <td style="width:120px; min-width:120px;">
+            <input type="text" class="tillval-trapphus-input"
+                placeholder="Trapphus"
+                value="${escapeHtml(data.trapphus || '')}">
+        </td>
 
         <td class="tillval-lgh">
-
-            <input
-                type="text"
-                class="tillval-lagenhet-input"
+            <input type="text" class="tillval-lagenhet-input"
                 placeholder="Lägenhet"
-                value="${escapeHtml(data.lagenhet || '')}"
-            >
-
+                value="${escapeHtml(data.lagenhet || '')}">
         </td>
 
-
         <td class="tillval-farg">
-
-            <input
-                type="text"
-                class="tillval-farg-luckor"
+            <input type="text" class="tillval-farg-luckor"
                 placeholder="Ex. Snövit (S-0500-N)"
-                value="${escapeHtml(data.fargLuckor || '')}"
-            >
-
+                value="${escapeHtml(data.fargLuckor || '')}">
         </td>
-
 
         <td class="tillval-farg">
-
-            <input
-                type="text"
-                class="tillval-farg-komposit"
+            <input type="text" class="tillval-farg-komposit"
                 placeholder="Ex. Ljusgrå"
-                value="${escapeHtml(data.fargKompositbank || '')}"
-            >
-
+                value="${escapeHtml(data.fargKompositbank || '')}">
         </td>
-
 
         <td class="tillval-parkett-cell">
-
-            <input
-                type="text"
-                class="tillval-parkett"
+            <input type="text" class="tillval-parkett"
                 placeholder="Ex. Alla rum, ej kök & klädkammare"
-                value="${escapeHtml(data.parkett || '')}"
-            >
-
+                value="${escapeHtml(data.parkett || '')}">
         </td>
-
 
         <td class="tillval-ja">
-
-            <input
-                type="text"
-                class="tillval-badrumsskap"
-                placeholder="ja"
-                value="${escapeHtml(data.badrumsskap || '')}"
-            >
-
+            <input type="text" class="tillval-badrumsskap"
+                placeholder="Ja/Nej"
+                value="${escapeHtml(data.badrumsskap || '')}">
         </td>
-
 
         <td class="tillval-ja">
-
-            <input
-                type="text"
-                class="tillval-takdusch"
-                placeholder="ja"
-                value="${escapeHtml(data.takdusch || '')}"
-            >
-
+            <input type="text" class="tillval-takdusch"
+                placeholder="Ja/Nej"
+                value="${escapeHtml(data.takdusch || '')}">
         </td>
-
 
         <td class="tillval-ja">
-
-            <input
-                type="text"
-                class="tillval-kommod"
-                placeholder="ja"
-                value="${escapeHtml(data.kommod || '')}"
-            >
-
+            <input type="text" class="tillval-kommod"
+                placeholder="Ja/Nej"
+                value="${escapeHtml(data.kommod || '')}">
         </td>
-
 
         <td class="tillval-ja">
-
-            <input
-                type="text"
-                class="tillval-spegelskap"
-                placeholder="ja"
-                value="${escapeHtml(data.spegelskapWC || '')}"
-            >
-
+            <input type="text" class="tillval-spegelskap"
+                placeholder="Ja/Nej"
+                value="${escapeHtml(data.spegelskapWC || '')}">
         </td>
-
 
         <td class="tillval-ja">
-
-            <input
-                type="text"
-                class="tillval-eluttag"
-                placeholder="ja"
-                value="${escapeHtml(data.eluttagKapaWC || '')}"
-            >
-
+            <input type="text" class="tillval-eluttag"
+                placeholder="Ja/Nej"
+                value="${escapeHtml(data.eluttagKapaWC || '')}">
         </td>
-
 
         <td class="tillval-kommentar">
-
-            <input
-                type="text"
-                class="tillval-kommentar-input"
+            <input type="text" class="tillval-kommentar-input"
                 placeholder="Kommentar"
-                value="${escapeHtml(data.kommentar || '')}"
-            >
-
+                value="${escapeHtml(data.kommentar || '')}">
         </td>
 
-
-        <td
-            class="tillval-edit tillval-edited-by"
-        >
-
+        <td class="tillval-edit tillval-edited-by">
             ${escapeHtml(data.editedBy || '')}
-
         </td>
 
-
-        <td
-            class="tillval-date tillval-edited-date"
-        >
-
+        <td class="tillval-date tillval-edited-date">
             ${escapeHtml(data.editedDate || '')}
-
         </td>
-
 
         <td>
-
-            <button
-                class="delete-btn tillval-delete-btn"
-            >
-
-                X
-
-            </button>
-
+            <button class="delete-btn tillval-delete-btn">X</button>
         </td>
-
     `;
+
+    document.getElementById("tillvalTbody").appendChild(row);
+
+    const statusInputs = row.querySelectorAll(
+        ".tillval-badrumsskap, .tillval-takdusch, " +
+        ".tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
+    );
+
+    statusInputs.forEach(input => {
+        updateJaNejColor(input);
+        input.addEventListener("input", () => updateJaNejColor(input));
+    });
+
+    row.querySelectorAll("input").forEach(input => {
+        input.addEventListener("change", async () => {
+            if (loadingTillvalData || readOnlyMode) return;
+
+            const scrollPosition = window.scrollY;
+
+            row.querySelector(".tillval-edited-by").innerText = currentUser;
+            row.querySelector(".tillval-edited-date").innerText = timestamp();
+
+            sortTillvalRows();
+            await saveTillvalRow(row);
+
+            window.scrollTo(0, scrollPosition);
+        });
+    });
+
+    row.querySelector(".tillval-delete-btn").addEventListener("click", async () => {
+        if (readOnlyMode) return;
+
+        if (!deleteUsers.includes(currentUserUid)) {
+            alert("Du har inte behörighet att ta bort lägenheter.");
+            return;
+        }
+
+        const id = row.dataset.firebaseId;
+
+        if (!id) {
+            row.remove();
+            return;
+        }
+
+        if (!confirm("Vill du verkligen ta bort tillvalslägenheten?")) return;
+
+        try {
+            await window.firestoreDeleteDoc(
+                window.firestoreDoc(
+                    window.firestoreDb,
+                    "tillvalLagenheter",
+                    id
+                )
+            );
+        } catch (error) {
+            console.error("Kunde inte ta bort tillvalslägenheten:", error);
+            alert("Kunde inte ta bort lägenheten.");
+        }
+    });
+
+    if (readOnlyMode) {
+        row.querySelectorAll("input").forEach(input => {
+            input.disabled = true;
+            input.classList.add("readonly-field");
+        });
+
+        row.querySelector(".tillval-delete-btn").style.display = "none";
+    }
+}
+```
+
 
 
     document
