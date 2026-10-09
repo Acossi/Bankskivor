@@ -3320,55 +3320,47 @@ error
 TILLVAL - SORTERING
 ===================================================== */
 
-function sortTillvalRows(){
+function sortTillvalRows() {
+    const tbody = document.getElementById("tillvalTbody");
+    if (!tbody) return;
 
-const tbody =
-document.getElementById(
-"tillvalTbody"
-);
+    const rows = Array.from(tbody.querySelectorAll("tr"));
 
+    rows.sort((a, b) => {
+        const trapphusA = a.querySelector(
+            ".tillval-trapphus-input"
+        ).value.trim();
 
-const rows =
-Array.from(
-tbody.querySelectorAll("tr")
-);
+        const trapphusB = b.querySelector(
+            ".tillval-trapphus-input"
+        ).value.trim();
 
+        const trapphusSortering = trapphusA.localeCompare(
+            trapphusB,
+            "sv",
+            { numeric: true, sensitivity: "base" }
+        );
 
-rows.sort((a,b) => {
+        if (trapphusSortering !== 0) {
+            return trapphusSortering;
+        }
 
-const aValue =
-a.querySelector(
-".tillval-lagenhet-input"
-)
-.value
-.trim();
+        const lghA = a.querySelector(
+            ".tillval-lagenhet-input"
+        ).value.trim();
 
+        const lghB = b.querySelector(
+            ".tillval-lagenhet-input"
+        ).value.trim();
 
-const bValue =
-b.querySelector(
-".tillval-lagenhet-input"
-)
-.value
-.trim();
+        return lghA.localeCompare(
+            lghB,
+            "sv",
+            { numeric: true, sensitivity: "base" }
+        );
+    });
 
-
-return aValue.localeCompare(
-bValue,
-"sv",
-{
-numeric:true
-}
-);
-
-});
-
-
-rows.forEach(row => {
-
-tbody.appendChild(row);
-
-});
-
+    rows.forEach(row => tbody.appendChild(row));
 }
 
 
@@ -4102,45 +4094,40 @@ row.style.display = "";
   SORTERING BÄNKSKIVOR
 ===================================================== */
 
-function sortRows(){
 
-const tbody =
-document.getElementById(
-"tbody"
-);
+function sortRows() {
+    const tbody = document.getElementById("tbody");
+    if (!tbody) return;
 
+    const rows = Array.from(tbody.querySelectorAll("tr"));
 
-const rows =
-Array.from(
-tbody.querySelectorAll("tr")
-);
+    rows.sort((a, b) => {
+        const trapphusA = a.querySelector(".trapphus-input").value.trim();
+        const trapphusB = b.querySelector(".trapphus-input").value.trim();
 
+        // Sortera först efter trapphus, numeriskt där det går.
+        const trapphusSortering = trapphusA.localeCompare(
+            trapphusB,
+            "sv",
+            { numeric: true, sensitivity: "base" }
+        );
 
-rows.sort((a,b) => {
+        if (trapphusSortering !== 0) {
+            return trapphusSortering;
+        }
 
-const trA =
-a.querySelector(
-".trapphus-input"
-)
-.value
-.trim();
+        // Samma trapphus: sortera efter lägenhetsnummer.
+        const lghA = a.querySelector(".lgh-input").value.trim();
+        const lghB = b.querySelector(".lgh-input").value.trim();
 
+        return lghA.localeCompare(
+            lghB,
+            "sv",
+            { numeric: true, sensitivity: "base" }
+        );
+    });
 
-const trB =
-b.querySelector(
-".trapphus-input"
-)
-.value
-.trim();
-
-
-if(trA !== trB){
-
-return trA.localeCompare(
-trB,
-"sv"
-);
-
+    rows.forEach(row => tbody.appendChild(row));
 }
 
 
