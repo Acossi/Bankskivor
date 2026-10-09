@@ -1118,6 +1118,19 @@ footer{
 
 }
 
+    /* Färger för Ja/Nej under Tillval lägenheter */
+.tillval-ja input.ja-status {
+    background-color: #16a34a !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+.tillval-ja input.nej-status {
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
 </style>
 
 </head>
@@ -3003,7 +3016,29 @@ trapphus:
    TILLVAL - NY RAD
 ===================================================== */
 
+function updateJaNejColor(input) {
+    input.classList.remove("ja-status", "nej-status");
+
+    const value = input.value.trim().toLowerCase();
+
+    if (value === "ja") {
+        input.classList.add("ja-status");
+    } else if (value === "nej") {
+        input.classList.add("nej-status");
+    }
+}
+    
 function addTillvalRow(data = {}){
+   
+row.querySelectorAll(
+    ".tillval-badrumsskap, .tillval-takdusch, .tillval-kommod, .tillval-spegelskap, .tillval-eluttag"
+).forEach(input => {
+    updateJaNejColor(input);
+
+    input.addEventListener("input", () => {
+        updateJaNejColor(input);
+    });
+});
 
     const firebaseId =
         data.firebaseId || "";
