@@ -1132,7 +1132,7 @@ font-weight: bold;
 }
 
 .bankskiva-komposit {
-background-color: #d1d5db !important;
+background-color: #bfdbfe !important;
 color: #000000 !important;
 font-weight: bold;
 }
@@ -1163,6 +1163,12 @@ font-weight: bold;
 
 .farg-parlgra {
 background-color: #aebbc8 !important;
+color: #000000 !important;
+font-weight: bold;
+}
+
+.farg-sandbeige {
+background-color: #d9c7a6 !important;
 color: #000000 !important;
 font-weight: bold;
 }
@@ -3096,7 +3102,6 @@ function updateBankskivaColor(selectElement) {
 }
 
 function updateBankskivaFarg(input) {
-
     input.classList.remove(
         "farg-motion-grey",
         "farg-night-tebas"
@@ -3114,10 +3119,10 @@ function updateBankskivaFarg(input) {
         );
     }
 
-   if (
-    value.includes("night") ||
-    value.includes("tebas") ||
-    value.includes("mörkgrå")
+    if (
+        value.includes("night") ||
+        value.includes("tebas") ||
+        value.includes("mörkgrå")
     ) {
         input.classList.add(
             "farg-night-tebas"
@@ -3129,30 +3134,41 @@ function updateLuckfarg(input) {
 
     input.classList.remove(
         "farg-snovit",
-        "farg-parlgra"
+        "farg-parlgra",
+        "farg-sandbeige"
     );
 
     const value =
     input.value.toLowerCase().trim();
 
     if (
-    value.includes("snövit") ||
-    value.includes("s0500") ||
-    value.includes("s-0500")
+        value.includes("snövit") ||
+        value.includes("s0500") ||
+        value.includes("s-0500")
     ) {
         input.classList.add(
             "farg-snovit"
         );
     }
 
-   if (
-    value.includes("pärlgrå") ||
-    value.includes("parlgrå") ||
-    value.includes("s2500") ||
-    value.includes("s-2500")
+    if (
+        value.includes("pärlgrå") ||
+        value.includes("parlgrå") ||
+        value.includes("s2500") ||
+        value.includes("s-2500")
     ) {
         input.classList.add(
             "farg-parlgra"
+        );
+    }
+
+    if (
+        value.includes("sandbeige") ||
+        value.includes("s1502") ||
+        value.includes("s-1502")
+    ) {
+        input.classList.add(
+            "farg-sandbeige"
         );
     }
 }
@@ -3179,7 +3195,7 @@ row.innerHTML = `
 
        <td class="tillval-farg">
            <input type="text" class="tillval-farg-luckor"
-               placeholder="Ex. Snövit (S-0500-N)"
+               placeholder="Snövit, Pärlgrå eller Sandbeige"
                value="${escapeHtml(data.fargLuckor || '')}">
        </td>
 
