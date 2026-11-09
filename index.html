@@ -3152,7 +3152,7 @@ updateJaNejColor(input);
 input.addEventListener("input", () => updateJaNejColor(input));
 });
 
-row.querySelectorAll("input").forEach(input => {
+row.querySelectorAll("input, select").forEach(input => {
 input.addEventListener("change", async () => {
 if (loadingTillvalData || readOnlyMode) return;
 
@@ -3200,7 +3200,7 @@ alert("Kunde inte ta bort lägenheten.");
 });
 
 if (readOnlyMode) {
-row.querySelectorAll("input").forEach(input => {
+row.querySelectorAll("input, select").forEach(input => {
 input.disabled = true;
 input.classList.add("readonly-field");
 });
@@ -3264,7 +3264,7 @@ valBankskiva:
 data.valBankskiva,
 
 fargBänkskiva:
-data.Bänkskiva,
+data.fargBänkskiva,
 
 parkett:
 data.parkett,
