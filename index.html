@@ -1155,6 +1155,18 @@ color: #ffffff !important;
 font-weight: bold;
 }
 
+.farg-snovit {
+background-color: #ffffff !important;
+color: #000000 !important;
+font-weight: bold;
+}
+
+.farg-parlgra {
+background-color: #aebbc8 !important;
+color: #000000 !important;
+font-weight: bold;
+}
+
 </style>
 
 </head>
@@ -3113,6 +3125,38 @@ function updateBankskivaFarg(input) {
     }
 }
 
+function updateLuckfarg(input) {
+
+    input.classList.remove(
+        "farg-snovit",
+        "farg-parlgra"
+    );
+
+    const value =
+    input.value.toLowerCase().trim();
+
+    if (
+    value.includes("snövit") ||
+    value.includes("s0500") ||
+    value.includes("s-0500")
+    ) {
+        input.classList.add(
+            "farg-snovit"
+        );
+    }
+
+   if (
+    value.includes("pärlgrå") ||
+    value.includes("parlgrå") ||
+    value.includes("s2500") ||
+    value.includes("s-2500")
+    ) {
+        input.classList.add(
+            "farg-parlgra"
+        );
+    }
+}
+
 function addTillvalRow(data = {}) {
 const firebaseId = data.firebaseId || "";
 const row = document.createElement("tr");
@@ -3216,13 +3260,27 @@ row.innerHTML = `
 
 document.getElementById("tillvalTbody").appendChild(row);
 
-  const bankskivaSelect =
+const bankskivaSelect =
 row.querySelector(".tillval-val-bankskiva");
 
 updateBankskivaColor(bankskivaSelect);
 
-  const fargBankskivaInput =
+const fargBankskivaInput =
 row.querySelector(".tillval-farg-komposit");
+
+const luckFargInput =
+row.querySelector(".tillval-farg-luckor");
+
+updateLuckfarg(
+    luckFargInput
+);
+
+luckFargInput.addEventListener(
+    "input",
+    () => updateLuckfarg(
+        luckFargInput
+    )
+);
 
 updateBankskivaFarg(
     fargBankskivaInput
