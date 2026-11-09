@@ -1711,7 +1711,7 @@ Val och tillval för lägenheterna
 <input
 type="text"
 id="searchTillval"
-placeholder="🔎 Sök lägenhet..."
+placeholder="🔎 Sök trapphus eller lägenhet..."
 onkeyup="searchTillvalTable()"
 >
 
@@ -3569,45 +3569,42 @@ TILLVAL - SÖKNING
 
 function searchTillvalTable(){
 
-const search =
-document
-.getElementById(
-"searchTillval"
-)
-.value
-.toLowerCase()
-.trim();
+    const search =
+    document
+    .getElementById("searchTillval")
+    .value
+    .toLowerCase()
+    .trim();
 
+    const rows =
+    document.querySelectorAll(
+        "#tillvalTbody tr"
+    );
 
-const rows =
-document.querySelectorAll(
-"#tillvalTbody tr"
-);
+    rows.forEach(row => {
 
+        const trapphus =
+        row.querySelector(
+            ".tillval-trapphus-input"
+        )
+        .value
+        .toLowerCase();
 
-rows.forEach(row => {
+        const lagenhet =
+        row.querySelector(
+            ".tillval-lagenhet-input"
+        )
+        .value
+        .toLowerCase();
 
-const lagenhet =
-row.querySelector(
-".tillval-lagenhet-input"
-)
-.value
-.toLowerCase();
+        const matchar =
+            trapphus.includes(search) ||
+            lagenhet.includes(search);
 
+        row.style.display =
+            matchar ? "" : "none";
 
-if(
-lagenhet.includes(search)
-){
-
-row.style.display = "";
-
-}else{
-
-row.style.display = "none";
-
-}
-
-});
+    });
 
 }
 
@@ -4334,84 +4331,56 @@ function sortRows() {
 
 function searchTable(){
 
-const search =
-document
-.getElementById("search")
-.value
-.toLowerCase()
-.trim();
+    const search =
+    document
+    .getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
 
+    const rows =
+    document.querySelectorAll(
+        "#tbody tr"
+    );
 
-const rows =
-document.querySelectorAll(
-"#tbody tr"
-);
+    rows.forEach(row => {
 
+        const trapphus =
+        row.querySelector(
+            ".trapphus-input"
+        )
+        .value
+        .toLowerCase();
 
-rows.forEach(row => {
+        const lgh =
+        row.querySelector(
+            ".lgh-input"
+        )
+        .value
+        .toLowerCase();
 
-const trapphus =
-row.querySelector(
-".trapphus-input"
-)
-.value
-.toLowerCase();
+        const matchar =
+            trapphus.includes(search) ||
+            lgh.includes(search);
 
+        const finished =
+            isFinishedAndChecked(row);
 
-const lgh =
-row.querySelector(
-".lgh-input"
-)
-.value
-.toLowerCase();
+        if (finished) {
 
+            if (search !== "" && matchar) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
 
-const finished =
-isFinishedAndChecked(row);
+            return;
+        }
 
+        row.style.display =
+            matchar ? "" : "none";
 
-const matcharSokning =
-
-trapphus.includes(search) ||
-
-lgh.includes(search);
-
-
-if(finished){
-
-if(
-
-search !== "" &&
-
-lgh.includes(search)
-
-){
-
-row.style.display = "";
-
-}else{
-
-row.style.display = "none";
-
-}
-
-return;
-
-}
-
-
-if(matcharSokning){
-
-row.style.display = "";
-
-}else{
-
-row.style.display = "none";
-
-}
-
-});
-
+    });
 }
 
 
