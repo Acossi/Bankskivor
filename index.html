@@ -1695,9 +1695,12 @@ Lägenhet
 Färg Luckor
 </th>
 
+<th class="tillval-farg">
+Val av Bänkskiva
+</th>
 
 <th class="tillval-farg">
-Färg Kompositbänk
+Färg Bänkskiva
 </th>
 
 
@@ -2235,7 +2238,8 @@ button.textContent = "Lägger till lägenhet...";
 const rowData = {
 lagenhet: "",
 fargLuckor: "",
-fargKompositbank: "",
+valBankskiva: "Komposit",
+fargBänkskiva: "",
 parkett: "",
 badrumsskap: "",
 takdusch: "",
@@ -2875,7 +2879,9 @@ lagenhet:"",
 
 fargLuckor:"",
 
-fargKompositbank:"",
+valBankskiva: "Komposit",
+
+fargBänkskiva:"",
 
 parkett:"",
 
@@ -2957,7 +2963,12 @@ row.querySelector(
 ".tillval-farg-luckor"
 ).value,
 
-fargKompositbank:
+valBankskiva:
+row.querySelector(
+".tillval-val-bankskiva"
+).value,
+
+fargBänkskiva:
 row.querySelector(
 ".tillval-farg-komposit"
 ).value,
@@ -3054,10 +3065,24 @@ row.innerHTML = `
                value="${escapeHtml(data.fargLuckor || '')}">
        </td>
 
+<td class="tillval-farg">
+    <select class="tillval-val-bankskiva">
+        <option value="Komposit"
+            ${(data.valBankskiva || "Komposit") === "Komposit" ? "selected" : ""}>
+            Komposit
+        </option>
+
+        <option value="Laminat"
+            ${data.valBankskiva === "Laminat" ? "selected" : ""}>
+            Laminat
+        </option>
+    </select>
+</td>
+
        <td class="tillval-farg">
            <input type="text" class="tillval-farg-komposit"
                placeholder="Ex. Ljusgrå"
-               value="${escapeHtml(data.fargKompositbank || '')}">
+               value="${escapeHtml(data.fargBänkskiva || '')}">
        </td>
 
        <td class="tillval-parkett-cell">
@@ -3235,8 +3260,11 @@ data.lagenhet,
 fargLuckor:
 data.fargLuckor,
 
-fargKompositbank:
-data.fargKompositbank,
+valBankskiva:
+data.valBankskiva,
+
+fargBänkskiva:
+data.Bänkskiva,
 
 parkett:
 data.parkett,
