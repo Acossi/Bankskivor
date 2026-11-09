@@ -1131,6 +1131,18 @@ color: #ffffff !important;
 font-weight: bold;
 }
 
+.bankskiva-komposit {
+background-color: #d1d5db !important;
+color: #000000 !important;
+font-weight: bold;
+}
+
+.bankskiva-laminat {
+background-color: #d6b48a !important;
+color: #000000 !important;
+font-weight: bold;
+}
+
 </style>
 
 </head>
@@ -3038,6 +3050,26 @@ input.classList.add("ja-status");
 input.classList.add("nej-status");
 }
 }
+  
+function updateBankskivaColor(selectElement) {
+
+    selectElement.classList.remove(
+        "bankskiva-komposit",
+        "bankskiva-laminat"
+    );
+
+    if (selectElement.value === "Komposit") {
+        selectElement.classList.add(
+            "bankskiva-komposit"
+        );
+    }
+
+    if (selectElement.value === "Laminat") {
+        selectElement.classList.add(
+            "bankskiva-laminat"
+        );
+    }
+}
 
 function addTillvalRow(data = {}) {
 const firebaseId = data.firebaseId || "";
@@ -3081,7 +3113,7 @@ row.innerHTML = `
 
        <td class="tillval-farg">
            <input type="text" class="tillval-farg-komposit"
-               placeholder="Ex. Ljusgrå"
+              placeholder="Färg bänkskiva"
                value="${escapeHtml(data.fargBänkskiva || '')}">
        </td>
 
@@ -3141,6 +3173,16 @@ row.innerHTML = `
    `;
 
 document.getElementById("tillvalTbody").appendChild(row);
+
+  const bankskivaSelect =
+row.querySelector(".tillval-val-bankskiva");
+
+updateBankskivaColor(bankskivaSelect);
+
+bankskivaSelect.addEventListener(
+    "change",
+    () => updateBankskivaColor(bankskivaSelect)
+);
 
 const statusInputs = row.querySelectorAll(
 ".tillval-badrumsskap, .tillval-takdusch, " +
