@@ -1155,6 +1155,12 @@ color: #ffffff !important;
 font-weight: bold;
 }
 
+.farg-gra67 {
+background-color: #d6d6d6 !important;
+color: #000000 !important;
+font-weight: bold;
+}
+
 .farg-snovit {
 background-color: #ffffff !important;
 color: #000000 !important;
@@ -3102,10 +3108,12 @@ function updateBankskivaColor(selectElement) {
 }
 
 function updateBankskivaFarg(input) {
-    input.classList.remove(
-        "farg-motion-grey",
-        "farg-night-tebas"
-    );
+  input.classList.remove(
+    "farg-motion-grey",
+    "farg-night-tebas",
+    "farg-gra67"
+);
+
 
     const value =
     input.value.toLowerCase().trim();
@@ -3120,12 +3128,14 @@ function updateBankskivaFarg(input) {
     }
 
     if (
-        value.includes("night") ||
-        value.includes("tebas") ||
-        value.includes("mörkgrå")
-    ) {
-        input.classList.add(
-            "farg-night-tebas"
+    value.includes("grå 67") ||
+    value.includes("gra 67") ||
+    value.includes("ljus marmor") ||
+    value.includes("grå67") ||
+    value.includes("gra67")
+) {
+    input.classList.add(
+        "farg-gra67"
         );
     }
 }
