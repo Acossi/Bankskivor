@@ -3108,16 +3108,17 @@ function updateBankskivaColor(selectElement) {
 }
 
 function updateBankskivaFarg(input) {
-  input.classList.remove(
-    "farg-motion-grey",
-    "farg-night-tebas",
-    "farg-gra67"
-);
 
+    input.classList.remove(
+        "farg-motion-grey",
+        "farg-night-tebas",
+        "farg-gra67"
+    );
 
     const value =
     input.value.toLowerCase().trim();
 
+    // Motion Grey
     if (
         value.includes("motion") ||
         value.includes("ljusgrå")
@@ -3127,15 +3128,27 @@ function updateBankskivaFarg(input) {
         );
     }
 
+    // Night Tebas
     if (
-    value.includes("grå 67") ||
-    value.includes("gra 67") ||
-    value.includes("ljus marmor") ||
-    value.includes("grå67") ||
-    value.includes("gra67")
-) {
-    input.classList.add(
-        "farg-gra67"
+        value.includes("night") ||
+        value.includes("tebas") ||
+        value.includes("mörkgrå")
+    ) {
+        input.classList.add(
+            "farg-night-tebas"
+        );
+    }
+
+    // Grå 67 Ljus marmor
+    if (
+        value.includes("grå 67") ||
+        value.includes("gra 67") ||
+        value.includes("ljus marmor") ||
+        value.includes("grå67") ||
+        value.includes("gra67")
+    ) {
+        input.classList.add(
+            "farg-gra67"
         );
     }
 }
